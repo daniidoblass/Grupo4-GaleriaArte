@@ -51,7 +51,7 @@ public class controlador {
         vista.mostrarVentana();
 
         // Iniciar el panel Login
-        new controladorOpciones(modelo, vista, eventos, conexion, cliente);
+        new controladorLogin(modelo, vista, eventos, conexion, cliente);
     }
 
     private void crearPanelesVentanaPrincipal() {
