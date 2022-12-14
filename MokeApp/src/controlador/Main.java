@@ -7,9 +7,9 @@ package controlador;
  * @version 01
  * 
  */
-public class main {
+public class Main {
     
     public static void main(String[] args){
-        new controlador();
+        new Controlador();
     }
 }

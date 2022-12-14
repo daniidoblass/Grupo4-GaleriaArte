@@ -6,7 +6,7 @@
 package modelo;
 
 
-public class modelo {
+public class Modelo {
     
     // VENTANA PRINCIPAL
     private String[] textoVentanaPrincipal;
@@ -27,7 +27,7 @@ public class modelo {
     private String user = "root";
     private String password = "";
 
-    public modelo(){
+    public Modelo(){
         
         // VENTANA PRINCIPAL
         textoVentanaPrincipal = new String[]{"MOKE APP"};

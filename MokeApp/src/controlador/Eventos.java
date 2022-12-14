@@ -20,20 +20,20 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import modelo.modelo;
-import vista.vista;
-import conexion.conexion;
+import modelo.Modelo;
+import vista.Vista;
+import conexion.Conexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class eventos implements ActionListener, MouseListener {
+public class Eventos implements ActionListener, MouseListener {
 
-    private modelo modelo;
-    private vista vista;
-    private conexion conexion;
+    private Modelo modelo;
+    private Vista vista;
+    private Conexion conexion;
     private FTPClient cliente;
 
-    public eventos(modelo modelo, vista vista, conexion conexion, FTPClient cliente){
+    public Eventos(Modelo modelo, Vista vista, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
         this.vista = vista;
         this.conexion = conexion;
@@ -49,22 +49,22 @@ public class eventos implements ActionListener, MouseListener {
             JButton btn = (JButton)source;
             
             if(btn.getName().contains(modelo.getTipoOpciones()[0])){                        // Pulsado Boton FTP Moke
-                new controladorFTPPrincipal(modelo, vista, this, conexion, cliente);
+                new ControladorFTPPrincipal(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTipoOpciones()[1]){                          // Pulsado Boton Mail Moke
-                new controladorMailPrincipal(modelo, vista, this, conexion, cliente);
+                new ControladorMailPrincipal(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTipoOpciones()[2]){                          // Pulsado Boton Configuracion Moke
-                new controladorConfigPrincipal(modelo, vista, this, conexion, cliente);
+                new ControladorConfigPrincipal(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTipoOpciones()[3]){                          // Pulsado Boton Moke Info
-                new controladorInfoPrincipal(modelo, vista, this, conexion, cliente);
+                new ControladorInfoPrincipal(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTextoLogos()[0]){                            // Pulsado Icono Barra Superior
-                new controladorOpciones(modelo, vista, this, conexion, cliente);
+                new ControladorOpciones(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[0]){                     // Subir Archivo
-                new controladorSubirArchivo(modelo, vista, this, conexion);
+                new ControladorSubirArchivo(modelo, vista, this, conexion);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[1]){                     // Descargar Archivo
                 //new controladorOpciones(modelo, vista, this, conexion);
@@ -77,7 +77,7 @@ public class eventos implements ActionListener, MouseListener {
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[4]){                     // Eliminar Carpeta
                 //new controladorOpciones(modelo, vista, this, conexion);
-            	new controladorLogin(modelo, vista, this, conexion, cliente);
+            	new ControladorLogin(modelo, vista, this, conexion, cliente);
             }
         }
         

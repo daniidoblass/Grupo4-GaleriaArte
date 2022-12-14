@@ -6,10 +6,10 @@
 
 package controlador;
 
-import modelo.modelo;
-import vista.vista;
-import vista.vistaInfoPrincipal;
-import conexion.conexion;
+import modelo.Modelo;
+import vista.Vista;
+import vista.VistaLogin;
+import conexion.Conexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -17,20 +17,20 @@ import javax.swing.JFrame;
 
 import org.apache.commons.net.ftp.FTPClient;
 
-public class controladorInfoPrincipal {
+public class ControladorLogin {
     
-    private modelo modelo;
-    private vista vista;
-    private vistaInfoPrincipal vistaInfoPrincipal;
-    private eventos eventos;
-    private conexion conexion;
+    private Modelo modelo;
+    private Vista vista;
+    private VistaLogin vistaLogin;
+    private Eventos eventos;
+    private Conexion conexion;
     private FTPClient cliente;
     
-    public controladorInfoPrincipal(modelo modelo, vista vista, eventos eventos, conexion conexion, FTPClient cliente){
+    public ControladorLogin(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
         this.vista = vista;
         this.eventos = eventos;
-        vistaInfoPrincipal = new vistaInfoPrincipal(modelo, vista);
+        vistaLogin = new VistaLogin(modelo, vista);
         this.conexion = conexion;
         this.cliente = cliente;
 
@@ -42,8 +42,8 @@ public class controladorInfoPrincipal {
     }
 
     private void configurarTitulo() {
-		vista.setIcono("src/opcionesprincipal/3.png");
-		vista.setTitulo("MOKE Info");
+		vista.setIcono("src/opcionesprincipal/2.png");
+		vista.setTitulo("Configuracion MOKE");
 	}
 
     private void actualizarVentana() {

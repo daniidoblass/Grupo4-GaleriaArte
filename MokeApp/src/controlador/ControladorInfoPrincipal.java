@@ -6,10 +6,10 @@
 
 package controlador;
 
-import modelo.modelo;
-import vista.vista;
-import vista.vistaConfigPrincipal;
-import conexion.conexion;
+import modelo.Modelo;
+import vista.Vista;
+import vista.VistaInfoPrincipal;
+import conexion.Conexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -17,24 +17,24 @@ import javax.swing.JFrame;
 
 import org.apache.commons.net.ftp.FTPClient;
 
-public class controladorConfigPrincipal {
+public class ControladorInfoPrincipal {
     
-    private modelo modelo;
-    private vista vista;
-    private vistaConfigPrincipal vistaConfigPrincipal;
-    private eventos eventos;
-    private conexion conexion;
+    private Modelo modelo;
+    private Vista vista;
+    private VistaInfoPrincipal vistaInfoPrincipal;
+    private Eventos eventos;
+    private Conexion conexion;
     private FTPClient cliente;
     
-    public controladorConfigPrincipal(modelo modelo, vista vista, eventos eventos, conexion conexion, FTPClient cliente){
+    public ControladorInfoPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
         this.vista = vista;
         this.eventos = eventos;
-        vistaConfigPrincipal = new vistaConfigPrincipal(modelo, vista);
+        vistaInfoPrincipal = new VistaInfoPrincipal(modelo, vista);
         this.conexion = conexion;
         this.cliente = cliente;
 
-        // Configurar titulo de la pagina
+        // Configurar t�tulo de la p�gina
         configurarTitulo();
         
         // Actualizar ventana
@@ -42,8 +42,8 @@ public class controladorConfigPrincipal {
     }
 
     private void configurarTitulo() {
-		vista.setIcono("src/opcionesprincipal/2.png");
-		vista.setTitulo("Configuracion MOKE");
+		vista.setIcono("src/opcionesprincipal/3.png");
+		vista.setTitulo("MOKE Info");
 	}
 
     private void actualizarVentana() {

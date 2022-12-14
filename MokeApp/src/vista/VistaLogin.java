@@ -9,14 +9,14 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import modelo.modelo;
-import controlador.eventos;
+import modelo.Modelo;
+import controlador.Eventos;
 
-public class vistaLogin extends JFrame{
+public class VistaLogin extends JFrame{
     
-    private modelo modelo;
-    private vista vista;
-    private eventos eventos;
+    private Modelo modelo;
+    private Vista vista;
+    private Eventos eventos;
     
     private JPanel panelLogin = new JPanel();
     private JPanel panelLogo = new JPanel();
@@ -28,7 +28,7 @@ public class vistaLogin extends JFrame{
 
     private JPanel panelCentral = new JPanel();
 
-    public vistaLogin(modelo modelo, vista vista){
+    public VistaLogin(Modelo modelo, Vista vista){
         this.modelo = modelo;
         this.vista = vista;
         actualizarVentanaPrincipal();

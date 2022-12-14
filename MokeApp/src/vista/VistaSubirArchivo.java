@@ -2,19 +2,19 @@ package vista;
 
 import javax.swing.*;
 
-import modelo.modelo;
+import modelo.Modelo;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-public class vistaSubirArchivo extends JFrame {
+public class VistaSubirArchivo extends JFrame {
 
-	private modelo modelo;
+	private Modelo modelo;
 	private JFileChooser jFileChooser = new JFileChooser();
 	
-    public vistaSubirArchivo(modelo modelo) {
+    public VistaSubirArchivo(Modelo modelo) {
     	this.modelo = modelo;
     	configurarJFileChooser();
     }

@@ -2,14 +2,14 @@ package controlador;
 
 import org.apache.commons.net.ftp.FTPClient;
 
-public class controladorClienteFTP {
+public class ControladorClienteFTP {
 
 	private FTPClient cliente;
 	private String servidorFTP = "ftpupload.net";
 	private String usuario = "b3_33188433";
 	private String contrasena = "2wknvh9m";
 	
-	public controladorClienteFTP() {
+	public ControladorClienteFTP() {
 		
 		try {
 			

@@ -6,26 +6,26 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import conexion.conexion;
-import modelo.modelo;
-import vista.vista;
-import vista.vistaSubirArchivo;
+import conexion.Conexion;
+import modelo.Modelo;
+import vista.Vista;
+import vista.VistaSubirArchivo;
 
-public class controladorSubirArchivo {
+public class ControladorSubirArchivo {
 
   
-    private modelo modelo;
-    private vista vista;
-    private vistaSubirArchivo vistaSubirArchivo;
-    private eventos eventos;
-    private conexion conexion;
+    private Modelo modelo;
+    private Vista vista;
+    private VistaSubirArchivo vistaSubirArchivo;
+    private Eventos eventos;
+    private Conexion conexion;
     
     
-    public controladorSubirArchivo(modelo modelo, vista vista, eventos eventos, conexion conexion){
+    public ControladorSubirArchivo(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion){
         this.modelo = modelo;
         this.vista = vista;
         this.eventos = eventos;
-        vistaSubirArchivo = new vistaSubirArchivo(modelo);
+        vistaSubirArchivo = new VistaSubirArchivo(modelo);
         this.conexion = conexion;
 
         obtenerFicheroSeleccionado();
