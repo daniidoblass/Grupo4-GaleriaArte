@@ -1,0 +1,110 @@
+/**
+ * @author Samuel Acosta Fernandez
+ * @date 27/04/2022
+ * @version 01
+ */
+package conexion;
+import java.sql.*;
+import java.util.ArrayList;
+import modelo.modelo;
+
+public class conexion {
+    
+    private modelo modelo;
+    private Connection conexion;
+    private DatabaseMetaData metadatos;
+    
+    public conexion() {
+        modelo = new modelo();
+	realizarConexion();
+        realizarDatabaseMetaData();
+    }
+    
+    /*
+     * Realiza la conexion con la base de datos 
+     */
+    public void realizarConexion(){
+
+        try {
+            Class.forName(modelo.getTextoDatosConexion()[3]);	            
+
+            conexion = DriverManager.getConnection(
+                modelo.getTextoDatosConexion()[0],modelo.getTextoDatosConexion()[1], modelo.getTextoDatosConexion()[2]); 
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
+    
+    /*
+     * Obtener el Metadata de la conexion
+    */
+    public void realizarDatabaseMetaData(){
+        try {
+            metadatos = conexion.getMetaData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    /* 
+     * Realiza la consulta indicada y devuelve su resultado en forma de ArrayList<String>
+     */
+    public ResultSet realizarConsultaRS(String consulta){
+
+        try {
+                Statement s = conexion.createStatement();
+                ResultSet rs = s.executeQuery(consulta);
+                return rs;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+    
+    /* 
+     * Realiza la consulta indicada y devuelve su resultado en forma de ArrayList<String>
+     */
+    public void realizarUpdateStatement(String consulta){
+
+        try {
+            Statement s1 = conexion.createStatement();
+            s1.executeUpdate(consulta);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // Obtener Metadata
+    public DatabaseMetaData getMetaData() {
+        return metadatos;
+    }
+
+    // Obtener Tablas
+    public ResultSet getTables() {
+        try {
+            return metadatos.getTables("i1i2", null, null, new String[]{"TABLE"});
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    
+    // Obtener Columnas
+    public ResultSet getColumns(String nombreTabla) {
+        try {
+            return metadatos.getColumns("i1i2", null, nombreTabla, null);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+}
