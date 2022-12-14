@@ -72,8 +72,8 @@ public class vistaLogin extends JFrame{
 		// Poner propiedades
 		propiedadesVista();
 
-		// Añadir datos a la ventana.
-		añadirDatos();
+		// Aï¿½adir datos a la ventana.
+		agregarDatos();
 	}
     
 
@@ -88,7 +88,7 @@ public class vistaLogin extends JFrame{
     	panelLogo.add(icono);
 	}
 
-	private void añadirDatos() {
+	private void agregarDatos() {
 		// TODO Auto-generated method stub
 
 		todosPaneles.get(1).add(todasLabels.get(1));
@@ -130,7 +130,7 @@ public class vistaLogin extends JFrame{
 		label2.setFont(new Font("arial",0,20));
 		todasLabels.add(label2);
 		
-		JLabel label3 = new JLabel("CONTRASEÑA");
+		JLabel label3 = new JLabel("CONTRASEï¿½A");
 		label3.setForeground(Color.WHITE);
 		label3.setFont(new Font("arial",0,20));
 		todasLabels.add(label3);
