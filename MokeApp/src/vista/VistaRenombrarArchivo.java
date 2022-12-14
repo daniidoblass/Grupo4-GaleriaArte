@@ -1,12 +1,15 @@
 package vista;
 
 import javax.swing.*;
+
+import modelo.Modelo;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class VistaRenombrarArchivo extends JFrame implements ActionListener {
 
-	public VistaRenombrarArchivo() {
+	public VistaRenombrarArchivo(Modelo modelo, Vista vista) {
 		setTitle("Ventana principal");
 		setResizable(false);
 		setSize(300, 400);
