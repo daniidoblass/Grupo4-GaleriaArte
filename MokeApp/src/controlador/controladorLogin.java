@@ -37,6 +37,9 @@ public class ControladorLogin {
         // Configurar titulo de la pagina
         configurarTitulo();
         
+        // Configurar Boton Login
+        configurarBotonLogin();
+        
         // Actualizar ventana
         actualizarVentana();
     }
@@ -44,6 +47,10 @@ public class ControladorLogin {
     private void configurarTitulo() {
 		vista.setIcono("src/subiconos/usuario.png");
 		vista.setTitulo("MOKE Login");
+	}
+    
+    private void configurarBotonLogin() {
+		vistaLogin.getBotonLogin().addActionListener(eventos);
 	}
 
     private void actualizarVentana() {

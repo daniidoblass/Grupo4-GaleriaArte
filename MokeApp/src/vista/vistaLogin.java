@@ -21,7 +21,7 @@ public class VistaLogin extends JFrame{
     private JPanel panelLogin = new JPanel();
     private JPanel panelLogo = new JPanel();
     private ArrayList<JPanel> todosPaneles = new ArrayList<>();
-	private ArrayList<JButton> todosBotones = new ArrayList<>();
+	private JButton botonLogin = new JButton("LOGIN");
 	private ArrayList<JLabel> todasLabels = new ArrayList<>();
 	private JTextField usuario = new JTextField(30);
 	private JPasswordField password = new JPasswordField(30);
@@ -59,7 +59,7 @@ public class VistaLogin extends JFrame{
 		crearPaneles();
 
 		// Creacion de botones.
-		crearBotones();
+		configurarBotonLogin();
 
 		// Creacion de labels.
 		crearLabels();
@@ -70,7 +70,7 @@ public class VistaLogin extends JFrame{
 		// Poner propiedades
 		propiedadesVista();
 
-		// A�adir datos a la ventana.
+		// Añadir datos a la ventana.
 		agregarDatos();
 	}
     
@@ -97,7 +97,7 @@ public class VistaLogin extends JFrame{
 		
 		todosPaneles.get(4).add(password);
 	
-		todosPaneles.get(5).add(todosBotones.get(0));
+		todosPaneles.get(5).add(botonLogin);
 
 		for (int i = 0; i < todosPaneles.size(); i++) {
 			panelLogin.add(todosPaneles.get(i));
@@ -134,17 +134,15 @@ public class VistaLogin extends JFrame{
 		todasLabels.add(label3);
 	}
 
-	private void crearBotones() {
-		// TODO Auto-generated method stub
-
-		for (int i = 0; i < 1; i++) {
-
-			JButton botones = new JButton("LOGIN");
-			botones.setForeground(Color.WHITE);
-			botones.setFont(new Font("calibri",0,19));
-			botones.setBackground(Color.decode("#193349"));
-			todosBotones.add(botones);
-		}
+	private void configurarBotonLogin() {
+		botonLogin.setName("LOGIN");
+		botonLogin.setForeground(Color.WHITE);
+		botonLogin.setFont(new Font("calibri",0,19));
+		botonLogin.setBackground(Color.decode("#193349"));
+	}
+	
+	public JButton getBotonLogin() {
+		return botonLogin;
 	}
 
 	private void propiedadesVista() {
