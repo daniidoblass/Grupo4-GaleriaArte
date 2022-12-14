@@ -9,18 +9,18 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import modelo.modelo;
-import controlador.eventos;
+import modelo.Modelo;
+import controlador.Eventos;
 
-public class vistaConfigPrincipal extends JFrame{
+public class VistaConfigPrincipal extends JFrame{
     
-    private modelo modelo;
-    private vista vista;
-    private eventos eventos;
+    private Modelo modelo;
+    private Vista vista;
+    private Eventos eventos;
 
     private JPanel panelCentral = new JPanel();
 
-    public vistaConfigPrincipal(modelo modelo, vista vista){
+    public VistaConfigPrincipal(Modelo modelo, Vista vista){
         this.modelo = modelo;
         this.vista = vista;
         actualizarVentanaPrincipal();

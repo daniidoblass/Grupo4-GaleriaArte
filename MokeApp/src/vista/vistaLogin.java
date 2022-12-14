@@ -9,26 +9,27 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import modelo.modelo;
-import controlador.eventos;
+import modelo.Modelo;
+import controlador.Eventos;
 
-public class vistaLogin extends JFrame{
+public class VistaLogin extends JFrame{
     
-    private modelo modelo;
-    private vista vista;
-    private eventos eventos;
+    private Modelo modelo;
+    private Vista vista;
+    private Eventos eventos;
     
     private JPanel panelLogin = new JPanel();
     private JPanel panelLogo = new JPanel();
     private ArrayList<JPanel> todosPaneles = new ArrayList<>();
 	private ArrayList<JButton> todosBotones = new ArrayList<>();
 	private ArrayList<JLabel> todasLabels = new ArrayList<>();
-	private ArrayList<JTextField> cajasTexto = new ArrayList<>();
+	private JTextField usuario = new JTextField(30);
+	private JPasswordField password = new JPasswordField(30);
 	private JButton icono = new JButton();
 
     private JPanel panelCentral = new JPanel();
 
-    public vistaLogin(modelo modelo, vista vista){
+    public VistaLogin(Modelo modelo, Vista vista){
         this.modelo = modelo;
         this.vista = vista;
         actualizarVentanaPrincipal();
@@ -63,9 +64,6 @@ public class vistaLogin extends JFrame{
 		// Creacion de labels.
 		crearLabels();
 
-		// Crear cajas de texto.
-		crearCasjas();
-		
 		//Crear icono.
 		crearIcono();
 
@@ -93,11 +91,11 @@ public class vistaLogin extends JFrame{
 
 		todosPaneles.get(1).add(todasLabels.get(1));
 		
-		todosPaneles.get(2).add(cajasTexto.get(0));
+		todosPaneles.get(2).add(usuario);
 
 		todosPaneles.get(3).add(todasLabels.get(2));
 		
-		todosPaneles.get(4).add(cajasTexto.get(1));
+		todosPaneles.get(4).add(password);
 	
 		todosPaneles.get(5).add(todosBotones.get(0));
 
@@ -130,20 +128,10 @@ public class vistaLogin extends JFrame{
 		label2.setFont(new Font("arial",0,20));
 		todasLabels.add(label2);
 		
-		JLabel label3 = new JLabel("CONTRASE�A");
+		JLabel label3 = new JLabel("CONTRASEÑA");
 		label3.setForeground(Color.WHITE);
 		label3.setFont(new Font("arial",0,20));
 		todasLabels.add(label3);
-	}
-
-	private void crearCasjas() {
-		// TODO Auto-generated method stub
-
-		for (int i = 0; i < 2; i++) {
-
-			JTextField cajas = new JTextField(30);
-			cajasTexto.add(cajas);
-		}
 	}
 
 	private void crearBotones() {

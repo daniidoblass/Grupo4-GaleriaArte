@@ -9,19 +9,19 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import modelo.modelo;
+import modelo.Modelo;
 
-public class vistaOpciones extends JFrame{
+public class VistaOpciones extends JFrame{
     
-    private modelo modelo;
-    private vista vista;
+    private Modelo modelo;
+    private Vista vista;
 
     private JPanel panelCentral = new JPanel();
     private ArrayList<JPanel> panelesOpciones = new ArrayList<>();
     private ArrayList<JButton> perfilesOpciones = new ArrayList<>();
 
 
-    public vistaOpciones(modelo modelo, vista vista){
+    public VistaOpciones(Modelo modelo, Vista vista){
         this.modelo = modelo;
         this.vista = vista;
         actualizarVentanaPrincipal();

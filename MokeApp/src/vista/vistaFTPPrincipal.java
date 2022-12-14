@@ -9,19 +9,19 @@ import java.awt.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import modelo.modelo;
-import controlador.eventos;
+import modelo.Modelo;
+import controlador.Eventos;
 
-public class vistaFTPPrincipal extends JFrame{
+public class VistaFTPPrincipal extends JFrame{
     
-    private modelo modelo;
-    private vista vista;
-    private eventos eventos;
+    private Modelo modelo;
+    private Vista vista;
+    private Eventos eventos;
 
     private JPanel panelCentral = new JPanel();
     private ArrayList<JButton> caratulasProductos = new ArrayList<>();
 
-    public vistaFTPPrincipal(modelo modelo, vista vista){
+    public VistaFTPPrincipal(Modelo modelo, Vista vista){
         this.modelo = modelo;
         this.vista = vista;
         actualizarVentanaPrincipal();

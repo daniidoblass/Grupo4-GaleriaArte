@@ -6,10 +6,10 @@
 
 package controlador;
 
-import modelo.modelo;
-import vista.vista;
-import vista.vistaConfigPrincipal;
-import conexion.conexion;
+import modelo.Modelo;
+import vista.Vista;
+import vista.VistaConfigPrincipal;
+import conexion.Conexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -17,20 +17,20 @@ import javax.swing.JFrame;
 
 import org.apache.commons.net.ftp.FTPClient;
 
-public class controladorConfigPrincipal {
+public class ControladorConfigPrincipal {
     
-    private modelo modelo;
-    private vista vista;
-    private vistaConfigPrincipal vistaConfigPrincipal;
-    private eventos eventos;
-    private conexion conexion;
+    private Modelo modelo;
+    private Vista vista;
+    private VistaConfigPrincipal vistaConfigPrincipal;
+    private Eventos eventos;
+    private Conexion conexion;
     private FTPClient cliente;
     
-    public controladorConfigPrincipal(modelo modelo, vista vista, eventos eventos, conexion conexion, FTPClient cliente){
+    public ControladorConfigPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
         this.vista = vista;
         this.eventos = eventos;
-        vistaConfigPrincipal = new vistaConfigPrincipal(modelo, vista);
+        vistaConfigPrincipal = new VistaConfigPrincipal(modelo, vista);
         this.conexion = conexion;
         this.cliente = cliente;
 

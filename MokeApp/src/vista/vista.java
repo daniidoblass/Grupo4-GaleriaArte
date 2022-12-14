@@ -5,26 +5,26 @@
  */
 package vista;
 
-import conexion.conexion;
+import conexion.Conexion;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import modelo.modelo;
-import controlador.eventos;
+import modelo.Modelo;
+import controlador.Eventos;
 
-public class vista extends JFrame{
+public class Vista extends JFrame{
     
-    private modelo modelo;
-    private conexion conexion;
-    private ArrayList<fondoDegradado> paneles = new ArrayList<fondoDegradado>();
+    private Modelo modelo;
+    private Conexion conexion;
+    private ArrayList<FondoDegradado> paneles = new ArrayList<FondoDegradado>();
     private ArrayList<JButton> botonesMenu = new ArrayList<>();
     private JButton icono = new JButton();
     private JLabel titulo;
 
-    public vista(modelo modelo, conexion conexion){
+    public Vista(Modelo modelo, Conexion conexion){
         this.modelo = modelo;
         propiedadesVentana();
     }
@@ -57,12 +57,12 @@ public class vista extends JFrame{
      * Configuracion Paneles de Ventana Principal
     */
     public void crearPaneles(int i){
-        paneles.add(new fondoDegradado());
+        paneles.add(new FondoDegradado());
         paneles.get(i).setVisible(true);
         this.add(paneles.get(i));
     }
     
-    public ArrayList<fondoDegradado> getPaneles(){
+    public ArrayList<FondoDegradado> getPaneles(){
         return paneles;
     }
     

@@ -9,7 +9,7 @@ import java.awt.Rectangle;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class fondoDegradado extends JPanel {
+public class FondoDegradado extends JPanel {
 
 	private Color color1 = new Color(17, 32, 48);
 	private Color color2 = new Color(58, 175, 201);

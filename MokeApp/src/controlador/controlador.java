@@ -10,27 +10,27 @@ import java.sql.Connection;
 
 import org.apache.commons.net.ftp.FTPClient;
 
-import conexion.conexion;
-import modelo.modelo;
-import vista.vista;
+import conexion.Conexion;
+import modelo.Modelo;
+import vista.Vista;
 
-public class controlador {
+public class Controlador {
     
-    private modelo modelo;
-    private vista vista;
-    private eventos eventos;
-    private conexion conexion;
+    private Modelo modelo;
+    private Vista vista;
+    private Eventos eventos;
+    private Conexion conexion;
     private Connection resultadoConexion;
-    private controladorClienteFTP controladorClienteFTP;
+    private ControladorClienteFTP controladorClienteFTP;
     
     
-    public controlador(){
-        modelo = new modelo();
-        conexion = new conexion();
-        vista = new vista(modelo, conexion);
-        controladorClienteFTP = new controladorClienteFTP();
+    public Controlador(){
+        modelo = new Modelo();
+        conexion = new Conexion();
+        vista = new Vista(modelo, conexion);
+        controladorClienteFTP = new ControladorClienteFTP();
         FTPClient cliente = controladorClienteFTP.getFTPClient();
-        eventos = new eventos(modelo,vista,conexion,cliente);
+        eventos = new Eventos(modelo,vista,conexion,cliente);
         
         // Realizar conexion con la base de datos
         conexion.realizarConexion();
@@ -51,7 +51,7 @@ public class controlador {
         vista.mostrarVentana();
 
         // Iniciar el panel Login
-        new controladorOpciones(modelo, vista, eventos, conexion, cliente);
+        new ControladorLogin(modelo, vista, eventos, conexion, cliente);
     }
 
     private void crearPanelesVentanaPrincipal() {

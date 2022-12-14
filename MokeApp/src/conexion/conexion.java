@@ -6,16 +6,16 @@
 package conexion;
 import java.sql.*;
 import java.util.ArrayList;
-import modelo.modelo;
+import modelo.Modelo;
 
-public class conexion {
+public class Conexion {
     
-    private modelo modelo;
+    private Modelo modelo;
     private Connection conexion;
     private DatabaseMetaData metadatos;
     
-    public conexion() {
-        modelo = new modelo();
+    public Conexion() {
+        modelo = new Modelo();
 	realizarConexion();
         realizarDatabaseMetaData();
     }

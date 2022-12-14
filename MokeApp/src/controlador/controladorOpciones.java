@@ -13,25 +13,25 @@ import javax.swing.JFrame;
 
 import org.apache.commons.net.ftp.FTPClient;
 
-import modelo.modelo;
-import vista.vista;
-import vista.vistaOpciones;
-import conexion.conexion;
+import modelo.Modelo;
+import vista.Vista;
+import vista.VistaOpciones;
+import conexion.Conexion;
 
-public class controladorOpciones {
+public class ControladorOpciones {
     
-    private modelo modelo;
-    private vista vista;
-    private vistaOpciones vistaOpciones;
-    private eventos eventos;
-    private conexion conexion;
+    private Modelo modelo;
+    private Vista vista;
+    private VistaOpciones vistaOpciones;
+    private Eventos eventos;
+    private Conexion conexion;
     private FTPClient cliente;
     
-    public controladorOpciones(modelo modelo, vista vista, eventos eventos, conexion conexion, FTPClient cliente){
+    public ControladorOpciones(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
         this.vista = vista;
         this.eventos = eventos;
-        vistaOpciones = new vistaOpciones(modelo,vista);
+        vistaOpciones = new VistaOpciones(modelo,vista);
         this.conexion = conexion;
         this.cliente = cliente;
 
