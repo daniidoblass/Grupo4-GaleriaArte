@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import org.apache.commons.net.ftp.FTPClient;
+
 public class controladorFTPPrincipal {
     
     private modelo modelo;
@@ -23,18 +25,20 @@ public class controladorFTPPrincipal {
     private vistaFTPPrincipal vistaFTPPrincipal;
     private eventos eventos;
     private conexion conexion;
+    private FTPClient cliente;
     private ArrayList<String> nombreFicheros;
     
     
-    public controladorFTPPrincipal(modelo modelo, vista vista, eventos eventos, conexion conexion){
+    public controladorFTPPrincipal(modelo modelo, vista vista, eventos eventos, conexion conexion, FTPClient cliente){
         this.modelo = modelo;
         this.vista = vista;
         this.eventos = eventos;
         vistaFTPPrincipal = new vistaFTPPrincipal(modelo, vista);
         this.conexion = conexion;
+        this.cliente = cliente;
         nombreFicheros = new ArrayList<>();
 
-        // Configurar título de la página
+        // Configurar tï¿½tulo de la pï¿½gina
         configurarTitulo();
         
         // ficheros de prueba

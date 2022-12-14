@@ -88,7 +88,7 @@ public class conexion {
     // Obtener Tablas
     public ResultSet getTables() {
         try {
-            return metadatos.getTables("i1i2", null, null, new String[]{"TABLE"});
+            return metadatos.getTables("mokedb", null, null, new String[]{"TABLE"});
         }
         catch (SQLException e) {
             e.printStackTrace();

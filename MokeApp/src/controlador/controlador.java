@@ -6,10 +6,13 @@
 
 package controlador;
 
+import java.sql.Connection;
+
+import org.apache.commons.net.ftp.FTPClient;
+
+import conexion.conexion;
 import modelo.modelo;
 import vista.vista;
-import conexion.conexion;
-import java.sql.Connection;
 
 public class controlador {
     
@@ -18,13 +21,16 @@ public class controlador {
     private eventos eventos;
     private conexion conexion;
     private Connection resultadoConexion;
+    private controladorClienteFTP controladorClienteFTP;
     
     
     public controlador(){
         modelo = new modelo();
         conexion = new conexion();
         vista = new vista(modelo, conexion);
-        eventos = new eventos(modelo,vista,conexion);
+        controladorClienteFTP = new controladorClienteFTP();
+        FTPClient cliente = controladorClienteFTP.getFTPClient();
+        eventos = new eventos(modelo,vista,conexion,cliente);
         
         // Realizar conexion con la base de datos
         conexion.realizarConexion();
@@ -43,9 +49,9 @@ public class controlador {
 
         // Mostrar Ventana Principal
         vista.mostrarVentana();
-        
+
         // Iniciar el panel Login
-        new controladorOpciones(modelo, vista, eventos, conexion);
+        new controladorOpciones(modelo, vista, eventos, conexion, cliente);
     }
 
     private void crearPanelesVentanaPrincipal() {

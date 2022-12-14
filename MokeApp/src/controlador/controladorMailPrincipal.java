@@ -15,6 +15,8 @@ import java.sql.SQLException;
 
 import javax.swing.JFrame;
 
+import org.apache.commons.net.ftp.FTPClient;
+
 public class controladorMailPrincipal {
     
     private modelo modelo;
@@ -22,16 +24,17 @@ public class controladorMailPrincipal {
     private vistaMailPrincipal vistaMailPrincipal;
     private eventos eventos;
     private conexion conexion;
+    private FTPClient cliente;
     
-    
-    public controladorMailPrincipal(modelo modelo, vista vista, eventos eventos, conexion conexion){
+    public controladorMailPrincipal(modelo modelo, vista vista, eventos eventos, conexion conexion, FTPClient cliente){
         this.modelo = modelo;
         this.vista = vista;
         this.eventos = eventos;
         vistaMailPrincipal = new vistaMailPrincipal(modelo, vista);
         this.conexion = conexion;
+        this.cliente = cliente;
 
-        // Configurar título de la página
+        // Configurar tï¿½tulo de la pï¿½gina
         configurarTitulo();
         
         // Actualizar ventana

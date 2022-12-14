@@ -15,6 +15,8 @@ import java.sql.SQLException;
 
 import javax.swing.JFrame;
 
+import org.apache.commons.net.ftp.FTPClient;
+
 public class controladorLogin {
     
     private modelo modelo;
@@ -22,16 +24,17 @@ public class controladorLogin {
     private vistaLogin vistaLogin;
     private eventos eventos;
     private conexion conexion;
+    private FTPClient cliente;
     
-    
-    public controladorLogin(modelo modelo, vista vista, eventos eventos, conexion conexion){
+    public controladorLogin(modelo modelo, vista vista, eventos eventos, conexion conexion, FTPClient cliente){
         this.modelo = modelo;
         this.vista = vista;
         this.eventos = eventos;
         vistaLogin = new vistaLogin(modelo, vista);
         this.conexion = conexion;
+        this.cliente = cliente;
 
-        // Configurar título de la página
+        // Configurar tï¿½tulo de la pï¿½gina
         configurarTitulo();
         
         // Actualizar ventana

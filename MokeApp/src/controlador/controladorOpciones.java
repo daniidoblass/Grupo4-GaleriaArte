@@ -11,6 +11,8 @@ import java.sql.SQLException;
 
 import javax.swing.JFrame;
 
+import org.apache.commons.net.ftp.FTPClient;
+
 import modelo.modelo;
 import vista.vista;
 import vista.vistaOpciones;
@@ -23,16 +25,17 @@ public class controladorOpciones {
     private vistaOpciones vistaOpciones;
     private eventos eventos;
     private conexion conexion;
+    private FTPClient cliente;
     
-    
-    public controladorOpciones(modelo modelo, vista vista, eventos eventos, conexion conexion){
+    public controladorOpciones(modelo modelo, vista vista, eventos eventos, conexion conexion, FTPClient cliente){
         this.modelo = modelo;
         this.vista = vista;
         this.eventos = eventos;
         vistaOpciones = new vistaOpciones(modelo,vista);
         this.conexion = conexion;
+        this.cliente = cliente;
 
-        // Configurar título de la página
+        // Configurar titulo de la pagina
         configurarTitulo();
         
         // Crear paneles de Opciones
