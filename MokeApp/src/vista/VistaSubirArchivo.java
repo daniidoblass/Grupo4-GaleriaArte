@@ -1,5 +1,11 @@
 package vista;
 
+/**
+ * @author Pablo Navarro Vázquez
+ * @date 14/12/2022
+ * @version 01
+ */
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 

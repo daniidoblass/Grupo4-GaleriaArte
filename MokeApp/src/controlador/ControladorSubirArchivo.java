@@ -21,18 +21,12 @@ import vista.VistaSubirArchivo;
 public class ControladorSubirArchivo {
 
 	private Modelo modelo;
-	private Vista vista;
 	private VistaSubirArchivo vistaSubirArchivo;
-	private Eventos eventos;
-	private Conexion conexion;
 	private FTPClient cliente;
 
 	public ControladorSubirArchivo(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) {
 		this.modelo = modelo;
-		this.vista = vista;
-		this.eventos = eventos;
 		vistaSubirArchivo = new VistaSubirArchivo(modelo);
-		this.conexion = conexion;
 		this.cliente = cliente;
 
 		obtenerFicheroSeleccionado();
