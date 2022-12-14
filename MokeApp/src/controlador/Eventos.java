@@ -19,6 +19,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import modelo.Modelo;
 import vista.Vista;
@@ -73,7 +74,13 @@ public class Eventos implements ActionListener, MouseListener {
                 //new controladorOpciones(modelo, vista, this, conexion);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[3]){                     // Crear Carpeta
-                //new controladorOpciones(modelo, vista, this, conexion);
+                try {
+					new controladorCrearCarpeta(modelo, vista, this, conexion,cliente);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            	
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[4]){                     // Eliminar Carpeta
                 //new controladorOpciones(modelo, vista, this, conexion);
