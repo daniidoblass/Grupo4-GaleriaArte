@@ -1,5 +1,9 @@
 package vista;
-
+/**
+ * @author Pablo Pérez Ferre
+ * @date 15/12/2022
+ * @version 01
+ */
 import javax.swing.*;
 
 import org.apache.commons.net.ftp.FTPClient;

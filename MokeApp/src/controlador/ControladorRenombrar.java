@@ -1,5 +1,9 @@
 package controlador;
-
+/**
+ * @author Daniel Jesús Doblas Florido
+ * @date 15/12/2022
+ * @version 01
+ */
 import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
