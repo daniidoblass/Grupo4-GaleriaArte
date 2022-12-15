@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
 
 public class ControladorFTPPrincipal {
     
@@ -38,24 +39,11 @@ public class ControladorFTPPrincipal {
         this.cliente = cliente;
         nombreFicheros = new ArrayList<>();
 
-        // Configurar t�tulo de la p�gina
+        // Configurar titulo de la pagina
         configurarTitulo();
         
         // ficheros de prueba
-        nombreFicheros.add("Descargas");
-        
-        nombreFicheros.add("Peliculas");
-        nombreFicheros.add("Piratas del Caribe.mp4");
-        nombreFicheros.add("Bohemian Rapsody.mp3");
-        nombreFicheros.add("texto1.txt");
-        nombreFicheros.add("Piratas del Caribe.mp4");
-        nombreFicheros.add("texto1.txt");
-        nombreFicheros.add("foto.png");
-        nombreFicheros.add("Bohemian Rapsody.mp3");
-        nombreFicheros.add("texto1.txt");
-        nombreFicheros.add("Piratas del Caribe.mp4");
-
-        
+        listarFicherosFTP();
         
         // Crear lista de ficheros
         agregarCaratulasFicheros();
@@ -64,7 +52,25 @@ public class ControladorFTPPrincipal {
         actualizarVentana();
     }
 
-    private void agregarCaratulasFicheros() {
+    private void listarFicherosFTP() {
+    	try {
+    		// Ficheros en el directorio actual
+    		FTPFile[] files = cliente.listFiles();
+    		
+    		//array para visualizar el tipo de fichero
+    		String[] tipos = {"Fichero", "Directorio","Enlace simb."};
+
+    		for (int i = 0; i < files.length; i++) {
+    			nombreFicheros.add(files[i].getName());
+    		}
+    	}
+    	catch(Exception e) {
+    		System.out.println("ERROR: no se han podido listar los archivos");
+    	}
+    	
+	}
+
+	private void agregarCaratulasFicheros() {
 
     	for(int i=0; i<nombreFicheros.size(); i++) {
     		String formato = extraerFormato(nombreFicheros.get(i));
