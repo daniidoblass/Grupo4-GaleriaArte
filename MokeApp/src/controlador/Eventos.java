@@ -71,14 +71,13 @@ public class Eventos implements ActionListener, MouseListener {
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[2]){                     // Eliminar Archivo
                 //new controladorOpciones(modelo, vista, this, conexion);
-            	new ControladorEliminarCarpeta(modelo, vista, null, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[3]){                     // Crear Carpeta
                 //new controladorOpciones(modelo, vista, this, conexion);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[4]){                     // Eliminar Carpeta
                 //new controladorOpciones(modelo, vista, this, conexion);
-            	new ControladorLogin(modelo, vista, this, conexion, cliente);
+            	new ControladorEliminarCarpeta(modelo, vista, null, conexion, cliente);
             }
         }
         
