@@ -1,5 +1,11 @@
 package controlador;
 
+/**
+ * @author Daniel Jesús Doblas Florido
+ * @date 14/12/2022
+ * @version 01
+ */
+
 import java.io.IOException;
 import java.net.SocketException;
 
@@ -24,7 +30,7 @@ public class ControladorDescargarArchivo {
 		this.modelo = modelo;
 		this.vista = vista;
 		this.eventos = eventos;
-		vistaDescargarArchivo = new VistaDescargarArchivo(modelo,cliente);
+		vistaDescargarArchivo = new VistaDescargarArchivo(cliente);
 		this.conexion = conexion;
 		
 	}
