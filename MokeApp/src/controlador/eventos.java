@@ -32,7 +32,11 @@ public class Eventos implements ActionListener, MouseListener {
     private Vista vista;
     private Conexion conexion;
     private FTPClient cliente;
+<<<<<<< Updated upstream:MokeApp/src/controlador/eventos.java
     private String ventanaActual = "LOGIN";
+=======
+    private String ventanaActual = "OPCIONES";
+>>>>>>> Stashed changes:MokeApp/src/controlador/Eventos.java
 
     public Eventos(Modelo modelo, Vista vista, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
@@ -86,10 +90,14 @@ public class Eventos implements ActionListener, MouseListener {
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[4]){                     // Eliminar Carpeta
             	new ControladorLogin(modelo, vista, this, conexion, cliente);
             }
+<<<<<<< Updated upstream:MokeApp/src/controlador/eventos.java
             else if(btn.getName() == "LOGIN"){                     							// Pulsado Login
             	new ControladorOpciones(modelo, vista, this, conexion, cliente);
             	ventanaActual = "OPCIONES";
             }
+=======
+
+>>>>>>> Stashed changes:MokeApp/src/controlador/Eventos.java
         }
         
     }

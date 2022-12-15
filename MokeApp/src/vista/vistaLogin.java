@@ -155,7 +155,17 @@ public class VistaLogin extends JFrame{
         panelCentral.add(panelLogin);
 	}
 
+	public JTextField getUsuario() {
+		return usuario;
+	}
     
+	public JPasswordField getPassword() {
+		return password;
+	}
+	
+	public void mostrarMensajeEmergente(String titulo, String mensaje) {
+		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
+	}
 }
 
 

@@ -64,7 +64,29 @@ public class ControladorFTPPrincipal {
         actualizarVentana();
     }
 
+<<<<<<< Updated upstream:MokeApp/src/controlador/controladorFTPPrincipal.java
     private void agregarCaratulasFicheros() {
+=======
+    private void listarFicherosFTP() {
+    	try {
+    		// Ficheros en el directorio actual
+    		FTPFile[] files = cliente.listFiles();
+    		
+    		//array para visualizar el tipo de fichero
+    		String[] tipos = {"Fichero", "Directorio","Enlace simb."};
+
+    		for (int i = 0; i < files.length; i++) {
+    			nombreFicheros.add(files[i].getName());
+    		}
+    	}
+    	catch(Exception e) {
+    		System.out.println("ERROR: no se han podido listar los archivos");
+    	}
+    	
+	}
+
+	private void agregarCaratulasFicheros() {
+>>>>>>> Stashed changes:MokeApp/src/controlador/ControladorFTPPrincipal.java
 
     	for(int i=0; i<nombreFicheros.size(); i++) {
     		String formato = extraerFormato(nombreFicheros.get(i));
