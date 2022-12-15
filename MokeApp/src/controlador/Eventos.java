@@ -52,7 +52,7 @@ public class Eventos implements ActionListener, MouseListener {
                 new ControladorFTPPrincipal(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTipoOpciones()[1]){                          // Pulsado Boton Mail Moke
-                new ControladorMailPrincipal(modelo, vista, this, conexion, cliente);
+                //new ControladorMailPrincipal(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTipoOpciones()[2]){                          // Pulsado Boton Configuracion Moke
                 new ControladorConfigPrincipal(modelo, vista, this, conexion, cliente);
@@ -78,6 +78,10 @@ public class Eventos implements ActionListener, MouseListener {
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[4]){                     // Eliminar Carpeta
                 //new controladorOpciones(modelo, vista, this, conexion);
             	new ControladorLogin(modelo, vista, this, conexion, cliente);
+            }
+            else if(btn.getName() == modelo.getTextoOpcionesMenu()[5]){                     // Eliminar Carpeta
+                //new controladorOpciones(modelo, vista, this, conexion);
+            	new ControladorRenombrar(modelo, vista, this, conexion, cliente);
             }
         }
         
