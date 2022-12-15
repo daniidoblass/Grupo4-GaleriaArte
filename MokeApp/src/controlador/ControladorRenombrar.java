@@ -30,8 +30,4 @@ public class ControladorRenombrar {
 		vistaRenombrarArchivo = new VistaRenombrarArchivo(cliente);
 		
 	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-	
-	}
 }
