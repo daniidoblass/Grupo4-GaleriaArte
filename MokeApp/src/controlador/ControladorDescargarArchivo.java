@@ -41,11 +41,11 @@ public class ControladorDescargarArchivo {
 		this.eventos = eventos;
 		vistaDescargarArchivo = new VistaDescargarArchivo(modelo);
 		this.conexion = conexion;
-		DescargarFichero();
+		descargarFichero();
 		
 	}
 	
-	private void DescargarFichero() throws SocketException, IOException {
+	private void descargarFichero() throws SocketException, IOException {
 		
 		cliente.setFileType(FTP.BINARY_FILE_TYPE);
 
