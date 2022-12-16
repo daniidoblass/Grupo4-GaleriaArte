@@ -66,23 +66,27 @@ public class ControladorLogin implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String usuario = vistaLogin.getUsuario().getText().toString();
 		String password = String.valueOf(vistaLogin.getPassword().getPassword());
-		if(comprobarUsuario(usuario, password)) {
-			new ControladorOpciones(modelo, vista, eventos, conexion, cliente);
+		String categoria = comprobarUsuario(usuario, password);
+		if(categoria.equals("admin")) {
+			new ControladorAdmin(modelo, vista, eventos, conexion, cliente);
+		}
+		else if(categoria.equals("null")) {
+			vistaLogin.mostrarMensajeEmergente("ERROR AL INICIAR SESION", "Usuario o contraseña incorrectos, vuelva a intentarlo");
 		}
 		else {
-			vistaLogin.mostrarMensajeEmergente("ERROR AL INICIAR SESION", "Usuario o contraseÃ±a incorrectos, vuelva a intentarlo");
+			new ControladorOpciones(modelo, vista, eventos, conexion, cliente);
 		}
 	}
 	
-	public boolean comprobarUsuario(String usuario, String password) {
+	public String comprobarUsuario(String usuario, String password) {
 		
-		boolean comprobacion = false;
+		String categoria = "null";
 		
 		try {
 			ResultSet usuarios = conexion.realizarConsultaRS("SELECT * FROM usuarios");
-			while(usuarios.next() && !comprobacion) {
+			while(usuarios.next() && categoria.equals("null")) {
 				if(usuarios.getString(2).equals(usuario) && usuarios.getString(4).equals(password)) {
-					comprobacion = true;
+					categoria = usuarios.getString(5);
 				}
 			}
 		}
@@ -90,7 +94,7 @@ public class ControladorLogin implements ActionListener {
 			e.printStackTrace();
 		}
 
-		return comprobacion;
+		return categoria;
 	}
 }
 

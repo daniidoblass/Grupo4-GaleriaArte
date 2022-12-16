@@ -128,7 +128,7 @@ public class VistaLogin extends JFrame{
 		label2.setFont(new Font("arial",0,20));
 		todasLabels.add(label2);
 		
-		JLabel label3 = new JLabel("CONTRASEÃ‘A");
+		JLabel label3 = new JLabel("CONTRASEÑA");
 		label3.setForeground(Color.WHITE);
 		label3.setFont(new Font("arial",0,20));
 		todasLabels.add(label3);

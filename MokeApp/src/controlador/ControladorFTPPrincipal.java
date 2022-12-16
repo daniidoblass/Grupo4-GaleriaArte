@@ -41,13 +41,13 @@ public class ControladorFTPPrincipal {
 
         // Configurar titulo de la pagina
         configurarTitulo();
-        
+        /*
         // ficheros de prueba
         listarFicherosFTP();
         
         // Crear lista de ficheros
         agregarCaratulasFicheros();
-        
+        */
         // Actualizar ventana
         actualizarVentana();
     }

@@ -8,7 +8,7 @@ package controlador;
 
 import modelo.Modelo;
 import vista.Vista;
-import vista.VistaMailPrincipal;
+import vista.VistaAdmin;
 import conexion.Conexion;
 
 import java.awt.event.ActionEvent;
@@ -21,22 +21,22 @@ import javax.swing.JFrame;
 
 import org.apache.commons.net.ftp.FTPClient;
 
-public class ControladorMailPrincipal implements ActionListener {
+public class ControladorAdmin implements ActionListener {
     
     private Modelo modelo;
     private Vista vista;
-    private VistaMailPrincipal vistaMailPrincipal;
+    private VistaAdmin vistaAdmin;
     private Eventos eventos;
     private Conexion conexion;
     private FTPClient cliente;
     private ArrayList<String> nombreColumnas;
     private String nombreTabla;
     
-    public ControladorMailPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
+    public ControladorAdmin(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
         this.vista = vista;
         this.eventos = eventos;
-        vistaMailPrincipal = new VistaMailPrincipal(modelo, vista);
+        vistaAdmin = new VistaAdmin(modelo, vista);
         this.conexion = conexion;
         this.cliente = cliente;
 
@@ -58,8 +58,8 @@ public class ControladorMailPrincipal implements ActionListener {
     }
 
     private void configurarBotonCambiarTabla() {
-    	vistaMailPrincipal.configurarBotonCambiarTabla();
-    	vistaMailPrincipal.getBotonCambiarTabla().addActionListener(this);
+    	vistaAdmin.configurarBotonCambiarTabla();
+    	vistaAdmin.getBotonCambiarTabla().addActionListener(this);
 	}
     
     @Override
@@ -79,7 +79,7 @@ public class ControladorMailPrincipal implements ActionListener {
         rellenarTitulos(nombreTabla);
 
         // Configurar tabla con datos
-        vistaMailPrincipal.configuracionJTable1(nombreColumnas.toArray(new String[nombreColumnas.size()]));
+        vistaAdmin.configuracionJTable1(nombreColumnas.toArray(new String[nombreColumnas.size()]));
         
         // Rellenar Datos
         rellenarDatos("SELECT * FROM " + nombreTabla);
@@ -90,7 +90,7 @@ public class ControladorMailPrincipal implements ActionListener {
         rellenarTitulos(nombreTabla);
 
         // Actualizar tabla con datos
-        vistaMailPrincipal.modificarModeloTabla(nombreColumnas.toArray(new String[nombreColumnas.size()]));
+        vistaAdmin.modificarModeloTabla(nombreColumnas.toArray(new String[nombreColumnas.size()]));
         
         // Rellenar Datos
         rellenarDatos("SELECT * FROM " + nombreTabla);
@@ -116,7 +116,7 @@ public class ControladorMailPrincipal implements ActionListener {
     private void rellenarDatos(String select) {
 
         // Limpiamos los datos de la tabla
-    	vistaMailPrincipal.limpiarTabla();
+    	vistaAdmin.limpiarTabla();
         
         try {
             // Obtener datos de Tabla seleccionada
@@ -135,7 +135,7 @@ public class ControladorMailPrincipal implements ActionListener {
                   
 
                // Se añade al modelo la fila completa.
-               vistaMailPrincipal.insertRow(fila);
+               vistaAdmin.insertRow(fila);
             }
             
             
@@ -147,17 +147,17 @@ public class ControladorMailPrincipal implements ActionListener {
 
 	private void configurarPanelesAdmin() {
 		for(int i=0; i<3; i++) {
-			vistaMailPrincipal.crearPanelesAdmin(i);
+			vistaAdmin.crearPanelesAdmin(i);
 		}
-		vistaMailPrincipal.ordenarPaneles();
-		vistaMailPrincipal.configurarPanelAdminNorte();
-		vistaMailPrincipal.configurarPanelAdminEste();
-		vistaMailPrincipal.configurarPanelAdminCentral();
+		vistaAdmin.ordenarPaneles();
+		vistaAdmin.configurarPanelAdminNorte();
+		vistaAdmin.configurarPanelAdminEste();
+		vistaAdmin.configurarPanelAdminCentral();
 	}
 
 	private void configurarTitulo() {
-		vista.setIcono("src/opcionesprincipal/1.png");
-		vista.setTitulo("Mail MOKE");
+		vista.setIcono("src/opcionesprincipal/4.png");
+		vista.setTitulo("Administracion MOKE");
 	}
 
     private void actualizarVentana() {
