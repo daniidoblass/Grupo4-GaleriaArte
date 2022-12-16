@@ -17,14 +17,32 @@ public class VistaInfoPrincipal extends JFrame{
     private Modelo modelo;
     private Vista vista;
     private Eventos eventos;
+    private ArrayList<JLabel> labelsInfo = new ArrayList<>();
 
     private JPanel panelCentral = new JPanel();
 
     public VistaInfoPrincipal(Modelo modelo, Vista vista){
         this.modelo = modelo;
         this.vista = vista;
+        crearLabels();
         actualizarVentanaPrincipal();
         configurarPanelCentral();
+    }
+    
+
+	/*
+     * Crear Labels de la ventana Info
+     */
+    private void crearLabels() {
+    	
+    	for(int i = 0; i<modelo.getTextoDatosInfo().length; i++) {
+    		 
+    		JLabel labels = new JLabel(modelo.getTextoDatosInfo()[i]);
+    		labels.setForeground(Color.WHITE);
+    		labels.setFont(new Font("Microsoft Himalaya",0,35));
+    		labelsInfo.add(labels);
+    		panelCentral.add(labelsInfo.get(i));
+    	}
     }
     
     /*
@@ -39,7 +57,7 @@ public class VistaInfoPrincipal extends JFrame{
      * Configuracion de Ventana Principal
      */
     public void configurarPanelCentral() {
-        panelCentral.setLayout(new GridLayout(3,5));
+        panelCentral.setLayout(new GridLayout(5,5));
         panelCentral.setOpaque(false);
         vista.getPaneles().get(2).add(panelCentral);
     }

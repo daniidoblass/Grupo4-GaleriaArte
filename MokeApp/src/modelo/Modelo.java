@@ -16,6 +16,8 @@ public class Modelo {
     private String[] tipoOpciones;
     private String[] textoLogos;
     
+    //VENTANA INFO
+    private String[] textoDatosInfo;
     // OPCIONES
     private String[] textoPanelesOpciones;
     private String textoOpciones;
@@ -43,6 +45,14 @@ public class Modelo {
 
         // CONEXION
         textoDatosConexion = new String[]{"jdbc:mysql://" + ip + "/" + archivo + "?serverTimezone=UTC", user, password, "com.mysql.cj.jdbc.Driver"};
+        
+        //VENTANA INFO
+        textoDatosInfo = new String[] {"Subir Archivos: El usuario podrá subir archivos\n",
+        		 "El usuario podrá descargar archivos de otros usuarios (no tiene permitido descargar carpetas)\n",
+        		 "El usuario podrá crear carpetas donde subir los Archivos.\n",
+        		 "El usuario podrá renombrar las carpetas y archivos subidos por él.\n",
+        		 "El usuario podrá borrar las carpetas creadas por él.",
+        		 "El usuario podrá acceder a un apartado de correo electrónico donde podrá enviar correos a otros usuarios\n"};
     }
     
     public String[] getTextoVentanaPrincipal(){
@@ -80,5 +90,15 @@ public class Modelo {
     public String[] getTextoDatosConexion(){
         return textoDatosConexion;
     }
+
+	public String[] getTextoDatosInfo() {
+		return textoDatosInfo;
+	}
+
+	public void setTextoDatosInfo(String[] textoDatosInfo) {
+		this.textoDatosInfo = textoDatosInfo;
+	}
+    
+    
     
 }
