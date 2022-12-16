@@ -38,49 +38,51 @@ public class VistaEliminarCarpeta extends JFrame {
 
 	private void eliminarCarpeta(FTPClient cliente, String nombreArchivo, String currentDir)
 			throws HeadlessException, IOException {
-		cliente.changeWorkingDirectory(nombreArchivo);
-		String dirToList = nombreArchivo;
-		if (!currentDir.equals("")) {
-			dirToList += "/" + currentDir;
-		}
-		FTPFile[] subFiles = cliente.listFiles(dirToList);
-		if (subFiles != null && subFiles.length > 0) {
-			for (FTPFile aFile : subFiles) {
-				String currentFileName = aFile.getName();
-				if (currentFileName.equals(".") || currentFileName.equals("..")) {
-					// skip parent directory and the directory itself
-					continue;
-				}
-				String filePath = nombreArchivo + "/" + currentFileName;
-				if (currentDir.equals("")) {
-					filePath = nombreArchivo + "/" + currentFileName;
-				}
-				if (aFile.isDirectory()) {
-					// remove the sub directory
-					eliminarCarpeta(cliente, filePath, currentDir);
-				} else {
-					// delete the file
-					boolean deleted = cliente.deleteFile(filePath);
-					if (deleted) {
-						System.out.println("DELETED the file: " + filePath);
+		int opcion = JOptionPane.showConfirmDialog(null, "¿Deseas eliminar la carpeta?", "Eliminar Carpeta",
+				JOptionPane.YES_NO_OPTION);
+		if (opcion == JOptionPane.YES_OPTION) {
+			cliente.changeWorkingDirectory(nombreArchivo);
+			String dirToList = nombreArchivo;
+			if (!currentDir.equals("")) {
+				dirToList += "/" + currentDir;
+			}
+			FTPFile[] subFiles = cliente.listFiles(dirToList);
+			if (subFiles != null && subFiles.length > 0) {
+				for (FTPFile aFile : subFiles) {
+					String currentFileName = aFile.getName();
+					if (currentFileName.equals(".") || currentFileName.equals("..")) {
+						// skip parent directory and the directory itself
+						continue;
+					}
+					String filePath = nombreArchivo + "/" + currentFileName;
+					if (currentDir.equals("")) {
+						filePath = nombreArchivo + "/" + currentFileName;
+					}
+					if (aFile.isDirectory()) {
+						// remove the sub directory
+						eliminarCarpeta(cliente, filePath, currentDir);
 					} else {
-						System.out.println("CANNOT delete the file: " + filePath);
+						// delete the file
+						boolean deleted = cliente.deleteFile(filePath);
+						if (deleted) {
+							System.out.println("DELETED the file: " + filePath);
+						} else {
+							System.out.println("CANNOT delete the file: " + filePath);
+						}
 					}
 				}
-			}
 
-			// finally, remove the directory itself
-			boolean removed = cliente.removeDirectory(dirToList);
-			if (removed) {
-				System.out.println("REMOVED the directory: " + dirToList);
-			} else {
-				System.out.println("CANNOT remove the directory: " + dirToList);
+				// finally, remove the directory itself
+				boolean removed = cliente.removeDirectory(dirToList);
+				if (removed) {
+					System.out.println("REMOVED the directory: " + dirToList);
+				} else {
+					System.out.println("CANNOT remove the directory: " + dirToList);
+				}
 			}
+			JOptionPane.showMessageDialog(null, nombreArchivo + " se ha elimindado correctamente");
+		} else {
 		}
-		JOptionPane.showMessageDialog(null, nombreArchivo + " se ha elimindado correctamente");
-		// } else {
-
-		// }
 	}
 
 }
