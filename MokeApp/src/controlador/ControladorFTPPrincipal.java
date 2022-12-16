@@ -49,6 +49,9 @@ public class ControladorFTPPrincipal {
         // Configurar titulo de la pagina
         configurarTitulo();
 
+        // Agregar boton de volver
+        agregarBotonVolver();
+        
         // ficheros de prueba
         listarFicherosFTP();
         
@@ -175,6 +178,20 @@ public class ControladorFTPPrincipal {
     	catch(Exception e) {
     		e.printStackTrace();
     	}
+	}
+	
+	private void agregarBotonVolver() {
+		try {
+        	if(!cliente.printWorkingDirectory().equals("/")) {
+    			// agregar boton de volver
+    			vistaFTPPrincipal.crearCaratulasFicheros("Volver", "return", "carpeta-Volver");
+    			vistaFTPPrincipal.getCaratulasProductos().get(0).addMouseListener(eventosFTP);
+        		vistaFTPPrincipal.getCaratulasProductos().get(0).addActionListener(eventosFTP);
+    		}
+        }
+        catch(Exception e) {
+        	System.out.println("ERROR: no se ha podido acceder a la carpeta actual");
+        }
 	}
 	
 }
