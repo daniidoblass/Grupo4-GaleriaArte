@@ -55,59 +55,45 @@ public class VistaFTPPrincipal extends JFrame{
     /*
      * Crear Caratulas de Ficheros
      */
-    public void crearCaratulasFicheros(int i, String nombreFichero, String formato, String infoFichero) {
+    public void crearCaratulasFicheros(String nombreFichero, String formato, String infoFichero) {
     	caratulasProductos.add(new JButton());
-        caratulasProductos.get(i).setName(infoFichero);
+        caratulasProductos.get(caratulasProductos.size() - 1).setName(infoFichero);
         
         // ponerle icono
     	ImageIcon icon = new ImageIcon("src/formatos/" + formato + ".png");
-    	caratulasProductos.get(i).setIcon(new ImageIcon(icon.getImage().getScaledInstance(120,120,java.awt.Image.SCALE_SMOOTH)));
+    	caratulasProductos.get(caratulasProductos.size() - 1).setIcon(new ImageIcon(icon.getImage().getScaledInstance(120,120,java.awt.Image.SCALE_SMOOTH)));
     	
     	// ponerle texto
-    	caratulasProductos.get(i).setText(nombreFichero);
+    	caratulasProductos.get(caratulasProductos.size() - 1).setText(nombreFichero);
     	
     	// Texto en el centro y debajo del icono
-    	caratulasProductos.get(i).setHorizontalTextPosition( SwingConstants.CENTER );
-    	caratulasProductos.get(i).setVerticalTextPosition( SwingConstants.BOTTOM );
+    	caratulasProductos.get(caratulasProductos.size() - 1).setHorizontalTextPosition( SwingConstants.CENTER );
+    	caratulasProductos.get(caratulasProductos.size() - 1).setVerticalTextPosition( SwingConstants.BOTTOM );
     	
     	//ajustes adicionales
-    	caratulasProductos.get(i).setBorderPainted(false);
-    	caratulasProductos.get(i).setPreferredSize(new Dimension(200,200));
-    	caratulasProductos.get(i).setOpaque(false);
-    	caratulasProductos.get(i).setContentAreaFilled(false);
+    	caratulasProductos.get(caratulasProductos.size() - 1).setBorderPainted(false);
+    	caratulasProductos.get(caratulasProductos.size() - 1).setPreferredSize(new Dimension(200,200));
+    	caratulasProductos.get(caratulasProductos.size() - 1).setOpaque(false);
+    	caratulasProductos.get(caratulasProductos.size() - 1).setContentAreaFilled(false);
     	//caratulasProductos.get(i).setHorizontalAlignment(SwingConstants.LEFT);
     	
     	// Personalizar texto
-    	caratulasProductos.get(i).setForeground(Color.WHITE);
-    	caratulasProductos.get(i).setFont(new Font("arial",0,20));
+    	caratulasProductos.get(caratulasProductos.size() - 1).setForeground(Color.WHITE);
+    	caratulasProductos.get(caratulasProductos.size() - 1).setFont(new Font("arial",0,20));
     	
     	// agregar a panel
-    	panelCentral.add(caratulasProductos.get(i));
-    	
-    	/*
-    	ImageIcon icon = new ImageIcon("src/subiconos/enviar.png");
-		
-    	// ponerle texto e icono
-        	cambiarTabla.setText("Redactar");
-        	cambiarTabla.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40,40,java.awt.Image.SCALE_SMOOTH)));
-    		
-    	// Texto en el centro y debajo del icono
-        	cambiarTabla.setHorizontalTextPosition( SwingConstants.RIGHT );
-        	cambiarTabla.setVerticalTextPosition( SwingConstants.CENTER );
-    		
-    	// Configurar propiedades del boton
-        	cambiarTabla.setBackground(new Color(66, 120, 147));
-        	cambiarTabla.setBorderPainted(false);
-        	cambiarTabla.setPreferredSize(new Dimension(200, 60));
-        	cambiarTabla.setHorizontalAlignment(SwingConstants.LEFT);
-    		
-    	// Personalizar texto
-        	cambiarTabla.setForeground(Color.WHITE);
-        	cambiarTabla.setFont(new Font("arial",0,20));*/
+    	panelCentral.add(caratulasProductos.get(caratulasProductos.size() - 1));
     }
     
     public ArrayList<JButton> getCaratulasProductos() {
         return caratulasProductos;
+    }
+    
+    public void limpiarPanelCentral() {
+    	panelCentral.removeAll();
+    	panelCentral.revalidate();
+    	panelCentral.repaint();
+    	caratulasProductos.clear();
     }
     
 }

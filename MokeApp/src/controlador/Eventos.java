@@ -33,7 +33,6 @@ public class Eventos implements ActionListener, MouseListener {
     private Conexion conexion;
     private FTPClient cliente;
     private String ventanaActual = "OPCIONES";
-    private String infoFicheroPulsado = "";
 
     public Eventos(Modelo modelo, Vista vista, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
@@ -87,16 +86,11 @@ public class Eventos implements ActionListener, MouseListener {
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[4]){                     // Eliminar Carpeta
             	new ControladorLogin(modelo, vista, this, conexion, cliente);
             }
-            else if(btn.getName().contains("fichero-") || btn.getName().contains("carpeta-")){          // Pulsado fichero FTP
-            	infoFicheroPulsado = btn.getName();
-            }
 
         }
-        
     }
 
-
-    /*
+	/*
      * HOVER EN OPCIONES PRINCIPALES
      */
     @Override

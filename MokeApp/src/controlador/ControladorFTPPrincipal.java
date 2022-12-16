@@ -10,16 +10,21 @@ import modelo.Modelo;
 import vista.Vista;
 import vista.VistaFTPPrincipal;
 import conexion.Conexion;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
-public class ControladorFTPPrincipal {
+public class ControladorFTPPrincipal implements ActionListener {
     
     private Modelo modelo;
     private Vista vista;
@@ -29,6 +34,7 @@ public class ControladorFTPPrincipal {
     private FTPClient cliente;
     private ArrayList<String> nombreFicheros;
     private ArrayList<String> infoFicheros;
+    private String infoFicheroPulsado = "";
     
     
     public ControladorFTPPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
@@ -38,8 +44,6 @@ public class ControladorFTPPrincipal {
         vistaFTPPrincipal = new VistaFTPPrincipal(modelo, vista);
         this.conexion = conexion;
         this.cliente = cliente;
-        nombreFicheros = new ArrayList<>();
-        infoFicheros = new ArrayList<>();
 
         // Configurar titulo de la pagina
         configurarTitulo();
@@ -55,6 +59,8 @@ public class ControladorFTPPrincipal {
     }
 
     private void listarFicherosFTP() {
+    	nombreFicheros = new ArrayList<>();
+        infoFicheros = new ArrayList<>();
     	try {
     		// Ficheros en el directorio actual
     		FTPFile[] files = cliente.listFiles();
@@ -79,9 +85,9 @@ public class ControladorFTPPrincipal {
 
     	for(int i=0; i<nombreFicheros.size(); i++) {
     		String formato = extraerFormato(nombreFicheros.get(i));
-    		vistaFTPPrincipal.crearCaratulasFicheros(i, nombreFicheros.get(i), formato, infoFicheros.get(i));
-    		vistaFTPPrincipal.getCaratulasProductos().get(i).addMouseListener(eventos);
-    		vistaFTPPrincipal.getCaratulasProductos().get(i).addActionListener(eventos);
+    		vistaFTPPrincipal.crearCaratulasFicheros(nombreFicheros.get(i), formato, infoFicheros.get(i));
+    		vistaFTPPrincipal.getCaratulasProductos().get(vistaFTPPrincipal.getCaratulasProductos().size() - 1).addMouseListener(eventos);
+    		vistaFTPPrincipal.getCaratulasProductos().get(vistaFTPPrincipal.getCaratulasProductos().size() - 1).addActionListener(this);
     	}
 
     }
@@ -111,7 +117,11 @@ public class ControladorFTPPrincipal {
 
 	private void configurarTitulo() {
 		vista.setIcono("src/opcionesprincipal/0.png");
-		vista.setTitulo("FTP MOKE");
+		try {
+			vista.setTitulo("FTP MOKE " + cliente.printWorkingDirectory());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
     private void actualizarVentana() {
@@ -119,6 +129,65 @@ public class ControladorFTPPrincipal {
         vista.pack();
         vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		JButton btn = (JButton)source;
+
+		if(btn.getName().contains("fichero-")){          						// Pulsado fichero FTP
+        	infoFicheroPulsado = btn.getName();
+        }
+        else if(btn.getName().contains("carpeta-")){          						// Pulsada carpeta FTP
+        	if(btn.getName().contains("Volver")) {
+        		cambiarDirectorioPadre();
+        	}
+        	else {
+        		infoFicheroPulsado = btn.getName();
+            	cambiarDirectorioHijo();
+        	}
+        }
+	}
+	
+	private void cambiarDirectorioHijo() {
+    	try {
+    		String nuevoDirectorio = infoFicheroPulsado.replace("carpeta-", "");
+    		if(cliente.changeWorkingDirectory(nuevoDirectorio)) {
+    			listarFicherosFTP();
+    			vistaFTPPrincipal.limpiarPanelCentral();
+    			configurarTitulo();
+    			// agregar boton de volver
+    			vistaFTPPrincipal.crearCaratulasFicheros("Volver", "return", "carpeta-Volver");
+    			vistaFTPPrincipal.getCaratulasProductos().get(0).addMouseListener(eventos);
+        		vistaFTPPrincipal.getCaratulasProductos().get(0).addActionListener(this);
+        		// agregar caratulas
+    			agregarCaratulasFicheros();
+    		}
+    		else {
+    			System.out.println("ERROR: no se ha podido acceder al directorio seleccionado");
+    		}
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}
+	}
+	
+	private void cambiarDirectorioPadre() {
+    	try {
+    		if(cliente.changeToParentDirectory()) {
+    			listarFicherosFTP();
+    			vistaFTPPrincipal.limpiarPanelCentral();
+    			configurarTitulo();
+    			agregarCaratulasFicheros();
+    		}
+    		else {
+    			System.out.println("ERROR: no se ha podido acceder al directorio padre");
+    		}
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}
+	}
 	
 }
 
