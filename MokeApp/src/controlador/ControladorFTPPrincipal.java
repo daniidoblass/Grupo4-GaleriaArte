@@ -24,7 +24,7 @@ import javax.swing.JFrame;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
-public class ControladorFTPPrincipal implements ActionListener {
+public class ControladorFTPPrincipal {
     
     private Modelo modelo;
     private Vista vista;
@@ -34,7 +34,7 @@ public class ControladorFTPPrincipal implements ActionListener {
     private FTPClient cliente;
     private ArrayList<String> nombreFicheros;
     private ArrayList<String> infoFicheros;
-    private String infoFicheroPulsado = "";
+    private EventosFTP eventosFTP;
     
     
     public ControladorFTPPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
@@ -44,6 +44,7 @@ public class ControladorFTPPrincipal implements ActionListener {
         vistaFTPPrincipal = new VistaFTPPrincipal(modelo, vista);
         this.conexion = conexion;
         this.cliente = cliente;
+        eventosFTP = new EventosFTP(modelo, vista, conexion, cliente, this);
 
         // Configurar titulo de la pagina
         configurarTitulo();
@@ -86,8 +87,8 @@ public class ControladorFTPPrincipal implements ActionListener {
     	for(int i=0; i<nombreFicheros.size(); i++) {
     		String formato = extraerFormato(nombreFicheros.get(i));
     		vistaFTPPrincipal.crearCaratulasFicheros(nombreFicheros.get(i), formato, infoFicheros.get(i));
-    		vistaFTPPrincipal.getCaratulasProductos().get(vistaFTPPrincipal.getCaratulasProductos().size() - 1).addMouseListener(eventos);
-    		vistaFTPPrincipal.getCaratulasProductos().get(vistaFTPPrincipal.getCaratulasProductos().size() - 1).addActionListener(this);
+    		vistaFTPPrincipal.getCaratulasProductos().get(vistaFTPPrincipal.getCaratulasProductos().size() - 1).addMouseListener(eventosFTP);
+    		vistaFTPPrincipal.getCaratulasProductos().get(vistaFTPPrincipal.getCaratulasProductos().size() - 1).addActionListener(eventosFTP);
     	}
 
     }
@@ -130,26 +131,7 @@ public class ControladorFTPPrincipal implements ActionListener {
         vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object source = e.getSource();
-		JButton btn = (JButton)source;
-
-		if(btn.getName().contains("fichero-")){          						// Pulsado fichero FTP
-        	infoFicheroPulsado = btn.getName();
-        }
-        else if(btn.getName().contains("carpeta-")){          						// Pulsada carpeta FTP
-        	if(btn.getName().contains("Volver")) {
-        		cambiarDirectorioPadre();
-        	}
-        	else {
-        		infoFicheroPulsado = btn.getName();
-            	cambiarDirectorioHijo();
-        	}
-        }
-	}
-	
-	private void cambiarDirectorioHijo() {
+	public void cambiarDirectorioHijo(String infoFicheroPulsado) {
     	try {
     		String nuevoDirectorio = infoFicheroPulsado.replace("carpeta-", "");
     		if(cliente.changeWorkingDirectory(nuevoDirectorio)) {
@@ -158,8 +140,8 @@ public class ControladorFTPPrincipal implements ActionListener {
     			configurarTitulo();
     			// agregar boton de volver
     			vistaFTPPrincipal.crearCaratulasFicheros("Volver", "return", "carpeta-Volver");
-    			vistaFTPPrincipal.getCaratulasProductos().get(0).addMouseListener(eventos);
-        		vistaFTPPrincipal.getCaratulasProductos().get(0).addActionListener(this);
+    			vistaFTPPrincipal.getCaratulasProductos().get(0).addMouseListener(eventosFTP);
+        		vistaFTPPrincipal.getCaratulasProductos().get(0).addActionListener(eventosFTP);
         		// agregar caratulas
     			agregarCaratulasFicheros();
     		}
@@ -172,12 +154,18 @@ public class ControladorFTPPrincipal implements ActionListener {
     	}
 	}
 	
-	private void cambiarDirectorioPadre() {
+	public void cambiarDirectorioPadre() {
     	try {
     		if(cliente.changeToParentDirectory()) {
     			listarFicherosFTP();
     			vistaFTPPrincipal.limpiarPanelCentral();
     			configurarTitulo();
+    			if(!cliente.printWorkingDirectory().equals("/")) {
+    				// agregar boton de volver
+        			vistaFTPPrincipal.crearCaratulasFicheros("Volver", "return", "carpeta-Volver");
+        			vistaFTPPrincipal.getCaratulasProductos().get(0).addMouseListener(eventosFTP);
+            		vistaFTPPrincipal.getCaratulasProductos().get(0).addActionListener(eventosFTP);
+    			}
     			agregarCaratulasFicheros();
     		}
     		else {
