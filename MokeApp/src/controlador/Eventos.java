@@ -32,6 +32,8 @@ public class Eventos implements ActionListener, MouseListener {
     private Vista vista;
     private Conexion conexion;
     private FTPClient cliente;
+    private String ventanaActual = "OPCIONES";
+    private String infoFicheroPulsado = "";
 
     public Eventos(Modelo modelo, Vista vista, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
@@ -50,18 +52,25 @@ public class Eventos implements ActionListener, MouseListener {
             
             if(btn.getName().contains(modelo.getTipoOpciones()[0])){                        // Pulsado Boton FTP Moke
                 new ControladorFTPPrincipal(modelo, vista, this, conexion, cliente);
+                ventanaActual = "FTP";
             }
             else if(btn.getName() == modelo.getTipoOpciones()[1]){                          // Pulsado Boton Mail Moke
                 new ControladorMailPrincipal(modelo, vista, this, conexion, cliente);
+                ventanaActual = "MAIL";
             }
             else if(btn.getName() == modelo.getTipoOpciones()[2]){                          // Pulsado Boton Configuracion Moke
                 new ControladorConfigPrincipal(modelo, vista, this, conexion, cliente);
+                ventanaActual = "CONFIGURACION";
             }
             else if(btn.getName() == modelo.getTipoOpciones()[3]){                          // Pulsado Boton Moke Info
                 new ControladorInfoPrincipal(modelo, vista, this, conexion, cliente);
+                ventanaActual = "INFO";
             }
             else if(btn.getName() == modelo.getTextoLogos()[0]){                            // Pulsado Icono Barra Superior
-                new ControladorOpciones(modelo, vista, this, conexion, cliente);
+            	if(!ventanaActual.equals("LOGIN") && !ventanaActual.equals("OPCIONES")) {
+            		new ControladorOpciones(modelo, vista, this, conexion, cliente);
+            		ventanaActual = "OPCIONES";
+            	}
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[0]){                     // Subir Archivo
                 new ControladorSubirArchivo(modelo, vista, this, conexion);
@@ -76,9 +85,12 @@ public class Eventos implements ActionListener, MouseListener {
                 //new controladorOpciones(modelo, vista, this, conexion);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[4]){                     // Eliminar Carpeta
-                //new controladorOpciones(modelo, vista, this, conexion);
             	new ControladorLogin(modelo, vista, this, conexion, cliente);
             }
+            else if(btn.getName().contains("fichero-") || btn.getName().contains("carpeta-")){          // Pulsado fichero FTP
+            	infoFicheroPulsado = btn.getName();
+            }
+
         }
         
     }

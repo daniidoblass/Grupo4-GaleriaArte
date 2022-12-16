@@ -28,6 +28,7 @@ public class ControladorFTPPrincipal {
     private Conexion conexion;
     private FTPClient cliente;
     private ArrayList<String> nombreFicheros;
+    private ArrayList<String> infoFicheros;
     
     
     public ControladorFTPPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
@@ -38,10 +39,11 @@ public class ControladorFTPPrincipal {
         this.conexion = conexion;
         this.cliente = cliente;
         nombreFicheros = new ArrayList<>();
+        infoFicheros = new ArrayList<>();
 
         // Configurar titulo de la pagina
         configurarTitulo();
-        
+
         // ficheros de prueba
         listarFicherosFTP();
         
@@ -58,15 +60,17 @@ public class ControladorFTPPrincipal {
     		FTPFile[] files = cliente.listFiles();
     		
     		//array para visualizar el tipo de fichero
-    		String[] tipos = {"Fichero", "Directorio","Enlace simb."};
+    		String[] tipos = {"fichero", "carpeta", "enlace"};
 
     		for (int i = 0; i < files.length; i++) {
-    			nombreFicheros.add(files[i].getName());
-    			System.out.println(files[i].getName());
+    			if(!files[i].getName().equals(".") && !files[i].getName().equals("..")) {
+    				nombreFicheros.add(files[i].getName());
+    				infoFicheros.add(tipos[files[i].getType()] + "-" + files[i].getName());
+    			}
     		}
     	}
     	catch(Exception e) {
-    		System.out.println("ERROR: no se han podido listar los archivos");
+    		e.printStackTrace();
     	}
     	
 	}
@@ -75,7 +79,7 @@ public class ControladorFTPPrincipal {
 
     	for(int i=0; i<nombreFicheros.size(); i++) {
     		String formato = extraerFormato(nombreFicheros.get(i));
-    		vistaFTPPrincipal.crearCaratulasFicheros(i, nombreFicheros.get(i), formato);
+    		vistaFTPPrincipal.crearCaratulasFicheros(i, nombreFicheros.get(i), formato, infoFicheros.get(i));
     		vistaFTPPrincipal.getCaratulasProductos().get(i).addMouseListener(eventos);
     		vistaFTPPrincipal.getCaratulasProductos().get(i).addActionListener(eventos);
     	}
@@ -86,16 +90,16 @@ public class ControladorFTPPrincipal {
 		
 		String formato = "file";
 		
-		if(nombreFichero.contains(".mp4")) {
+		if(nombreFichero.contains(".mp4") || nombreFichero.contains(".avi")) {
 			formato = "movie";
 		}
-		else if(nombreFichero.contains(".mp3")) {
+		else if(nombreFichero.contains(".mp3") || nombreFichero.contains(".wav")) {
 			formato = "music";
 		}
-		else if(nombreFichero.contains(".txt")) {
+		else if(nombreFichero.contains(".txt") || nombreFichero.contains(".docx") || nombreFichero.contains(".pdf")) {
 			formato = "document";
 		}
-		else if(nombreFichero.contains(".png")) {
+		else if(nombreFichero.contains(".png") || nombreFichero.contains(".jpg") || nombreFichero.contains(".jpeg")) {
 			formato = "image";
 		}
 		else if(!nombreFichero.contains(".")) {
