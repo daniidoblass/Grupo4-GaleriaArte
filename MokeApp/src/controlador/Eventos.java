@@ -82,7 +82,7 @@ public class Eventos implements ActionListener, MouseListener {
             else if(btn.getName() == modelo.getTextoConfiguracion()[0]){                     // Restablecer Contra
             	new ControladorRestablecerContra(modelo, vista, this, conexion, cliente);
             }
-            else if(btn.getName() == modelo.getTextoConfiguracion()[0]){                     // Restablecer Contra
+            else if(btn.getName() == modelo.getTextoConfiguracion()[1]){                     // Cambiar Email
             	new ControladorCambiarEmail(modelo, vista, this, conexion, cliente);
             }
         }

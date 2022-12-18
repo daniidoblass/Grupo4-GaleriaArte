@@ -21,7 +21,12 @@ public class ControladorCambiarEmail {
 	private VistaCambiarEmail vistaCambiarEmail;
 	
 	public ControladorCambiarEmail(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) {
-		
+		this.modelo = modelo;
+		this.vista = vista;
+		this.eventos = eventos;
+		this.conexion = conexion;
+		this.cliente = cliente;
+		vistaCambiarEmail = new VistaCambiarEmail(conexion);
 	}
 
 }
