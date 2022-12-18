@@ -16,8 +16,6 @@ public class Modelo {
     private String[] tipoOpciones;
     private String[] textoLogos;
     
-    //VENTANA INFO
-    private String[] textoDatosInfo;
     // OPCIONES
     private String[] textoPanelesOpciones;
     private String textoOpciones;
@@ -32,6 +30,7 @@ public class Modelo {
     // INFO
     private String[] textoOpcionesInfo;
     private String[] textoOpcionesInfoImages;
+    private String[] textoDatosInfo;
     
     // CONFIGURACI√ìN
     private String[] textoOpcionesConfig;
@@ -46,10 +45,6 @@ public class Modelo {
         textoOpcionesMenuImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta", "eliminar_carpeta", "eliminar_carpeta"};
         tipoOpciones = new String[]{"FTP_Moke", "Mail_Moke", "Configuracion_Moke", "Moke_Info"};
         textoLogos= new String[]{"MOKE APP", "FTP MOKE", "Mail MOKE", "Configuracion MOKE", "MOKE INFO"};
-        textoOpcionesInfo = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta"};
-        textoOpcionesInfoImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta"};
-        textoOpcionesConfig = new String[]{"Reestablecer Contrase√±a", "Cambiar Correo Corporativo", "Soporte T√©cnico"};
-        textoOpcionesConfigImages = new String[]{"password", "gmail", "soporte"};
         
         // LOGIN
         textoPanelesOpciones = new String[]{"arribaTexto", "medioUsuarios", "abajoFondo"};
@@ -58,13 +53,20 @@ public class Modelo {
         // CONEXION
         textoDatosConexion = new String[]{"jdbc:mysql://" + ip + "/" + archivo + "?serverTimezone=UTC", user, password, "com.mysql.cj.jdbc.Driver"};
         
-        //VENTANA INFO
-        textoDatosInfo = new String[] {"Subir Archivos: El usuario podr· subir archivos\n",
-        		 "El usuario podr· descargar archivos de otros usuarios (no tiene permitido descargar carpetas)\n",
-        		 "El usuario podr· crear carpetas donde subir los Archivos.\n",
-        		 "El usuario podr· renombrar las carpetas y archivos subidos por Èl.\n",
-        		 "El usuario podr· borrar las carpetas creadas por Èl.",
-        		 "El usuario podr· acceder a un apartado de correo electrÛnico donde podr· enviar correos a otros usuarios\n"};
+        // INFO
+        textoOpcionesInfo = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta"};
+        textoOpcionesInfoImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta"};
+        textoDatosInfo = new String[] {"El usuario podr√° subir archivos desde su ordenador al servidor",
+        		 "El usuario podr√° descargar archivos de otros usuarios (no tiene permitido descargar carpetas)",
+        		 "El usuario podr√° borrar los archivos creados por √©l",
+        		 "El usuario podr√° crear carpetas donde subir los archivos",
+        		 "El usuario podr√° borrar las carpetas creadas por √©l",
+        		 "El usuario podr√° renombrar las carpetas y archivos subidos por √©l",
+        		 "El usuario podr√° acceder a un apartado de correo electr√≥nico donde podr√° enviar correos a otros usuarios"};
+        
+        // CONFIGURACI√ìN
+        textoOpcionesConfig = new String[]{"Reestablecer Contrase√±a", "Cambiar Correo Corporativo", "Soporte T√©cnico"};
+        textoOpcionesConfigImages = new String[]{"password", "gmail", "soporte"};
     }
     
     public String[] getTextoVentanaPrincipal(){
@@ -103,17 +105,6 @@ public class Modelo {
         return textoDatosConexion;
     }
 
-<<<<<<< Updated upstream
-	public String[] getTextoDatosInfo() {
-		return textoDatosInfo;
-	}
-
-	public void setTextoDatosInfo(String[] textoDatosInfo) {
-		this.textoDatosInfo = textoDatosInfo;
-	}
-    
-    
-=======
     public String[] getTextoOpcionesInfo(){
         return textoOpcionesInfo;
     }
@@ -122,6 +113,10 @@ public class Modelo {
         return textoOpcionesInfoImages;
     }
     
+    public String[] getTextoDatosInfo() {
+		return textoDatosInfo;
+	}
+    
     public String[] getTextoOpcionesConfig(){
         return textoOpcionesConfig;
     }
@@ -129,6 +124,5 @@ public class Modelo {
     public String[] getTextoOpcionesConfigImages(){
         return textoOpcionesConfigImages;
     }
->>>>>>> Stashed changes
     
 }

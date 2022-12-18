@@ -17,37 +17,15 @@ public class VistaInfoPrincipal extends JFrame{
     private Modelo modelo;
     private Vista vista;
     private Eventos eventos;
-<<<<<<< Updated upstream
-    private ArrayList<JLabel> labelsInfo = new ArrayList<>();
-
-=======
     
->>>>>>> Stashed changes
     private JPanel panelCentral = new JPanel();
     private ArrayList<JButton> botonesMenu = new ArrayList<>();
 
     public VistaInfoPrincipal(Modelo modelo, Vista vista){
         this.modelo = modelo;
         this.vista = vista;
-        crearLabels();
         actualizarVentanaPrincipal();
         configurarPanelCentral();
-    }
-    
-
-	/*
-     * Crear Labels de la ventana Info
-     */
-    private void crearLabels() {
-    	
-    	for(int i = 0; i<modelo.getTextoDatosInfo().length; i++) {
-    		 
-    		JLabel labels = new JLabel(modelo.getTextoDatosInfo()[i]);
-    		labels.setForeground(Color.WHITE);
-    		labels.setFont(new Font("Microsoft Himalaya",0,35));
-    		labelsInfo.add(labels);
-    		panelCentral.add(labelsInfo.get(i));
-    	}
     }
     
     /*
@@ -62,11 +40,7 @@ public class VistaInfoPrincipal extends JFrame{
      * Configuracion de Ventana Principal
      */
     public void configurarPanelCentral() {
-<<<<<<< Updated upstream
-        panelCentral.setLayout(new GridLayout(5,5));
-=======
         panelCentral.setLayout(new GridLayout(5,1));
->>>>>>> Stashed changes
         panelCentral.setOpaque(false);
         vista.getPaneles().get(2).add(panelCentral);
     }
@@ -104,6 +78,13 @@ public class VistaInfoPrincipal extends JFrame{
     public ArrayList<JButton> getBotonesMenu() {
     	return botonesMenu;
     }
+    
+    /*
+	 * Mensaje Emergente
+	 */
+    public void mostrarMensajeEmergente(String titulo, String mensaje) {
+		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
+	}
     
 }
 

@@ -100,7 +100,7 @@ public class Conexion {
     // Obtener Columnas
     public ResultSet getColumns(String nombreTabla) {
         try {
-            return metadatos.getColumns("i1i2", null, nombreTabla, null);
+            return metadatos.getColumns("mokedb", null, nombreTabla, null);
         }
         catch (SQLException e) {
             e.printStackTrace();

@@ -25,6 +25,7 @@ public class ControladorInfoPrincipal {
     private Eventos eventos;
     private Conexion conexion;
     private FTPClient cliente;
+    private EventosInfo eventosInfo;
     
     public ControladorInfoPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
@@ -33,6 +34,7 @@ public class ControladorInfoPrincipal {
         vistaInfoPrincipal = new VistaInfoPrincipal(modelo, vista);
         this.conexion = conexion;
         this.cliente = cliente;
+        eventosInfo = new EventosInfo(modelo, this, vistaInfoPrincipal);
 
         // Configurar titulo de la pagina
         configurarTitulo();
@@ -58,8 +60,8 @@ public class ControladorInfoPrincipal {
     private void crearOpcionesMenu() {
         for(int i=0; i<modelo.getTextoOpcionesInfo().length; i++) {
         	vistaInfoPrincipal.crearBotonMenu(i, modelo.getTextoOpcionesInfo()[i], modelo.getTextoOpcionesInfoImages()[i]);
-        	vistaInfoPrincipal.getBotonesMenu().get(i).addMouseListener(eventos);
-        	vistaInfoPrincipal.getBotonesMenu().get(i).addActionListener(eventos);
+        	vistaInfoPrincipal.getBotonesMenu().get(i).addMouseListener(eventosInfo);
+        	vistaInfoPrincipal.getBotonesMenu().get(i).addActionListener(eventosInfo);
         }
     }
 	
