@@ -1,11 +1,13 @@
 package controlador;
 
+/**
+ * @author Pablo P�rez Ferre
+ * @date 15/12/2022
+ * @version 01
+ */
 import java.sql.ResultSet;
-
 import javax.swing.JOptionPane;
-
 import org.apache.commons.net.ftp.FTPClient;
-
 import conexion.Conexion;
 import modelo.Modelo;
 import vista.Vista;

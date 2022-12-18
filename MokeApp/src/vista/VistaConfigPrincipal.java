@@ -1,10 +1,10 @@
-/**
- * @author Samuel Acosta Fernandez
- * @date 09/02/2022
- * @version 01
- */
 package vista;
 
+/**
+ * @author Pablo P�rez Ferre
+ * @date 15/12/2022
+ * @version 01
+ */
 import java.awt.*;
 import java.util.ArrayList;
 
