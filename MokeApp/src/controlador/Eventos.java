@@ -79,6 +79,9 @@ public class Eventos implements ActionListener, MouseListener {
                 //new controladorOpciones(modelo, vista, this, conexion);
             	new ControladorLogin(modelo, vista, this, conexion, cliente);
             }
+            else if(btn.getName() == modelo.getTextoConfiguracion()[0]){                     // Restablecer Contra
+            	new ControladorRestablecerContra(modelo, vista, this, conexion, cliente);
+            }
         }
         
     }

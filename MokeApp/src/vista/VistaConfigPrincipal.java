@@ -73,7 +73,7 @@ public class VistaConfigPrincipal extends JFrame{
      */
     public void crearPerfilesOpciones(int i) {
     	perfilesOpciones.add(new JButton());
-        perfilesOpciones.get(i).setName(modelo.getTipoOpciones()[i]);
+        perfilesOpciones.get(i).setName(modelo.getTextoConfiguracion()[i]);
     	ImageIcon icon = new ImageIcon("src/opcionesprincipal/" + i + ".png");
     	perfilesOpciones.get(i).setIcon(new ImageIcon(icon.getImage().getScaledInstance(150,150,java.awt.Image.SCALE_REPLICATE)));
     	perfilesOpciones.get(i).setBorderPainted(false);
