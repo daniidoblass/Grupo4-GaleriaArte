@@ -16,6 +16,7 @@ public class Modelo {
     private String[] tipoOpciones;
     private String[] textoLogos;
     private String[] textoConfiguracion;
+    private String[] textoSoporteTecnico;
     
     // OPCIONES
     private String[] textoPanelesOpciones;
@@ -38,6 +39,7 @@ public class Modelo {
         tipoOpciones = new String[]{"FTP_Moke", "Mail_Moke", "Configuracion_Moke", "Moke_Info"};
         textoLogos= new String[]{"MOKE APP", "FTP MOKE", "Mail MOKE", "Configuracion MOKE", "MOKE INFO"};
         textoConfiguracion= new String[]{"Reestablecer Contraseña", "Cambiar Email Corporativo", "Soporte Tecnico"};
+        textoSoporteTecnico= new String[]{"Si desea informarnos sobre algún problema relacionado con el programa\nContáctanos por:","Télefono: 695138058","Correo Electrónico: adminMokeApp@gmail.com"};        
         // LOGIN
         textoPanelesOpciones = new String[]{"arribaTexto", "medioUsuarios", "abajoFondo"};
         textoOpciones = "Seleccione una opcion";
@@ -89,5 +91,9 @@ public class Modelo {
     public String[] getTextoDatosConexion(){
         return textoDatosConexion;
     }
+
+	public String[] getTextoSoporteTecnico() {
+		return textoSoporteTecnico;
+	}
     
 }

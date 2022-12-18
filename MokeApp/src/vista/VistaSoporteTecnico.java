@@ -26,12 +26,12 @@ import java.util.regex.Pattern;
 
 public class VistaSoporteTecnico extends JFrame {
 
-
-	public VistaSoporteTecnico() {
-			cambiarEmail();
+	
+	public VistaSoporteTecnico(Modelo modelo) {
+			cambiarEmail(modelo);
 	}
 
-	private void cambiarEmail(){
-
+	private void cambiarEmail(Modelo modelo){
+		JOptionPane.showMessageDialog(null,modelo.getTextoSoporteTecnico()[0]+"\n\n"+modelo.getTextoSoporteTecnico()[1]+"\n"+modelo.getTextoSoporteTecnico()[2], "Soporte Técnico",JOptionPane.INFORMATION_MESSAGE);
 	}
 }

@@ -23,7 +23,7 @@ public class ControladorSoporteTecnico {
 		this.eventos = eventos;
 		this.conexion = conexion;
 		this.cliente = cliente;
-		vistaSoporteTecnico = new VistaSoporteTecnico();
+		vistaSoporteTecnico = new VistaSoporteTecnico(modelo);
 	}
 
 }
