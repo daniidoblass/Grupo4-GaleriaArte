@@ -23,9 +23,6 @@ public class ControladorRestablecerContra {
 		this.eventos = eventos;
 		this.conexion = conexion;
 		this.cliente = cliente;
-		vistaRestablecerContra = new VistaRestablecerContra(cliente);
-		
+		vistaRestablecerContra = new VistaRestablecerContra(conexion);
 	}
-
-	
 }
