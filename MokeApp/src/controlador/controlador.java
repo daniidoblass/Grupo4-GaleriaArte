@@ -77,7 +77,5 @@ public class Controlador {
     
     private void agregarIconoBarraSuperior() {
         vista.agregarIcono();
-        vista.getIcono().addActionListener(eventos);
     }
-	
 }

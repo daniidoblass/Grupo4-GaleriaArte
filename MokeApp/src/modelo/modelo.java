@@ -26,6 +26,19 @@ public class Modelo {
     private String ip = "localhost";
     private String user = "root";
     private String password = "";
+<<<<<<< Updated upstream:MokeApp/src/modelo/modelo.java
+=======
+    
+    // INFO
+    private String[] textoOpcionesInfo;
+    private String[] textoOpcionesInfoImages;
+    private String[] textoDatosInfo;
+    
+    // CONFIGURACIÓN
+    private String[] textoOpcionesConfig;
+    private String[] textoOpcionesConfigImages;
+    private String[] textoDatosConfig;
+>>>>>>> Stashed changes:MokeApp/src/modelo/Modelo.java
 
     public Modelo(){
         
@@ -43,6 +56,27 @@ public class Modelo {
 
         // CONEXION
         textoDatosConexion = new String[]{"jdbc:mysql://" + ip + "/" + archivo + "?serverTimezone=UTC", user, password, "com.mysql.cj.jdbc.Driver"};
+<<<<<<< Updated upstream:MokeApp/src/modelo/modelo.java
+=======
+        
+        // INFO
+        textoOpcionesInfo = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta"};
+        textoOpcionesInfoImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta"};
+        textoDatosInfo = new String[] {"El usuario podrá subir archivos desde su ordenador al servidor",
+        		 "El usuario podrá descargar archivos de otros usuarios (no tiene permitido descargar carpetas)",
+        		 "El usuario podrá borrar los archivos creados por él",
+        		 "El usuario podrá crear carpetas donde subir los archivos",
+        		 "El usuario podrá borrar las carpetas creadas por él",
+        		 "El usuario podrá renombrar las carpetas y archivos subidos por él",
+        		 "El usuario podrá acceder a un apartado de correo electrónico donde podrá enviar correos a otros usuarios"};
+        
+        // CONFIGURACIÓN
+        textoOpcionesConfig = new String[]{"Reestablecer Contraseña", "Cambiar Correo Corporativo", "Soporte Técnico"};
+        textoOpcionesConfigImages = new String[]{"password", "gmail", "soporte"};
+        textoDatosConfig = new String[] {"Introduzca la nueva contraseña",
+       		 "Introduzca el nuevo correo corporativo",
+       		 "Introduzca un mensaje para el Soporte Técnico"};
+>>>>>>> Stashed changes:MokeApp/src/modelo/Modelo.java
     }
     
     public String[] getTextoVentanaPrincipal(){
@@ -80,5 +114,9 @@ public class Modelo {
     public String[] getTextoDatosConexion(){
         return textoDatosConexion;
     }
+    
+    public String[] getTextoDatosConfig() {
+		return textoDatosConfig;
+	}
     
 }

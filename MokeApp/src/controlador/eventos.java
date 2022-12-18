@@ -12,6 +12,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import org.apache.commons.net.ftp.FTPClient;
 
@@ -70,9 +71,15 @@ public class Eventos implements ActionListener, MouseListener {
                 ventanaActual = "INFO";
             }
             else if(btn.getName() == modelo.getTextoLogos()[0]){                            // Pulsado Icono Barra Superior
-            	if(!ventanaActual.equals("LOGIN") && !ventanaActual.equals("OPCIONES")) {
+            	if(!ventanaActual.equals("LOGIN") && !ventanaActual.equals("OPCIONES") && !ventanaActual.equals("ADMIN")) {
             		new ControladorOpciones(modelo, vista, this, conexion, cliente);
             		ventanaActual = "OPCIONES";
+            	}
+            	else if(ventanaActual.equals("OPCIONES") || ventanaActual.equals("ADMIN")){
+            		if(mostrarMensajeEmergente("Cerrar Sesión", "¿Seguro que quiere cerrar sesión?") == 0) {
+            			new ControladorLogin(modelo, vista, this, conexion, cliente);
+            			ventanaActual = "LOGIN";
+            		}
             	}
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[0]){                     // Subir Archivo
@@ -88,8 +95,9 @@ public class Eventos implements ActionListener, MouseListener {
                 //new controladorOpciones(modelo, vista, this, conexion);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[4]){                     // Eliminar Carpeta
-            	new ControladorLogin(modelo, vista, this, conexion, cliente);
+            	//new ControladorLogin(modelo, vista, this, conexion, cliente);
             }
+<<<<<<< Updated upstream:MokeApp/src/controlador/eventos.java
 <<<<<<< Updated upstream:MokeApp/src/controlador/eventos.java
             else if(btn.getName() == "LOGIN"){                     							// Pulsado Login
             	new ControladorOpciones(modelo, vista, this, conexion, cliente);
@@ -98,9 +106,22 @@ public class Eventos implements ActionListener, MouseListener {
 =======
 
 >>>>>>> Stashed changes:MokeApp/src/controlador/Eventos.java
+=======
+>>>>>>> Stashed changes:MokeApp/src/controlador/Eventos.java
         }
         
     }
+    
+    public void setVentanaActual(String ventanaActual) {
+    	this.ventanaActual = ventanaActual;
+    }
+
+    /*
+	 * Mensaje Emergente
+	 */
+    public int mostrarMensajeEmergente(String titulo, String mensaje) {
+		return JOptionPane.showConfirmDialog(null, mensaje, titulo, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+	}
 
 
     /*

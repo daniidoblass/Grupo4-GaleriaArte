@@ -28,6 +28,7 @@ public class ControladorLogin implements ActionListener {
     private Eventos eventos;
     private Conexion conexion;
     private FTPClient cliente;
+    private static int contadorActionListener = 0;
     
     public ControladorLogin(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) {
         this.modelo = modelo;
@@ -50,6 +51,7 @@ public class ControladorLogin implements ActionListener {
     private void configurarTitulo() {
 		vista.setIcono("src/subiconos/usuario.png");
 		vista.setTitulo("MOKE Login");
+		eventos.setVentanaActual("LOGIN");
 	}
     
     private void configurarBotonLogin() {
@@ -75,6 +77,12 @@ public class ControladorLogin implements ActionListener {
 		}
 		else {
 			vistaLogin.mostrarMensajeEmergente("ERROR AL INICIAR SESION", "Usuario o contraseña incorrectos, vuelva a intentarlo");
+		}
+		
+		// Activar solo una vez el ActionListener del icono superior
+		if(contadorActionListener == 0) {
+			vista.getIcono().addActionListener(eventos);
+			contadorActionListener++;
 		}
 	}
 	

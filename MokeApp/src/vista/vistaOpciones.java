@@ -96,7 +96,5 @@ public class VistaOpciones extends JFrame{
     	panelesOpciones.get(0).add(centrar, BorderLayout.SOUTH);
     }
 
-    
-
 }
 
