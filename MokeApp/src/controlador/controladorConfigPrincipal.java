@@ -39,6 +39,9 @@ public class ControladorConfigPrincipal {
         // Configurar titulo de la pagina
         configurarTitulo();
         
+        // Creacion de lista de opciones
+        crearOpcionesMenu();
+        
         // Actualizar ventana
         actualizarVentana();
     }
@@ -53,8 +56,6 @@ public class ControladorConfigPrincipal {
         vista.pack();
         vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-<<<<<<< Updated upstream:MokeApp/src/controlador/controladorConfigPrincipal.java
-=======
     
     private void crearOpcionesMenu() {
         for(int i=0; i<modelo.getTextoOpcionesConfig().length; i++) {
@@ -63,7 +64,6 @@ public class ControladorConfigPrincipal {
         	vistaConfigPrincipal.getBotonesMenu().get(i).addActionListener(eventosConfig);
         }
     }
->>>>>>> Stashed changes:MokeApp/src/controlador/ControladorConfigPrincipal.java
 	
 }
 

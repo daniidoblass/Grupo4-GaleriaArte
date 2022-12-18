@@ -33,11 +33,7 @@ public class Eventos implements ActionListener, MouseListener {
     private Vista vista;
     private Conexion conexion;
     private FTPClient cliente;
-<<<<<<< Updated upstream:MokeApp/src/controlador/eventos.java
-    private String ventanaActual = "LOGIN";
-=======
     private String ventanaActual = "OPCIONES";
->>>>>>> Stashed changes:MokeApp/src/controlador/Eventos.java
 
     public Eventos(Modelo modelo, Vista vista, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
@@ -97,19 +93,7 @@ public class Eventos implements ActionListener, MouseListener {
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[4]){                     // Eliminar Carpeta
             	//new ControladorLogin(modelo, vista, this, conexion, cliente);
             }
-<<<<<<< Updated upstream:MokeApp/src/controlador/eventos.java
-<<<<<<< Updated upstream:MokeApp/src/controlador/eventos.java
-            else if(btn.getName() == "LOGIN"){                     							// Pulsado Login
-            	new ControladorOpciones(modelo, vista, this, conexion, cliente);
-            	ventanaActual = "OPCIONES";
-            }
-=======
-
->>>>>>> Stashed changes:MokeApp/src/controlador/Eventos.java
-=======
->>>>>>> Stashed changes:MokeApp/src/controlador/Eventos.java
         }
-        
     }
     
     public void setVentanaActual(String ventanaActual) {
@@ -123,8 +107,7 @@ public class Eventos implements ActionListener, MouseListener {
 		return JOptionPane.showConfirmDialog(null, mensaje, titulo, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 	}
 
-
-    /*
+	/*
      * HOVER EN OPCIONES PRINCIPALES
      */
     @Override

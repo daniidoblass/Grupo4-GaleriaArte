@@ -25,6 +25,7 @@ public class ControladorInfoPrincipal {
     private Eventos eventos;
     private Conexion conexion;
     private FTPClient cliente;
+    private EventosInfo eventosInfo;
     
     public ControladorInfoPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
@@ -33,9 +34,13 @@ public class ControladorInfoPrincipal {
         vistaInfoPrincipal = new VistaInfoPrincipal(modelo, vista);
         this.conexion = conexion;
         this.cliente = cliente;
+        eventosInfo = new EventosInfo(modelo, this, vistaInfoPrincipal);
 
-        // Configurar t�tulo de la p�gina
+        // Configurar titulo de la pagina
         configurarTitulo();
+        
+        // Creacion de lista de opciones
+        crearOpcionesMenu();
         
         // Actualizar ventana
         actualizarVentana();
@@ -50,6 +55,14 @@ public class ControladorInfoPrincipal {
         vista.repaint();
         vista.pack();
         vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
+    
+    private void crearOpcionesMenu() {
+        for(int i=0; i<modelo.getTextoOpcionesInfo().length; i++) {
+        	vistaInfoPrincipal.crearBotonMenu(i, modelo.getTextoOpcionesInfo()[i], modelo.getTextoOpcionesInfoImages()[i]);
+        	vistaInfoPrincipal.getBotonesMenu().get(i).addMouseListener(eventosInfo);
+        	vistaInfoPrincipal.getBotonesMenu().get(i).addActionListener(eventosInfo);
+        }
     }
 	
 }

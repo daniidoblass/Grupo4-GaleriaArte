@@ -26,8 +26,6 @@ public class Modelo {
     private String ip = "localhost";
     private String user = "root";
     private String password = "";
-<<<<<<< Updated upstream:MokeApp/src/modelo/modelo.java
-=======
     
     // INFO
     private String[] textoOpcionesInfo;
@@ -38,7 +36,6 @@ public class Modelo {
     private String[] textoOpcionesConfig;
     private String[] textoOpcionesConfigImages;
     private String[] textoDatosConfig;
->>>>>>> Stashed changes:MokeApp/src/modelo/Modelo.java
 
     public Modelo(){
         
@@ -56,8 +53,6 @@ public class Modelo {
 
         // CONEXION
         textoDatosConexion = new String[]{"jdbc:mysql://" + ip + "/" + archivo + "?serverTimezone=UTC", user, password, "com.mysql.cj.jdbc.Driver"};
-<<<<<<< Updated upstream:MokeApp/src/modelo/modelo.java
-=======
         
         // INFO
         textoOpcionesInfo = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta"};
@@ -76,7 +71,6 @@ public class Modelo {
         textoDatosConfig = new String[] {"Introduzca la nueva contraseña",
        		 "Introduzca el nuevo correo corporativo",
        		 "Introduzca un mensaje para el Soporte Técnico"};
->>>>>>> Stashed changes:MokeApp/src/modelo/Modelo.java
     }
     
     public String[] getTextoVentanaPrincipal(){
@@ -113,6 +107,26 @@ public class Modelo {
 
     public String[] getTextoDatosConexion(){
         return textoDatosConexion;
+    }
+
+    public String[] getTextoOpcionesInfo(){
+        return textoOpcionesInfo;
+    }
+    
+    public String[] getTextoOpcionesInfoImages(){
+        return textoOpcionesInfoImages;
+    }
+    
+    public String[] getTextoDatosInfo() {
+		return textoDatosInfo;
+	}
+    
+    public String[] getTextoOpcionesConfig(){
+        return textoOpcionesConfig;
+    }
+    
+    public String[] getTextoOpcionesConfigImages(){
+        return textoOpcionesConfigImages;
     }
     
     public String[] getTextoDatosConfig() {
