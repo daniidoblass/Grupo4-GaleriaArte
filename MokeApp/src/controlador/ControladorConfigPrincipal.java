@@ -37,6 +37,9 @@ public class ControladorConfigPrincipal {
         // Configurar titulo de la pagina
         configurarTitulo();
         
+        // Creacion de lista de opciones
+        crearOpcionesMenu();
+        
         // Actualizar ventana
         actualizarVentana();
     }
@@ -50,6 +53,14 @@ public class ControladorConfigPrincipal {
         vista.repaint();
         vista.pack();
         vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
+    
+    private void crearOpcionesMenu() {
+        for(int i=0; i<modelo.getTextoOpcionesConfig().length; i++) {
+        	vistaConfigPrincipal.crearBotonMenu(i, modelo.getTextoOpcionesConfig()[i], modelo.getTextoOpcionesConfigImages()[i]);
+        	vistaConfigPrincipal.getBotonesMenu().get(i).addMouseListener(eventos);
+        	vistaConfigPrincipal.getBotonesMenu().get(i).addActionListener(eventos);
+        }
     }
 	
 }

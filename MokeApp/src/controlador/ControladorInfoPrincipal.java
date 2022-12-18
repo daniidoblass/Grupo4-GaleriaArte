@@ -34,8 +34,11 @@ public class ControladorInfoPrincipal {
         this.conexion = conexion;
         this.cliente = cliente;
 
-        // Configurar t�tulo de la p�gina
+        // Configurar titulo de la pagina
         configurarTitulo();
+        
+        // Creacion de lista de opciones
+        crearOpcionesMenu();
         
         // Actualizar ventana
         actualizarVentana();
@@ -50,6 +53,14 @@ public class ControladorInfoPrincipal {
         vista.repaint();
         vista.pack();
         vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
+    
+    private void crearOpcionesMenu() {
+        for(int i=0; i<modelo.getTextoOpcionesInfo().length; i++) {
+        	vistaInfoPrincipal.crearBotonMenu(i, modelo.getTextoOpcionesInfo()[i], modelo.getTextoOpcionesInfoImages()[i]);
+        	vistaInfoPrincipal.getBotonesMenu().get(i).addMouseListener(eventos);
+        	vistaInfoPrincipal.getBotonesMenu().get(i).addActionListener(eventos);
+        }
     }
 	
 }

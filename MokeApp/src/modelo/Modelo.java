@@ -28,6 +28,14 @@ public class Modelo {
     private String ip = "localhost";
     private String user = "root";
     private String password = "";
+    
+    // INFO
+    private String[] textoOpcionesInfo;
+    private String[] textoOpcionesInfoImages;
+    
+    // CONFIGURACIÓN
+    private String[] textoOpcionesConfig;
+    private String[] textoOpcionesConfigImages;
 
     public Modelo(){
         
@@ -38,6 +46,10 @@ public class Modelo {
         textoOpcionesMenuImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta", "eliminar_carpeta", "eliminar_carpeta"};
         tipoOpciones = new String[]{"FTP_Moke", "Mail_Moke", "Configuracion_Moke", "Moke_Info"};
         textoLogos= new String[]{"MOKE APP", "FTP MOKE", "Mail MOKE", "Configuracion MOKE", "MOKE INFO"};
+        textoOpcionesInfo = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta"};
+        textoOpcionesInfoImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta"};
+        textoOpcionesConfig = new String[]{"Reestablecer Contraseña", "Cambiar Correo Corporativo", "Soporte Técnico"};
+        textoOpcionesConfigImages = new String[]{"password", "gmail", "soporte"};
         
         // LOGIN
         textoPanelesOpciones = new String[]{"arribaTexto", "medioUsuarios", "abajoFondo"};
@@ -91,6 +103,7 @@ public class Modelo {
         return textoDatosConexion;
     }
 
+<<<<<<< Updated upstream
 	public String[] getTextoDatosInfo() {
 		return textoDatosInfo;
 	}
@@ -100,5 +113,22 @@ public class Modelo {
 	}
     
     
+=======
+    public String[] getTextoOpcionesInfo(){
+        return textoOpcionesInfo;
+    }
+    
+    public String[] getTextoOpcionesInfoImages(){
+        return textoOpcionesInfoImages;
+    }
+    
+    public String[] getTextoOpcionesConfig(){
+        return textoOpcionesConfig;
+    }
+    
+    public String[] getTextoOpcionesConfigImages(){
+        return textoOpcionesConfigImages;
+    }
+>>>>>>> Stashed changes
     
 }
