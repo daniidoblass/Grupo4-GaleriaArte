@@ -1,4 +1,4 @@
-package vista;
+package filtros;
 import javax.swing.*;
 import java.beans.*;
 import java.awt.*;

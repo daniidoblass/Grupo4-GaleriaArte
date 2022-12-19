@@ -1,4 +1,4 @@
-package vista;
+package filtros;
 import java.io.File;
 import javax.swing.filechooser.*;
 
