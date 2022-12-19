@@ -71,7 +71,7 @@ public class ControladorLogin implements ActionListener {
 			new ControladorAdmin(modelo, vista, eventos, conexion, cliente);
 		}
 		else if(categoria.equals("null")) {
-			vistaLogin.mostrarMensajeEmergente("ERROR AL INICIAR SESION", "Usuario o contraseña incorrectos, vuelva a intentarlo");
+			vistaLogin.mostrarMensajeEmergente("ERROR AL INICIAR SESION", "Usuario o contraseï¿½a incorrectos, vuelva a intentarlo");
 		}
 		else {
 			new ControladorOpciones(modelo, vista, eventos, conexion, cliente);

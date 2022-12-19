@@ -8,5 +8,8 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/LIBRERIAS/commons-net-3.9.0.jar"/>
 	<classpathentry kind="lib" path="C:/LIBRERIAS/mysql-connector-java-8.0.30.jar"/>
+	<classpathentry kind="lib" path="C:/LIBRERIAS/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/LIBRERIAS/activation-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/LIBRERIAS/jsoup-1.14.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
