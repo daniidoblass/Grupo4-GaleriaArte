@@ -126,7 +126,7 @@ public class ControladorMailPrincipal implements ActionListener {
             // Bucle para cada resultado en la consulta
             while (rs.next()) {
                 
-               // Se crea un array que serï¿½ una de las filas de la tabla
+               // Se crea un array que será una de las filas de la tabla
                Object[] fila = new Object[nombreColumnas.size()]; 
 
                for (int i=0;i<nombreColumnas.size();i++){
@@ -134,7 +134,7 @@ public class ControladorMailPrincipal implements ActionListener {
                }
                   
 
-               // Se aï¿½ade al modelo la fila completa.
+               // Se añade al modelo la fila completa.
                vistaMailPrincipal.insertRow(fila);
             }
             

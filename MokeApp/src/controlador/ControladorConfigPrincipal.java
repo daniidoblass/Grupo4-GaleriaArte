@@ -34,7 +34,7 @@ public class ControladorConfigPrincipal {
         vistaConfigPrincipal = new VistaConfigPrincipal(modelo, vista);
         this.conexion = conexion;
         this.cliente = cliente;
-        eventosConfig = new EventosConfig(modelo, conexion, this, vistaConfigPrincipal);
+        eventosConfig = new EventosConfig(modelo, eventos, conexion, this, vistaConfigPrincipal);
 
         // Configurar titulo de la pagina
         configurarTitulo();

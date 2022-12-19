@@ -20,6 +20,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import modelo.Modelo;
 import vista.Vista;
@@ -34,6 +35,8 @@ public class Eventos implements ActionListener, MouseListener {
     private Conexion conexion;
     private FTPClient cliente;
     private String ventanaActual = "OPCIONES";
+    private String usuario = "";
+    private ControladorFTPPrincipal controladorFTPPrincipal = null;
 
     public Eventos(Modelo modelo, Vista vista, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
@@ -51,7 +54,12 @@ public class Eventos implements ActionListener, MouseListener {
             JButton btn = (JButton)source;
             
             if(btn.getName().contains(modelo.getTipoOpciones()[0])){                        // Pulsado Boton FTP Moke
-                new ControladorFTPPrincipal(modelo, vista, this, conexion, cliente);
+                try {
+					new ControladorFTPPrincipal(modelo, vista, this, conexion, cliente);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
                 ventanaActual = "FTP";
             }
             else if(btn.getName() == modelo.getTipoOpciones()[1]){                          // Pulsado Boton Mail Moke
@@ -72,26 +80,29 @@ public class Eventos implements ActionListener, MouseListener {
             		ventanaActual = "OPCIONES";
             	}
             	else if(ventanaActual.equals("OPCIONES") || ventanaActual.equals("ADMIN")){
-            		if(mostrarMensajeEmergente("Cerrar Sesión", "¿Seguro que quiere cerrar sesión?") == 0) {
+            		if(mostrarMensajeConfirmacion("Cerrar Sesión", "¿Seguro que quiere cerrar sesión?") == 0) {
             			new ControladorLogin(modelo, vista, this, conexion, cliente);
             			ventanaActual = "LOGIN";
             		}
             	}
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[0]){                     // Subir Archivo
-                new ControladorSubirArchivo(modelo, vista, this, conexion);
+                new ControladorSubirArchivo(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[1]){                     // Descargar Archivo
-                //new controladorOpciones(modelo, vista, this, conexion);
+                new ControladorDescargarArchivo(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[2]){                     // Eliminar Archivo
-                //new controladorOpciones(modelo, vista, this, conexion);
+            	new ControladorEliminarArchivo(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[3]){                     // Crear Carpeta
-                //new controladorOpciones(modelo, vista, this, conexion);
+            	new ControladorCrearCarpeta(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[4]){                     // Eliminar Carpeta
             	//new ControladorLogin(modelo, vista, this, conexion, cliente);
+            }
+            else if(btn.getName() == modelo.getTextoOpcionesMenu()[5]){                     // Renombrar
+                //new controladorOpciones(modelo, vista, this, conexion);
             }
         }
     }
@@ -99,11 +110,27 @@ public class Eventos implements ActionListener, MouseListener {
     public void setVentanaActual(String ventanaActual) {
     	this.ventanaActual = ventanaActual;
     }
+    
+    public String getUsuario() {
+    	return usuario;
+    }
+    
+    public void setUsuario(String usuario) {
+    	this.usuario = usuario;
+    }
+    
+    public ControladorFTPPrincipal getControladorFTPPrincipal() {
+    	return controladorFTPPrincipal;
+    }
+    
+    public void setControladorFTPPrincipal(ControladorFTPPrincipal controladorFTPPrincipal) {
+    	this.controladorFTPPrincipal = controladorFTPPrincipal;
+    }
 
     /*
 	 * Mensaje Emergente
 	 */
-    public int mostrarMensajeEmergente(String titulo, String mensaje) {
+    public int mostrarMensajeConfirmacion(String titulo, String mensaje) {
 		return JOptionPane.showConfirmDialog(null, mensaje, titulo, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 	}
 

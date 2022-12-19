@@ -96,6 +96,12 @@ public class VistaFTPPrincipal extends JFrame{
     	caratulasProductos.clear();
     }
     
+    /*
+	 * Mensaje Emergente
+	 */
+	public void mostrarMensajeEmergente(String titulo, String mensaje) {
+		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
+	}
 }
 
 

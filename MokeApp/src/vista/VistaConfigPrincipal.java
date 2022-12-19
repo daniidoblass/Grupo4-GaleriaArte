@@ -82,8 +82,12 @@ public class VistaConfigPrincipal extends JFrame{
     /*
 	 * Mensaje Emergente
 	 */
-    public String mostrarMensajeEmergente(String titulo, String mensaje) {
+    public String mostrarInputEmergente(String titulo, String mensaje) {
 		return JOptionPane.showInputDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
+	}
+    
+    public void mostrarMensajeEmergente(String titulo, String mensaje) {
+		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
 	}
 }
 

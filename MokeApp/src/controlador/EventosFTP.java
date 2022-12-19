@@ -42,6 +42,7 @@ public class EventosFTP implements ActionListener, MouseListener {
             
             if(btn.getName().contains("fichero-")){          						// Pulsado fichero FTP
             	infoFicheroPulsado = btn.getName();
+            	this.controladorFTPPrincipal.setInfoFicheroPulsado(infoFicheroPulsado);
             }
             else if(btn.getName().contains("carpeta-")){          						// Pulsada carpeta FTP
             	if(btn.getName().contains("Volver")) {
@@ -50,6 +51,7 @@ public class EventosFTP implements ActionListener, MouseListener {
             	else {
             		infoFicheroPulsado = btn.getName();
             		controladorFTPPrincipal.cambiarDirectorioHijo(infoFicheroPulsado);
+            		this.controladorFTPPrincipal.setInfoFicheroPulsado(infoFicheroPulsado);
             	}
             }
             

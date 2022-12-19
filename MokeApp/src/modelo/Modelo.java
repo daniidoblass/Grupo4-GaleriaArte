@@ -36,14 +36,18 @@ public class Modelo {
     private String[] textoOpcionesConfig;
     private String[] textoOpcionesConfigImages;
     private String[] textoDatosConfig;
+    
+    // ADMIN
+    private String[] textoOpcionesAdmin;
+    private String[] textoOpcionesAdminImages;
 
     public Modelo(){
         
         // VENTANA PRINCIPAL
         textoVentanaPrincipal = new String[]{"MOKE APP"};
         textoPanelesVentanaPrincipal = new String[]{"NORTE", "OESTE", "CENTRAL"};
-        textoOpcionesMenu = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta"};
-        textoOpcionesMenuImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta", "eliminar_carpeta", "eliminar_carpeta"};
+        textoOpcionesMenu = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta", "Renombrar"};
+        textoOpcionesMenuImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta", "edit"};
         tipoOpciones = new String[]{"FTP_Moke", "Mail_Moke", "Configuracion_Moke", "Moke_Info"};
         textoLogos= new String[]{"MOKE APP", "FTP MOKE", "Mail MOKE", "Configuracion MOKE", "MOKE INFO"};
         
@@ -55,8 +59,8 @@ public class Modelo {
         textoDatosConexion = new String[]{"jdbc:mysql://" + ip + "/" + archivo + "?serverTimezone=UTC", user, password, "com.mysql.cj.jdbc.Driver"};
         
         // INFO
-        textoOpcionesInfo = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta"};
-        textoOpcionesInfoImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta"};
+        textoOpcionesInfo = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta", "Renombrar"};
+        textoOpcionesInfoImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta", "edit"};
         textoDatosInfo = new String[] {"El usuario podrá subir archivos desde su ordenador al servidor",
         		 "El usuario podrá descargar archivos de otros usuarios (no tiene permitido descargar carpetas)",
         		 "El usuario podrá borrar los archivos creados por él",
@@ -71,6 +75,10 @@ public class Modelo {
         textoDatosConfig = new String[] {"Introduzca la nueva contraseña",
        		 "Introduzca el nuevo correo corporativo",
        		 "Introduzca un mensaje para el Soporte Técnico"};
+        
+        // ADMIN
+        textoOpcionesAdmin = new String[]{"Movimientos", "Usuarios", "Mensajes"};
+        textoOpcionesAdminImages = new String[]{"movements", "contacts", "message"};
     }
     
     public String[] getTextoVentanaPrincipal(){
@@ -132,5 +140,13 @@ public class Modelo {
     public String[] getTextoDatosConfig() {
 		return textoDatosConfig;
 	}
+    
+    public String[] getTextoOpcionesAdmin(){
+        return textoOpcionesAdmin;
+    }
+    
+    public String[] getTextoOpcionesAdminImages(){
+        return textoOpcionesAdminImages;
+    }
     
 }

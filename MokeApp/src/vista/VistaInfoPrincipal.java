@@ -40,7 +40,7 @@ public class VistaInfoPrincipal extends JFrame{
      * Configuracion de Ventana Principal
      */
     public void configurarPanelCentral() {
-        panelCentral.setLayout(new GridLayout(5,1));
+        panelCentral.setLayout(new GridLayout(6,1));
         panelCentral.setOpaque(false);
         vista.getPaneles().get(2).add(panelCentral);
     }

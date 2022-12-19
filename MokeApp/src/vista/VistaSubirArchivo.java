@@ -1,6 +1,13 @@
 package vista;
 
+/**
+ * @author Pablo Navarro Vázquez
+ * @date 14/12/2022
+ * @version 01
+ */
+
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import modelo.Modelo;
 
@@ -20,8 +27,8 @@ public class VistaSubirArchivo extends JFrame {
     }
     
     public void configurarJFileChooser() {
-    	jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         jFileChooser.setDialogTitle("Selecciona un archivo");
+    	jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
     }
     
     public int mostrarJFileChooser() {
