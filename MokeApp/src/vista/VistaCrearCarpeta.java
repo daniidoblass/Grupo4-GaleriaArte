@@ -1,7 +1,7 @@
 package vista;
 
 /**
- * @author Daniel Jesús Doblas Florido
+ * @author Daniel Jesï¿½s Doblas Florido
  * @date 14/12/2022
  * @version 01
  */
@@ -19,7 +19,7 @@ import org.apache.commons.net.ftp.FTPFile;
 
 import conexion.Conexion;
 import controlador.Eventos;
-import controlador.controladorCrearCarpeta;
+import controlador.ControladorCrearCarpeta;
 
 import javax.swing.*;
 
@@ -28,7 +28,7 @@ import modelo.Modelo;
 public class VistaCrearCarpeta extends JFrame{
 	
 	private String nombreCarpeta;
-	private controladorCrearCarpeta controladorCrearCarpeta;
+	private ControladorCrearCarpeta controladorCrearCarpeta;
 	private Modelo modelo;
 
 	public VistaCrearCarpeta(Modelo modelo) throws IOException {

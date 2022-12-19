@@ -1,7 +1,7 @@
 package controlador;
 
 /**
- * @author Daniel Jesús Doblas Florido
+ * @author Daniel Jesï¿½s Doblas Florido
  * @date 14/12/2022
  * @version 01
  */
@@ -19,7 +19,7 @@ import vista.Vista;
 import vista.VistaCrearCarpeta;
 import vista.VistaSubirArchivo;
 
-public class controladorCrearCarpeta {
+public class ControladorCrearCarpeta {
 
 	  	private Modelo modelo;
 	    private Vista vista;
@@ -29,7 +29,7 @@ public class controladorCrearCarpeta {
 	    private Conexion conexion;
 	    private String nombreCarpeta;
 	    
-	    public controladorCrearCarpeta(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) throws IOException {
+	    public ControladorCrearCarpeta(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) throws IOException {
 	    	
 	    	this.cliente = cliente;
 	    	this.modelo = modelo;

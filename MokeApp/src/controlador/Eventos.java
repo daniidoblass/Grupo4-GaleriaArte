@@ -75,7 +75,7 @@ public class Eventos implements ActionListener, MouseListener {
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[3]){                     // Crear Carpeta
                 try {
-					new controladorCrearCarpeta(modelo, vista, this, conexion,cliente);
+					new ControladorCrearCarpeta(modelo, vista, this, conexion,cliente);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
