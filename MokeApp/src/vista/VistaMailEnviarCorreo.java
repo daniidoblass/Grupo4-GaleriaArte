@@ -1,20 +1,18 @@
 package vista;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controlador.ControladorEnviarMail;
-
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 
 public class VistaMailEnviarCorreo extends JFrame {
 
@@ -91,7 +89,6 @@ public class VistaMailEnviarCorreo extends JFrame {
 		});
 		btnCancelar.setBounds(48, 441, 85, 21);
 		contentPane.add(btnCancelar);
-
 	}
 
 	private void propiedades() {
@@ -101,6 +98,6 @@ public class VistaMailEnviarCorreo extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 	}
-
 }

@@ -76,9 +76,14 @@ public class ControladorMailPrincipal implements ActionListener {
 		configurarBotonCambiarTabla();
 		
 		configurarBottonVerMensaje();
+		
+		Hilo h1 = new Hilo(this);
+		h1.start();
+	}
+	
+	public synchronized void controladorGmail() throws MessagingException {
+		rellenarDatos();
 
-		// Actualizar ventana
-		actualizarVentana();
 	}
 
 	private void configurarBotonCambiarTabla() {
@@ -136,7 +141,7 @@ public class ControladorMailPrincipal implements ActionListener {
 		vistaMailPrincipal.configuracionJTable1(nombreColumnas.toArray(new String[nombreColumnas.size()]));
 
 		// Rellenar Datos
-		rellenarDatos("SELECT * FROM " + nombreTabla);
+		rellenarDatos();
 	}
 
 	private void actualizarTabla(String nombreTabla) throws MessagingException {
@@ -147,7 +152,7 @@ public class ControladorMailPrincipal implements ActionListener {
 		vistaMailPrincipal.modificarModeloTabla(nombreColumnas.toArray(new String[nombreColumnas.size()]));
 
 		// Rellenar Datos
-		rellenarDatos("SELECT * FROM " + nombreTabla);
+		rellenarDatos();
 	}
 
 	private void rellenarTitulos(String nombreTablaSeleccionada) {
@@ -159,7 +164,7 @@ public class ControladorMailPrincipal implements ActionListener {
 
 	}
 
-	private void rellenarDatos(String select) {
+	private void rellenarDatos() {
 
 		// Limpiamos los datos de la tabla
 		vistaMailPrincipal.limpiarTabla();
@@ -310,6 +315,7 @@ public class ControladorMailPrincipal implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane(textArea);
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
+		textArea.setEditable(false);
 		scrollPane.setPreferredSize(new Dimension(500, 500));
 		JOptionPane.showMessageDialog(null, scrollPane, "Correo", JOptionPane.CLOSED_OPTION);
 	}
