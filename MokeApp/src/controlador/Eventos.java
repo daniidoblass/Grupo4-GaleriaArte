@@ -73,7 +73,7 @@ public class Eventos implements ActionListener, MouseListener {
             	}
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[0]){                     // Subir Archivo
-                new ControladorSubirArchivo(modelo, vista, this, conexion);
+                new ControladorSubirArchivo(modelo, vista, this, conexion,cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[1]){                     // Descargar Archivo
                 try {

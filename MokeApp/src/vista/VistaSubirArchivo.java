@@ -1,7 +1,17 @@
 package vista;
 
-import javax.swing.*;
+/**
+ * @author Pablo Navarro Vázquez
+ * @date 14/12/2022
+ * @version 01
+ */
 
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import filtros.ImageFileView;
+import filtros.ImageFilter;
+import filtros.ImagePreview;
 import modelo.Modelo;
 
 import java.awt.event.ActionEvent;
@@ -20,8 +30,12 @@ public class VistaSubirArchivo extends JFrame {
     }
     
     public void configurarJFileChooser() {
-    	jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         jFileChooser.setDialogTitle("Selecciona un archivo");
+    	jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+    	jFileChooser.addChoosableFileFilter(new ImageFilter());
+        jFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("TXT Files",new String[]{"txt"}));
+        jFileChooser.setFileView(new ImageFileView());
+        jFileChooser.setAccessory(new ImagePreview(jFileChooser));
     }
     
     public int mostrarJFileChooser() {
