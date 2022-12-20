@@ -23,9 +23,11 @@ public class ControladorSubirArchivo {
 	private Modelo modelo;
 	private VistaSubirArchivo vistaSubirArchivo;
 	private FTPClient cliente;
+	private Eventos eventos;
 
 	public ControladorSubirArchivo(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) {
 		this.modelo = modelo;
+		this.eventos = eventos;
 		vistaSubirArchivo = new VistaSubirArchivo(modelo);
 		this.cliente = cliente;
 
@@ -43,6 +45,7 @@ public class ControladorSubirArchivo {
 
 					JOptionPane.showMessageDialog(vistaSubirArchivo.getJFileChooser(),
 							"Se ha subido correctamente el archivo " + nombreArchivo);
+					eventos.getControladorFTPPrincipal().actualizarContenido();
 				} else {
 					JOptionPane.showMessageDialog(vistaSubirArchivo.getJFileChooser(),
 							"No se ha podido subir el archivo " + nombreArchivo);

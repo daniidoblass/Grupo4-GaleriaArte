@@ -12,6 +12,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import org.apache.commons.net.ftp.FTPClient;
 
@@ -34,7 +35,8 @@ public class Eventos implements ActionListener, MouseListener {
     private Conexion conexion;
     private FTPClient cliente;
     private String ventanaActual = "OPCIONES";
-	private String usuario;
+	private String usuario = "";
+	private ControladorFTPPrincipal controladorFTPPrincipal = null;
 
     public Eventos(Modelo modelo, Vista vista, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
@@ -52,7 +54,12 @@ public class Eventos implements ActionListener, MouseListener {
             JButton btn = (JButton)source;
             
             if(btn.getName().contains(modelo.getTipoOpciones()[0])){                        // Pulsado Boton FTP Moke
-                new ControladorFTPPrincipal(modelo, vista, this, conexion, cliente);
+                try {
+					new ControladorFTPPrincipal(modelo, vista, this, conexion, cliente);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
                 ventanaActual = "FTP";
             }
             else if(btn.getName() == modelo.getTipoOpciones()[1]){                          // Pulsado Boton Mail Moke
@@ -93,12 +100,7 @@ public class Eventos implements ActionListener, MouseListener {
 				}
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[3]){                     // Crear Carpeta
-                try {
-					new ControladorCrearCarpeta(modelo, vista, this, conexion,cliente);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+                new ControladorCrearCarpeta(modelo, vista, this, conexion,cliente);
             	
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[4]){                     // Eliminar Carpeta
@@ -121,12 +123,23 @@ public class Eventos implements ActionListener, MouseListener {
         }
     }
     
+    public void setVentanaActual(String ventanaActual) {
+    	this.ventanaActual = ventanaActual;
+    }
     public String getUsuario() {
-		return usuario;
+    	return usuario;
     }
     
     public void setUsuario(String usuario) {
     	this.usuario = usuario;
+    }
+    
+    public ControladorFTPPrincipal getControladorFTPPrincipal() {
+    	return controladorFTPPrincipal;
+    }
+    
+    public void setControladorFTPPrincipal(ControladorFTPPrincipal controladorFTPPrincipal) {
+    	this.controladorFTPPrincipal = controladorFTPPrincipal;
     }
 
 	/*
@@ -163,5 +176,9 @@ public class Eventos implements ActionListener, MouseListener {
             btn.setBackground(Color.decode("#0c1823"));
         }
     }
+    
+    public int mostrarMensajeConfirmacion(String titulo, String mensaje) {
+		return JOptionPane.showConfirmDialog(null, mensaje, titulo, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+	}
 
 }

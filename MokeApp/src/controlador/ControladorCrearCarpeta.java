@@ -6,10 +6,6 @@ package controlador;
  * @version 01
  */
 
-import java.io.IOException;
-
-import javax.swing.JOptionPane;
-
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
@@ -29,7 +25,7 @@ public class ControladorCrearCarpeta {
 	    private Conexion conexion;
 	    private String nombreCarpeta;
 	    
-	    public ControladorCrearCarpeta(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) throws IOException {
+	    public ControladorCrearCarpeta(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) {
 	    	
 	    	this.cliente = cliente;
 	    	this.modelo = modelo;
@@ -38,53 +34,37 @@ public class ControladorCrearCarpeta {
 	        vistaCrearCarpeta = new VistaCrearCarpeta(modelo);
 	        this.conexion = conexion;
 	        crearCarpeta();
-	        
-	        
-
+			
 	    }
 	    
-	    private void crearCarpeta() throws IOException {
+	    private void crearCarpeta() {
 	    	
-	    	String direcSelec = cliente.printWorkingDirectory();
-	    	
-	    	nombreCarpeta = vistaCrearCarpeta.crearNombreCarpeta();
-			
-			if(!(nombreCarpeta == null)) {
+	    	try {
+	    		nombreCarpeta = vistaCrearCarpeta.crearNombreCarpeta("Crear Carpeta", "Nombre de la carpeta");
 				
-				String directorio = direcSelec; //Cambiar por direcSelec
-				
-				if(!direcSelec.equals("/")) { // directorio --> direcSelec.
-					
-					directorio = directorio + " que tal?";
+				if(nombreCarpeta.isEmpty() || nombreCarpeta.equals("")) {
+					//vistaCrearCarpeta.mostrarMensajeEmergente("El campo nombre no puede estar vacío");
 				}
-				
-				directorio += nombreCarpeta.trim(); //quita los espacios en blanco a der e izq.
+				else {
+					try {
+						String directorio = cliente.printWorkingDirectory();
+		
+						directorio += nombreCarpeta.trim(); //quita los espacios en blanco a der e izq.
 
-				try {
-					
-					if(cliente.makeDirectory(directorio)) {
-						String m = nombreCarpeta.trim()+"Se ha creado correctamente...";
-						JOptionPane.showMessageDialog(null, m);
+						if(cliente.makeDirectory(directorio)) {
+							String mensaje = nombreCarpeta.trim() + " se ha creado correctamente";
+							vistaCrearCarpeta.mostrarMensajeEmergente("Crear Carpeta", mensaje);
+							eventos.getControladorFTPPrincipal().actualizarContenido();
+						}else {
+							vistaCrearCarpeta.mostrarMensajeEmergente("Crear Carpeta", nombreCarpeta.trim()+ " no se ha podido crear");
+						}
 						
-						//Directorio de trabajo actual.
-						cliente.changeWorkingDirectory(direcSelec);
-						FTPFile [] ff2 = null;
-						
-						//Obtener ficheros del directorio actual.
-						ff2 = cliente.listFiles();
-						
-						//llenar la lista.
-						//llenarLista(ff2,direcSelec);
-						
-					}else {
-						JOptionPane.showMessageDialog(null,nombreCarpeta.trim()+ " => No se ha podido crear ...");
+					}catch (Exception e) {
+						vistaCrearCarpeta.mostrarMensajeEmergente("Crear Carpeta", nombreCarpeta.trim()+ " no se ha podido crear");
 					}
-					
-				}catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
 				}
-			}
+	    	}
+	    	catch(Exception e) {}
 	    }
 	    
 	    
