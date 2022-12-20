@@ -104,7 +104,10 @@ public class Eventos implements ActionListener, MouseListener {
                 //new controladorOpciones(modelo, vista, this, conexion);
             	new ControladorEliminarCarpeta(modelo, vista, null, conexion, cliente);
             }
-
+            else if(btn.getName() == modelo.getTextoOpcionesMenu()[5]){                     // Eliminar Carpeta
+                //new controladorOpciones(modelo, vista, this, conexion);
+            	new ControladorRenombrar(modelo, vista, this, conexion, cliente);
+            }
         }
     }
 
