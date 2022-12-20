@@ -15,6 +15,7 @@ public class Modelo {
     private String[] textoOpcionesMenuImages;
     private String[] tipoOpciones;
     private String[] textoLogos;
+    private String archivoClicado;
     
     // OPCIONES
     private String[] textoPanelesOpciones;
@@ -80,5 +81,13 @@ public class Modelo {
     public String[] getTextoDatosConexion(){
         return textoDatosConexion;
     }
+
+	public String getArchivoClicado() {
+		return archivoClicado;
+	}
+
+	public void setArchivoClicado(String archivoClicado) {
+		this.archivoClicado = archivoClicado;
+	}
     
 }

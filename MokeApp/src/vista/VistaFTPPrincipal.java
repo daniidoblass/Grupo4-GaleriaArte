@@ -55,20 +55,45 @@ public class VistaFTPPrincipal extends JFrame{
     /*
      * Crear Caratulas de Ficheros
      */
-    public void crearCaratulasFicheros(int i, String nombreFichero, String formato) {
+    public void crearCaratulasFicheros(String nombreFichero, String formato, String infoFichero) {
     	caratulasProductos.add(new JButton());
-        caratulasProductos.get(i).setName(nombreFichero);
+        caratulasProductos.get(caratulasProductos.size() - 1).setName(infoFichero);
+        
+        // ponerle icono
     	ImageIcon icon = new ImageIcon("src/formatos/" + formato + ".png");
-    	caratulasProductos.get(i).setIcon(new ImageIcon(icon.getImage().getScaledInstance(160,160,java.awt.Image.SCALE_SMOOTH)));
-    	caratulasProductos.get(i).setBorderPainted(false);
-    	caratulasProductos.get(i).setPreferredSize(new Dimension(200,200));
-    	caratulasProductos.get(i).setOpaque(false);
-    	caratulasProductos.get(i).setContentAreaFilled(false);
-    	panelCentral.add(caratulasProductos.get(i));
+    	caratulasProductos.get(caratulasProductos.size() - 1).setIcon(new ImageIcon(icon.getImage().getScaledInstance(120,120,java.awt.Image.SCALE_SMOOTH)));
+    	
+    	// ponerle texto
+    	caratulasProductos.get(caratulasProductos.size() - 1).setText(nombreFichero);
+    	
+    	// Texto en el centro y debajo del icono
+    	caratulasProductos.get(caratulasProductos.size() - 1).setHorizontalTextPosition( SwingConstants.CENTER );
+    	caratulasProductos.get(caratulasProductos.size() - 1).setVerticalTextPosition( SwingConstants.BOTTOM );
+    	
+    	//ajustes adicionales
+    	caratulasProductos.get(caratulasProductos.size() - 1).setBorderPainted(false);
+    	caratulasProductos.get(caratulasProductos.size() - 1).setPreferredSize(new Dimension(200,200));
+    	caratulasProductos.get(caratulasProductos.size() - 1).setOpaque(false);
+    	caratulasProductos.get(caratulasProductos.size() - 1).setContentAreaFilled(false);
+    	//caratulasProductos.get(i).setHorizontalAlignment(SwingConstants.LEFT);
+    	
+    	// Personalizar texto
+    	caratulasProductos.get(caratulasProductos.size() - 1).setForeground(Color.WHITE);
+    	caratulasProductos.get(caratulasProductos.size() - 1).setFont(new Font("arial",0,20));
+    	
+    	// agregar a panel
+    	panelCentral.add(caratulasProductos.get(caratulasProductos.size() - 1));
     }
     
     public ArrayList<JButton> getCaratulasProductos() {
         return caratulasProductos;
+    }
+    
+    public void limpiarPanelCentral() {
+    	panelCentral.removeAll();
+    	panelCentral.revalidate();
+    	panelCentral.repaint();
+    	caratulasProductos.clear();
     }
     
 }

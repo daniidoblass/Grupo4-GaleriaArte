@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import modelo.Modelo;
 import controlador.Eventos;
 
-public class VistaMailPrincipal extends JFrame{
+public class VistaAdmin extends JFrame{
     
     private Modelo modelo;
     private Vista vista;
@@ -28,7 +28,7 @@ public class VistaMailPrincipal extends JFrame{
     private JTable tabla = new JTable();
     private JButton cambiarTabla = new JButton();
 
-    public VistaMailPrincipal(Modelo modelo, Vista vista){
+    public VistaAdmin(Modelo modelo, Vista vista){
         this.modelo = modelo;
         this.vista = vista;
         actualizarVentanaPrincipal();
@@ -64,7 +64,7 @@ public class VistaMailPrincipal extends JFrame{
     
     public void ordenarPaneles() {
     	panelCentral.add(panelesAdmin.get(0), BorderLayout.NORTH);
-    	panelCentral.add(panelesAdmin.get(1), BorderLayout.WEST);
+    	panelCentral.add(panelesAdmin.get(1), BorderLayout.EAST);
     	panelCentral.add(panelesAdmin.get(2), BorderLayout.CENTER);
     }
     
@@ -76,7 +76,7 @@ public class VistaMailPrincipal extends JFrame{
     public void configurarPanelAdminEste() {
     	panelesAdmin.get(1).setLayout(new GridLayout(5,1));
     	panelesAdmin.get(1).setPreferredSize(new Dimension(250, 600));
-    	panelesAdmin.get(1).setAlignmentY(Component.LEFT_ALIGNMENT);
+    	panelesAdmin.get(1).setAlignmentY(Component.RIGHT_ALIGNMENT);
     }
     
     public void configurarPanelAdminCentral() {
@@ -133,10 +133,10 @@ public class VistaMailPrincipal extends JFrame{
      * Configurar Boton Cambiar Tabla
      */
     public void configurarBotonCambiarTabla() {
-    	ImageIcon icon = new ImageIcon("src/subiconos/enviar.png");
+    	ImageIcon icon = new ImageIcon("src/subiconos/editar.png");
 		
     	// ponerle texto e icono
-        	cambiarTabla.setText("Redactar");
+        	cambiarTabla.setText("Cambiar Vista");
         	cambiarTabla.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40,40,java.awt.Image.SCALE_SMOOTH)));
     		
     	// Texto en el centro y debajo del icono
