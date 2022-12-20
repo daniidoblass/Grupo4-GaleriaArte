@@ -77,6 +77,7 @@ public class ControladorRenombrar {
 				}
 
 			}
+			nuevoNombre = nuevoNombre.replace("-", "_");
 			if (cliente.rename(nombreArchivo, nuevoNombre + sufijo)) {
 				vistaRenombrarArchivo.mostrarMensajeEmergente("Renombrar",
 						"Se ha renombrado el archivo " + nombreArchivo + " a " + nuevoNombre+sufijo);
