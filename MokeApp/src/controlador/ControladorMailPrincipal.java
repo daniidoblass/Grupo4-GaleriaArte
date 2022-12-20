@@ -81,7 +81,7 @@ public class ControladorMailPrincipal implements ActionListener {
 
 		configurarBotonActualizarTabla();
 
-		hiloActualizar = new Hilo(this,TIEMPO_REFRESCO);
+		hiloActualizar = new Hilo(this, TIEMPO_REFRESCO);
 		hiloActualizar.start();
 	}
 
