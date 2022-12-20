@@ -17,11 +17,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+<<<<<<< HEAD
+=======
+import javax.swing.JButton;
+>>>>>>> ramaLogin
 import javax.swing.JFrame;
 
 import org.apache.commons.net.ftp.FTPClient;
 
+<<<<<<< HEAD
 public class ControladorAdmin implements ActionListener {
+=======
+public class ControladorAdmin {
+>>>>>>> ramaLogin
     
     private Modelo modelo;
     private Vista vista;
@@ -30,7 +38,11 @@ public class ControladorAdmin implements ActionListener {
     private Conexion conexion;
     private FTPClient cliente;
     private ArrayList<String> nombreColumnas;
+<<<<<<< HEAD
     private String nombreTabla;
+=======
+    private EventosAdmin eventosAdmin;
+>>>>>>> ramaLogin
     
     public ControladorAdmin(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
@@ -39,6 +51,10 @@ public class ControladorAdmin implements ActionListener {
         vistaAdmin = new VistaAdmin(modelo, vista);
         this.conexion = conexion;
         this.cliente = cliente;
+<<<<<<< HEAD
+=======
+        eventosAdmin = new EventosAdmin(modelo, this);
+>>>>>>> ramaLogin
 
         // Configurar titulo de la pagina
         configurarTitulo();
@@ -47,8 +63,12 @@ public class ControladorAdmin implements ActionListener {
         configurarPanelesAdmin();
         
         // Configurar tabla
+<<<<<<< HEAD
         nombreTabla = "usuarios";
         configurarTabla(nombreTabla);
+=======
+        configurarTabla("movimientos");
+>>>>>>> ramaLogin
         
         // Configurar boton cambiar tabla
         configurarBotonCambiarTabla();
@@ -58,6 +78,7 @@ public class ControladorAdmin implements ActionListener {
     }
 
     private void configurarBotonCambiarTabla() {
+<<<<<<< HEAD
     	vistaAdmin.configurarBotonCambiarTabla();
     	vistaAdmin.getBotonCambiarTabla().addActionListener(this);
 	}
@@ -74,6 +95,16 @@ public class ControladorAdmin implements ActionListener {
     	}
 	}
 
+=======
+    	for(int i=0; i<modelo.getTextoOpcionesAdmin().length; i++) {
+    		vistaAdmin.configurarBotonCambiarTabla(modelo.getTextoOpcionesAdmin()[i], modelo.getTextoOpcionesAdminImages()[i]);
+    		vistaAdmin.getBotonesCambiarTabla().get(i).addMouseListener(eventosAdmin);
+        	vistaAdmin.getBotonesCambiarTabla().get(i).addActionListener(eventosAdmin);
+    	}
+	}
+    
+    
+>>>>>>> ramaLogin
 	private void configurarTabla(String nombreTabla) {
     	// Rellenar Titulos
         rellenarTitulos(nombreTabla);
@@ -85,7 +116,11 @@ public class ControladorAdmin implements ActionListener {
         rellenarDatos("SELECT * FROM " + nombreTabla);
 	}
 	
+<<<<<<< HEAD
 	private void actualizarTabla(String nombreTabla) {
+=======
+	public void actualizarTabla(String nombreTabla) {
+>>>>>>> ramaLogin
     	// Rellenar Titulos
         rellenarTitulos(nombreTabla);
 
@@ -126,7 +161,11 @@ public class ControladorAdmin implements ActionListener {
             // Bucle para cada resultado en la consulta
             while (rs.next()) {
                 
+<<<<<<< HEAD
                // Se crea un array que será una de las filas de la tabla
+=======
+               // Se crea un array que sera una de las filas de la tabla
+>>>>>>> ramaLogin
                Object[] fila = new Object[nombreColumnas.size()]; 
 
                for (int i=0;i<nombreColumnas.size();i++){
@@ -134,7 +173,11 @@ public class ControladorAdmin implements ActionListener {
                }
                   
 
+<<<<<<< HEAD
                // Se añade al modelo la fila completa.
+=======
+               // Se aï¿½ade al modelo la fila completa.
+>>>>>>> ramaLogin
                vistaAdmin.insertRow(fila);
             }
             
@@ -158,6 +201,10 @@ public class ControladorAdmin implements ActionListener {
 	private void configurarTitulo() {
 		vista.setIcono("src/opcionesprincipal/4.png");
 		vista.setTitulo("Administracion MOKE");
+<<<<<<< HEAD
+=======
+		eventos.setVentanaActual("ADMIN");
+>>>>>>> ramaLogin
 	}
 
     private void actualizarVentana() {

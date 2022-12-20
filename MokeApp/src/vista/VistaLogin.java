@@ -87,9 +87,8 @@ public class VistaLogin extends JFrame{
 	}
 
 	private void agregarDatos() {
-		// TODO Auto-generated method stub
-
 		todosPaneles.get(1).add(todasLabels.get(1));
+<<<<<<< HEAD
 		
 		todosPaneles.get(2).add(usuario);
 
@@ -97,6 +96,11 @@ public class VistaLogin extends JFrame{
 		
 		todosPaneles.get(4).add(password);
 	
+=======
+		todosPaneles.get(2).add(usuario);
+		todosPaneles.get(3).add(todasLabels.get(2));
+		todosPaneles.get(4).add(password);
+>>>>>>> ramaLogin
 		todosPaneles.get(5).add(botonLogin);
 
 		for (int i = 0; i < todosPaneles.size(); i++) {
@@ -106,17 +110,14 @@ public class VistaLogin extends JFrame{
 
 	private void crearPaneles() {
 		for (int i = 0; i < 6; i++) {
-
 			JPanel paneles = new JPanel();
 			paneles.setOpaque(false);
 			todosPaneles.add(paneles);
-
 		}
 	}
 
 	private void crearLabels() {
-		// TODO Auto-generated method stub
-
+		
 		JLabel label1 = new JLabel("ACCESO");
 		label1.setForeground(Color.WHITE);
 		label1.setFont(new Font("arial",0,20));
@@ -146,7 +147,6 @@ public class VistaLogin extends JFrame{
 	}
 
 	private void propiedadesVista() {
-		// TODO Auto-generated method stub
 		panelLogo.setLayout(new GridLayout(1,1));
 		panelLogo.setOpaque(false);
 		panelLogin.setLayout(new GridLayout(6,1));
@@ -163,6 +163,12 @@ public class VistaLogin extends JFrame{
 		return password;
 	}
 	
+<<<<<<< HEAD
+=======
+	/*
+	 * Mensaje Emergente
+	 */
+>>>>>>> ramaLogin
 	public void mostrarMensajeEmergente(String titulo, String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
 	}

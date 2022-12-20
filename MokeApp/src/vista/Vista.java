@@ -74,7 +74,7 @@ public class Vista extends JFrame{
     
     public void configurarPanelOeste() {
     	paneles.get(1).setColor2(new Color(8, 143, 173));
-    	paneles.get(1).setLayout(new GridLayout(5,1));
+    	paneles.get(1).setLayout(new GridLayout(6,1));
     	paneles.get(1).setPreferredSize(new Dimension(250, 600));
     	paneles.get(1).setAlignmentY(Component.LEFT_ALIGNMENT);
     }

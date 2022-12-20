@@ -26,7 +26,11 @@ public class VistaAdmin extends JFrame{
     private ArrayList<JPanel> panelesAdmin = new ArrayList<>();
     private DefaultTableModel modeloTabla = new DefaultTableModel();
     private JTable tabla = new JTable();
+<<<<<<< HEAD
     private JButton cambiarTabla = new JButton();
+=======
+    private ArrayList<JButton> botonesCambiarTabla = new ArrayList<>();
+>>>>>>> ramaLogin
 
     public VistaAdmin(Modelo modelo, Vista vista){
         this.modelo = modelo;
@@ -111,6 +115,10 @@ public class VistaAdmin extends JFrame{
         tabla.getTableHeader().setBackground(new Color(66, 120, 147));
         tabla.getTableHeader().setForeground(new Color(255, 255, 255));
         tabla.setRowHeight(25);
+<<<<<<< HEAD
+=======
+        tabla.setDefaultEditor(Object.class, null);
+>>>>>>> ramaLogin
 
         panelesAdmin.get(2).add(scroll);
     }
@@ -132,11 +140,23 @@ public class VistaAdmin extends JFrame{
     /*
      * Configurar Boton Cambiar Tabla
      */
+<<<<<<< HEAD
     public void configurarBotonCambiarTabla() {
     	ImageIcon icon = new ImageIcon("src/subiconos/editar.png");
 		
     	// ponerle texto e icono
         	cambiarTabla.setText("Cambiar Vista");
+=======
+    public void configurarBotonCambiarTabla(String texto, String imagen) {
+    	
+    	// Agregar botón para cambiar tabla
+    	JButton cambiarTabla = new JButton();
+    	
+    	ImageIcon icon = new ImageIcon("src/iconos/" + imagen + ".png");
+		
+    	// ponerle texto e icono
+        	cambiarTabla.setText(texto);
+>>>>>>> ramaLogin
         	cambiarTabla.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40,40,java.awt.Image.SCALE_SMOOTH)));
     		
     	// Texto en el centro y debajo del icono
@@ -144,7 +164,12 @@ public class VistaAdmin extends JFrame{
         	cambiarTabla.setVerticalTextPosition( SwingConstants.CENTER );
     		
     	// Configurar propiedades del boton
+<<<<<<< HEAD
         	cambiarTabla.setBackground(new Color(66, 120, 147));
+=======
+        	cambiarTabla.setOpaque(false);
+        	cambiarTabla.setBackground(new Color(8, 143, 173, 90));
+>>>>>>> ramaLogin
         	cambiarTabla.setBorderPainted(false);
         	cambiarTabla.setPreferredSize(new Dimension(200, 60));
         	cambiarTabla.setHorizontalAlignment(SwingConstants.LEFT);
@@ -153,11 +178,20 @@ public class VistaAdmin extends JFrame{
         	cambiarTabla.setForeground(Color.WHITE);
         	cambiarTabla.setFont(new Font("arial",0,20));
         	
+<<<<<<< HEAD
     	panelesAdmin.get(1).add(cambiarTabla);
 	}
 	
 	public JButton getBotonCambiarTabla() {
 		return cambiarTabla;
+=======
+        	botonesCambiarTabla.add(cambiarTabla);
+    	panelesAdmin.get(1).add(botonesCambiarTabla.get(botonesCambiarTabla.size() - 1));
+	}
+	
+	public ArrayList<JButton> getBotonesCambiarTabla() {
+		return botonesCambiarTabla;
+>>>>>>> ramaLogin
 	}
 }
 

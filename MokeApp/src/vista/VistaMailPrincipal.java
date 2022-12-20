@@ -111,6 +111,10 @@ public class VistaMailPrincipal extends JFrame{
         tabla.getTableHeader().setBackground(new Color(66, 120, 147));
         tabla.getTableHeader().setForeground(new Color(255, 255, 255));
         tabla.setRowHeight(25);
+<<<<<<< HEAD
+=======
+        tabla.setDefaultEditor(Object.class, null);
+>>>>>>> ramaLogin
 
         panelesAdmin.get(2).add(scroll);
     }
