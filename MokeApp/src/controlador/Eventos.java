@@ -54,12 +54,7 @@ public class Eventos implements ActionListener, MouseListener {
             JButton btn = (JButton)source;
             
             if(btn.getName().contains(modelo.getTipoOpciones()[0])){                        // Pulsado Boton FTP Moke
-                try {
-					new ControladorFTPPrincipal(modelo, vista, this, conexion, cliente);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+                new ControladorFTPPrincipal(modelo, vista, this, conexion, cliente);
                 ventanaActual = "FTP";
             }
             else if(btn.getName() == modelo.getTipoOpciones()[1]){                          // Pulsado Boton Mail Moke
@@ -84,12 +79,7 @@ public class Eventos implements ActionListener, MouseListener {
                 new ControladorSubirArchivo(modelo, vista, this, conexion,cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[1]){                     // Descargar Archivo
-                try {
-					new ControladorDescargarArchivo(modelo, vista, this, conexion,cliente);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+                new ControladorDescargarArchivo(modelo, vista, this, conexion,cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[2]){                     // Eliminar Archivo
                 try {

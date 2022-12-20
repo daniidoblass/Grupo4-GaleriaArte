@@ -42,6 +42,7 @@ public class EventosFTP implements ActionListener, MouseListener {
             
             if(btn.getName().contains("fichero-")){          						// Pulsado fichero FTP
             	infoFicheroPulsado = btn.getName();
+            	this.controladorFTPPrincipal.setInfoFicheroPulsado(infoFicheroPulsado);
             }
             else if(btn.getName().contains("carpeta-")){          						// Pulsada carpeta FTP
             	if(btn.getName().contains("Volver")) {
@@ -50,25 +51,9 @@ public class EventosFTP implements ActionListener, MouseListener {
             	else {
             		infoFicheroPulsado = btn.getName();
             		controladorFTPPrincipal.cambiarDirectorioHijo(infoFicheroPulsado);
+            		this.controladorFTPPrincipal.setInfoFicheroPulsado(infoFicheroPulsado);
             	}
             }
-            
-            /*
-            else if(btn.getName() == modelo.getTextoOpcionesMenu()[0]){                     // Subir Archivo
-                //new ControladorSubirArchivo(modelo, vista, this, conexion);
-            }
-            else if(btn.getName() == modelo.getTextoOpcionesMenu()[1]){                     // Descargar Archivo
-                //new controladorOpciones(modelo, vista, this, conexion);
-            }
-            else if(btn.getName() == modelo.getTextoOpcionesMenu()[2]){                     // Eliminar Archivo
-                //new controladorOpciones(modelo, vista, this, conexion);
-            }
-            else if(btn.getName() == modelo.getTextoOpcionesMenu()[3]){                     // Crear Carpeta
-                //new controladorOpciones(modelo, vista, this, conexion);
-            }
-            else if(btn.getName() == modelo.getTextoOpcionesMenu()[4]){                     // Eliminar Carpeta
-            	//new ControladorLogin(modelo, vista, this, conexion, cliente);
-            }*/
 
         }
     }
