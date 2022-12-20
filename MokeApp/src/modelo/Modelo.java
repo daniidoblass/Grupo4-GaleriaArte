@@ -15,7 +15,10 @@ public class Modelo {
     private String[] textoOpcionesMenuImages;
     private String[] tipoOpciones;
     private String[] textoLogos;
+
     private String archivoClicado;
+    private String[] textoConfiguracion;
+    private String[] textoSoporteTecnico;
     
     // OPCIONES
     private String[] textoPanelesOpciones;
@@ -37,7 +40,8 @@ public class Modelo {
         textoOpcionesMenuImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta","edit"};
         tipoOpciones = new String[]{"FTP_Moke", "Mail_Moke", "Configuracion_Moke", "Moke_Info"};
         textoLogos= new String[]{"MOKE APP", "FTP MOKE", "Mail MOKE", "Configuracion MOKE", "MOKE INFO"};
-        
+        textoConfiguracion= new String[]{"Reestablecer Contraseña", "Cambiar Email Corporativo", "Soporte Tecnico"};
+        textoSoporteTecnico= new String[]{"Si desea informarnos sobre algún problema relacionado con el programa\nContáctanos por:","Télefono: 695138058","Correo Electrónico: adminMokeApp@gmail.com"};        
         // LOGIN
         textoPanelesOpciones = new String[]{"arribaTexto", "medioUsuarios", "abajoFondo"};
         textoOpciones = "Seleccione una opcion";
@@ -46,7 +50,15 @@ public class Modelo {
         textoDatosConexion = new String[]{"jdbc:mysql://" + ip + "/" + archivo + "?serverTimezone=UTC", user, password, "com.mysql.cj.jdbc.Driver"};
     }
     
-    public String[] getTextoVentanaPrincipal(){
+    public String[] getTextoConfiguracion() {
+		return textoConfiguracion;
+	}
+
+	public void setTextoConfiguracion(String[] textoConfiguracion) {
+		this.textoConfiguracion = textoConfiguracion;
+	}
+
+	public String[] getTextoVentanaPrincipal(){
         return textoVentanaPrincipal;
     }
     
@@ -88,6 +100,9 @@ public class Modelo {
 
 	public void setArchivoClicado(String archivoClicado) {
 		this.archivoClicado = archivoClicado;
+	}
+	public String[] getTextoSoporteTecnico() {
+		return textoSoporteTecnico;
 	}
     
 }

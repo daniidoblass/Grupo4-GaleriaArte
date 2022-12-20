@@ -37,8 +37,21 @@ public class ControladorConfigPrincipal {
         // Configurar titulo de la pagina
         configurarTitulo();
         
+        // Crear paneles de Opciones
+        crearPanelesOpciones();
+        
+        // Configurar paneles de Opciones
+        vistaConfigPrincipal.configurarPanelesOpciones();
+        
+        // Configurar Texto de Opciones
+        vistaConfigPrincipal.crearEtiquetaOpciones();
+        
+        // Agregar perfiles de Opciones
+        agregarOpciones();
+
         // Actualizar ventana
         actualizarVentana();
+        
     }
 
     private void configurarTitulo() {
@@ -51,6 +64,20 @@ public class ControladorConfigPrincipal {
         vista.pack();
         vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-	
+    private void crearPanelesOpciones() {
+        for(int i=0; i<4; i++) {
+        	vistaConfigPrincipal.crearPanelesOpciones(i);
+        }
+    }
+
+    private void agregarOpciones() {
+
+        for(int i=0; i<3; i++) {
+        	vistaConfigPrincipal.crearEtiquetas(i);
+        	vistaConfigPrincipal.crearPerfilesOpciones(i);
+        	vistaConfigPrincipal.getPerfilesOpciones().get(i).addMouseListener(eventos);
+        	vistaConfigPrincipal.getPerfilesOpciones().get(i).addActionListener(eventos);
+        }
+    }
 }
 
