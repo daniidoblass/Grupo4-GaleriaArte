@@ -30,38 +30,32 @@ public class VistaEliminarCarpeta extends JFrame {
 		this.cliente = cliente;
 		this.eventos = eventos;
 		nombreArchivo = eventos.getControladorFTPPrincipal().getInfoFicheroPulsado();
+		
+		
+		
 		try {
 			if (nombreArchivo.contains("carpeta")) {
 
+				nombreArchivo = nombreArchivo.replace("carpeta-", "");
+				
 				int opcion = JOptionPane.showConfirmDialog(null,
-						"¿Deseas eliminar la carpeta " + nombreArchivo.substring(8, nombreArchivo.length()) + "?",
+						"¿Deseas eliminar la carpeta " + nombreArchivo + "?",
 						"Eliminar Carpeta", JOptionPane.YES_NO_OPTION);
 				if (opcion == JOptionPane.YES_OPTION) {
-					nombreArchivo = nombreArchivo.substring(8, nombreArchivo.length());
+
 					if (cliente.printWorkingDirectory().equals("/")) {
 						nombreArchivo = cliente.printWorkingDirectory() + nombreArchivo;
 					} else {
 						nombreArchivo = cliente.printWorkingDirectory() + "/" + nombreArchivo;
 					}
 					eliminarCarpeta(cliente, nombreArchivo, currentDir);
-					JOptionPane.showMessageDialog(null, nombreArchivo.substring(8, nombreArchivo.length()) + " se ha elimindado correctamente");
+					JOptionPane.showMessageDialog(null, nombreArchivo + " se ha elimindado correctamente");
 				} else {
 				}
-			} else {
-				eliminarFichero();
-			}
+			} 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-	}
-
-	private void eliminarFichero() throws IOException {
-		int opcion = JOptionPane.showConfirmDialog(null,
-				"¿Deseas eliminar " + nombreArchivo.substring(8, nombreArchivo.length()) + "?", "Eliminar fichero",
-				JOptionPane.YES_NO_OPTION);
-		if (opcion == JOptionPane.YES_OPTION) {
-			cliente.deleteFile(nombreArchivo.substring(8, nombreArchivo.length()));
 		}
 	}
 

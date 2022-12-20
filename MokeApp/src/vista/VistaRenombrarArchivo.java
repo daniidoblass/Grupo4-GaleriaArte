@@ -1,6 +1,7 @@
 package vista;
+
 /**
- * @author Pablo Pérez Ferre
+ * @author Pablo Pï¿½rez Ferre
  * @date 15/12/2022
  * @version 01
  */
@@ -15,40 +16,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class VistaRenombrarArchivo extends JFrame  {
+public class VistaRenombrarArchivo extends JFrame {
 
-	private FTPClient cliente;
-	private String nombreArchivo = "mokemamahuevo";
-	
-	public VistaRenombrarArchivo(FTPClient cliente) {
+	public VistaRenombrarArchivo() {
 
-		this.cliente = cliente;
-		
-		try {
-			renombrarArchivos(nombreArchivo);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
 	}
 
-	private void renombrarArchivos(String nombreArchivo) throws HeadlessException, IOException {
-		// TODO Auto-generated method stub
-
-		String nuevoNombre = JOptionPane.showInputDialog(null, "Introduce nuevo nombre del archivo");
-		if (nuevoNombre != null) {
-			if ( cliente.rename(nombreArchivo, nuevoNombre) ) {
-	                JOptionPane.showMessageDialog(null, "Se ha renombrado el archivo " + nombreArchivo + " a " + nuevoNombre);
-				JOptionPane.showMessageDialog(null, "Se ha renombrado el archivo a " + nuevoNombre);
-			} else {
-	                JOptionPane.showMessageDialog(null, "No se ha podido renombrar el archivo " + nombreArchivo + " a " + nombreArchivo);
-				JOptionPane.showMessageDialog(null, "No se ha podido renombrar el archivo a " + nuevoNombre);
-			}
-		}
+	public void mostrarMensajeEmergente(String titulo, String mensaje) {
+		JOptionPane.showMessageDialog(null, mensaje);
 	}
 	
-	
+	public String mostrarMensajeInput(String titulo, String mensaje) {
+		return JOptionPane.showInputDialog(null, mensaje);
+	}
 
 
 }
