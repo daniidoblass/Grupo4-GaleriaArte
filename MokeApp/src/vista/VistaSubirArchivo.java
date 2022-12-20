@@ -45,5 +45,4 @@ public class VistaSubirArchivo extends JFrame {
     public JFileChooser getJFileChooser() {
     	return jFileChooser;
     }
-
 }
