@@ -25,6 +25,7 @@ public class ControladorConfigPrincipal {
     private Eventos eventos;
     private Conexion conexion;
     private FTPClient cliente;
+    private EventosConfig eventosConfig;
     
     public ControladorConfigPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
@@ -33,25 +34,16 @@ public class ControladorConfigPrincipal {
         vistaConfigPrincipal = new VistaConfigPrincipal(modelo, vista);
         this.conexion = conexion;
         this.cliente = cliente;
+        eventosConfig = new EventosConfig(modelo, eventos, conexion, this, vistaConfigPrincipal);
 
         // Configurar titulo de la pagina
         configurarTitulo();
         
-        // Crear paneles de Opciones
-        crearPanelesOpciones();
-        
-        // Configurar paneles de Opciones
-        vistaConfigPrincipal.configurarPanelesOpciones();
-        
-        // Configurar Texto de Opciones
-        //vistaConfigPrincipal.crearEtiquetaOpciones();
-
         // Creacion de lista de opciones
         crearOpcionesMenu();
-
+        
         // Actualizar ventana
         actualizarVentana();
-        
     }
 
     private void configurarTitulo() {
@@ -64,29 +56,14 @@ public class ControladorConfigPrincipal {
         vista.pack();
         vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
-    private void crearPanelesOpciones() {
-        for(int i=0; i<3; i++) {
-        	vistaConfigPrincipal.crearPanelesOpciones(i);
-        }
-    }
-
-    private void agregarOpciones() {
-
-        for(int i=0; i<3; i++) {
-        	vistaConfigPrincipal.crearEtiquetas(i);
-        	vistaConfigPrincipal.crearPerfilesOpciones(i);
-        	vistaConfigPrincipal.getPerfilesOpciones().get(i).addMouseListener(eventos);
-        	vistaConfigPrincipal.getPerfilesOpciones().get(i).addActionListener(eventos);
-        }
-    }
     
     private void crearOpcionesMenu() {
         for(int i=0; i<modelo.getTextoOpcionesConfig().length; i++) {
         	vistaConfigPrincipal.crearBotonMenu(i, modelo.getTextoOpcionesConfig()[i], modelo.getTextoOpcionesConfigImages()[i]);
-        	vistaConfigPrincipal.getBotonesMenu().get(i).addMouseListener(eventos);
-        	vistaConfigPrincipal.getBotonesMenu().get(i).addActionListener(eventos);
+        	vistaConfigPrincipal.getBotonesMenu().get(i).addMouseListener(eventosConfig);
+        	vistaConfigPrincipal.getBotonesMenu().get(i).addActionListener(eventosConfig);
         }
     }
-
+	
 }
 

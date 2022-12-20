@@ -69,15 +69,17 @@ public class Conexion {
     /* 
      * Realiza la consulta indicada y devuelve su resultado en forma de ArrayList<String>
      */
-    public void realizarUpdateStatement(String consulta){
+    public int realizarUpdateStatement(String consulta){
 
         try {
             Statement s1 = conexion.createStatement();
-            s1.executeUpdate(consulta);
+            return s1.executeUpdate(consulta);
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
+        
+        return 0;
     }
     
     // Obtener Metadata

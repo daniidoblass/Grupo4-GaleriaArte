@@ -34,6 +34,7 @@ public class Eventos implements ActionListener, MouseListener {
     private Conexion conexion;
     private FTPClient cliente;
     private String ventanaActual = "OPCIONES";
+	private String usuario;
 
     public Eventos(Modelo modelo, Vista vista, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
@@ -117,8 +118,15 @@ public class Eventos implements ActionListener, MouseListener {
             else if(btn.getName() == modelo.getTextoConfiguracion()[2]){                     // Soporte Técnico
             	new ControladorSoporteTecnico(modelo, vista, this, conexion, cliente);
             }
-
         }
+    }
+    
+    public String getUsuario() {
+		return usuario;
+    }
+    
+    public void setUsuario(String usuario) {
+    	this.usuario = usuario;
     }
 
 	/*

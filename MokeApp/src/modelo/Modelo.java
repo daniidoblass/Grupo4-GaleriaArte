@@ -39,6 +39,7 @@ public class Modelo {
     // CONFIGURACI√ìN
     private String[] textoOpcionesConfig;
     private String[] textoOpcionesConfigImages;
+    private String[] textoDatosConfig;
 
     public Modelo(){
         
@@ -69,9 +70,12 @@ public class Modelo {
         		 "El usuario podr√° renombrar las carpetas y archivos subidos por √©l",
         		 "El usuario podr√° acceder a un apartado de correo electr√≥nico donde podr√° enviar correos a otros usuarios"};
         
-        // CONFIGURACI√ìN
-        textoOpcionesConfig = new String[]{"Reestablecer Contrase√±a", "Cambiar Correo Corporativo", "Soporte T√©cnico"};
+     // CONFIGURACI”N
+        textoOpcionesConfig = new String[]{"Reestablecer ContraseÒa", "Cambiar Correo Corporativo", "Soporte TÈcnico"};
         textoOpcionesConfigImages = new String[]{"password", "gmail", "soporte"};
+        textoDatosConfig = new String[] {"Introduzca la nueva contraseÒa",
+       		 "Introduzca el nuevo correo corporativo",
+       		 "Introduzca un mensaje para el Soporte TÈcnico"};
     }
     
     public String[] getTextoConfiguracion() {
@@ -148,5 +152,9 @@ public class Modelo {
     public String[] getTextoOpcionesConfigImages(){
         return textoOpcionesConfigImages;
     }
+    
+    public String[] getTextoDatosConfig() {
+		return textoDatosConfig;
+	}
     
 }
