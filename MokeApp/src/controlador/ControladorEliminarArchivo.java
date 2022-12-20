@@ -1,73 +1,71 @@
 package controlador;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+
+/**
+ * @author Daniel Jesus Doblas Florido
+ * @date 14/12/2022
+ * @version 01
+ */
+
 import java.io.IOException;
+import java.net.SocketException;
 
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 
+import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
 import conexion.Conexion;
 import modelo.Modelo;
 import vista.Vista;
 import vista.VistaEliminarArchivo;
-import vista.VistaSubirArchivo;
 
 public class ControladorEliminarArchivo {
+	
+	private FTPClient cliente;
 	private Modelo modelo;
 	private Vista vista;
-	private VistaEliminarArchivo vistaEliminarArchivo;
 	private Eventos eventos;
 	private Conexion conexion;
-	private FTPClient cliente;
+	private VistaEliminarArchivo vistaEliminarArchivo;
 
-	public ControladorEliminarArchivo(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente)
-			throws IOException {
+	public ControladorEliminarArchivo(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion,FTPClient cliente) {
+		
+		this.cliente = cliente;
 		this.modelo = modelo;
 		this.vista = vista;
 		this.eventos = eventos;
 		vistaEliminarArchivo = new VistaEliminarArchivo(modelo);
 		this.conexion = conexion;
-		this.cliente = cliente;
-
-		buscarArchivo();
-
+		eliminarFichero();
+		
 	}
-
-	public void buscarArchivo() {
+	
+	private void eliminarFichero() {
+		
 		try {
-
-			if (vistaEliminarArchivo.mostrarJFileChooser() == JFileChooser.APPROVE_OPTION) {
-				File f = vistaEliminarArchivo.getJFileChooser().getSelectedFile();
-				String dir = f.getAbsolutePath();
-				String nombreArchivo = f.getName();
-
-				System.out.println(dir);
-				System.out.println(nombreArchivo);
-
-				int resp = JOptionPane.showConfirmDialog(null, "Â¿Esta seguro que quieres borrar el archivo?",
-						"Borrar archivo", JOptionPane.YES_NO_OPTION);
-				
-				if (resp == 0) {
-					if (eliminarArchivo(dir)) {
-						System.out.println("Fichero eliminado... ");
-
-					} else {
-						System.out.println("No se ha podido eliminar Fichero... ");
+			String archivoDelServidor = eventos.getControladorFTPPrincipal().getInfoFicheroPulsado();
+			if(archivoDelServidor.isEmpty() || archivoDelServidor.equals("") || archivoDelServidor.contains("carpeta-")) {
+				vistaEliminarArchivo.mostrarMensajeEmergente("Eliminar Archivo", "No hay seleccionado ningún archivo");
+			}
+			else {
+				archivoDelServidor = archivoDelServidor.replace("fichero-", "");
+				if(vistaEliminarArchivo.mostrarMensajeConfirmacion("Eliminar Archivo", "¿Desea eliminar " + archivoDelServidor + "?") == 0) {
+					if(cliente.deleteFile(archivoDelServidor)) {
+						eventos.getControladorFTPPrincipal().actualizarContenido();
+						vistaEliminarArchivo.mostrarMensajeEmergente("Eliminar Archivo", "Archivo eliminado correctamente");
+					}
+					else {
+						vistaEliminarArchivo.mostrarMensajeEmergente("Eliminar Archivo", "No se ha podido eliminar el archivo");
 					}
 				}
 			}
-		} catch (Exception e) {
-
 		}
-	}
-
-	public boolean eliminarArchivo(String direc) throws IOException {
-		if (cliente.deleteFile(direc)) {
-			return true;
-		} else {
-			return false;
+		catch(Exception e) {
+			vistaEliminarArchivo.mostrarMensajeEmergente("Eliminar Archivo", "No se ha podido eliminar el archivo");
 		}
 	}
 }

@@ -82,12 +82,7 @@ public class Eventos implements ActionListener, MouseListener {
                 new ControladorDescargarArchivo(modelo, vista, this, conexion,cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[2]){                     // Eliminar Archivo
-                try {
-					new ControladorEliminarArchivo(modelo, vista, this, conexion,cliente);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+                new ControladorEliminarArchivo(modelo, vista, this, conexion,cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[3]){                     // Crear Carpeta
                 new ControladorCrearCarpeta(modelo, vista, this, conexion,cliente);
@@ -95,7 +90,7 @@ public class Eventos implements ActionListener, MouseListener {
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[4]){                     // Eliminar Carpeta
                 //new controladorOpciones(modelo, vista, this, conexion);
-            	new ControladorEliminarCarpeta(modelo, vista, null, conexion, cliente);
+            	new ControladorEliminarCarpeta(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[5]){                     // Eliminar Carpeta
                 //new controladorOpciones(modelo, vista, this, conexion);

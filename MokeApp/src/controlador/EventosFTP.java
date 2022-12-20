@@ -50,7 +50,7 @@ public class EventosFTP implements ActionListener, MouseListener {
             	}
             	else {
             		infoFicheroPulsado = btn.getName();
-            		controladorFTPPrincipal.cambiarDirectorioHijo(infoFicheroPulsado);
+            		//controladorFTPPrincipal.cambiarDirectorioHijo(infoFicheroPulsado);
             		this.controladorFTPPrincipal.setInfoFicheroPulsado(infoFicheroPulsado);
             	}
             }
@@ -63,6 +63,31 @@ public class EventosFTP implements ActionListener, MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent e) {
+    	Object source = e.getSource();
+
+		if (source instanceof JButton) {
+			JButton btn = (JButton) source;
+			modelo.setArchivoClicado(btn.getName());
+			if (btn.getName().contains("fichero-")) { // Pulsado fichero FTP
+				infoFicheroPulsado = btn.getName();
+			} else if (btn.getName().contains("carpeta-")) { // Pulsada carpeta FTP
+				if (btn.getName().contains("Volver")) {
+					controladorFTPPrincipal.cambiarDirectorioPadre();
+				} else {
+					if (e.getClickCount() == 2) {
+						infoFicheroPulsado = btn.getName();
+						controladorFTPPrincipal.cambiarDirectorioHijo(infoFicheroPulsado);
+					}
+
+				}
+			}
+		}
+		try {
+			System.out.println(modelo.getArchivoClicado());
+			System.out.println(cliente.printWorkingDirectory());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
     }
 
     @Override
