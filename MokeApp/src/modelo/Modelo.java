@@ -15,10 +15,6 @@ public class Modelo {
     private String[] textoOpcionesMenuImages;
     private String[] tipoOpciones;
     private String[] textoLogos;
-<<<<<<< HEAD
-    private String archivoClicado;
-=======
->>>>>>> ramaLogin
     
     // OPCIONES
     private String[] textoPanelesOpciones;
@@ -30,36 +26,14 @@ public class Modelo {
     private String ip = "localhost";
     private String user = "root";
     private String password = "";
-<<<<<<< HEAD
-=======
-    
-    // INFO
-    private String[] textoOpcionesInfo;
-    private String[] textoOpcionesInfoImages;
-    private String[] textoDatosInfo;
-    
-    // CONFIGURACIÓN
-    private String[] textoOpcionesConfig;
-    private String[] textoOpcionesConfigImages;
-    private String[] textoDatosConfig;
-    
-    // ADMIN
-    private String[] textoOpcionesAdmin;
-    private String[] textoOpcionesAdminImages;
->>>>>>> ramaLogin
 
     public Modelo(){
         
         // VENTANA PRINCIPAL
         textoVentanaPrincipal = new String[]{"MOKE APP"};
         textoPanelesVentanaPrincipal = new String[]{"NORTE", "OESTE", "CENTRAL"};
-<<<<<<< HEAD
         textoOpcionesMenu = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta"};
         textoOpcionesMenuImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta", "eliminar_carpeta", "eliminar_carpeta"};
-=======
-        textoOpcionesMenu = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta", "Renombrar"};
-        textoOpcionesMenuImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta", "edit"};
->>>>>>> ramaLogin
         tipoOpciones = new String[]{"FTP_Moke", "Mail_Moke", "Configuracion_Moke", "Moke_Info"};
         textoLogos= new String[]{"MOKE APP", "FTP MOKE", "Mail MOKE", "Configuracion MOKE", "MOKE INFO"};
         
@@ -69,31 +43,6 @@ public class Modelo {
 
         // CONEXION
         textoDatosConexion = new String[]{"jdbc:mysql://" + ip + "/" + archivo + "?serverTimezone=UTC", user, password, "com.mysql.cj.jdbc.Driver"};
-<<<<<<< HEAD
-=======
-        
-        // INFO
-        textoOpcionesInfo = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta", "Renombrar"};
-        textoOpcionesInfoImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta", "edit"};
-        textoDatosInfo = new String[] {"El usuario podrá subir archivos desde su ordenador al servidor",
-        		 "El usuario podrá descargar archivos de otros usuarios (no tiene permitido descargar carpetas)",
-        		 "El usuario podrá borrar los archivos creados por él",
-        		 "El usuario podrá crear carpetas donde subir los archivos",
-        		 "El usuario podrá borrar las carpetas creadas por él",
-        		 "El usuario podrá renombrar las carpetas y archivos subidos por él",
-        		 "El usuario podrá acceder a un apartado de correo electrónico donde podrá enviar correos a otros usuarios"};
-        
-        // CONFIGURACIÓN
-        textoOpcionesConfig = new String[]{"Reestablecer Contraseña", "Cambiar Correo Corporativo", "Soporte Técnico"};
-        textoOpcionesConfigImages = new String[]{"password", "gmail", "soporte"};
-        textoDatosConfig = new String[] {"Introduzca la nueva contraseña",
-       		 "Introduzca el nuevo correo corporativo",
-       		 "Introduzca un mensaje para el Soporte Técnico"};
-        
-        // ADMIN
-        textoOpcionesAdmin = new String[]{"Movimientos", "Usuarios", "Mensajes"};
-        textoOpcionesAdminImages = new String[]{"movements", "contacts", "message"};
->>>>>>> ramaLogin
     }
     
     public String[] getTextoVentanaPrincipal(){
@@ -131,48 +80,5 @@ public class Modelo {
     public String[] getTextoDatosConexion(){
         return textoDatosConexion;
     }
-
-<<<<<<< HEAD
-	public String getArchivoClicado() {
-		return archivoClicado;
-	}
-
-	public void setArchivoClicado(String archivoClicado) {
-		this.archivoClicado = archivoClicado;
-	}
     
-=======
-    public String[] getTextoOpcionesInfo(){
-        return textoOpcionesInfo;
-    }
-    
-    public String[] getTextoOpcionesInfoImages(){
-        return textoOpcionesInfoImages;
-    }
-    
-    public String[] getTextoDatosInfo() {
-		return textoDatosInfo;
-	}
-    
-    public String[] getTextoOpcionesConfig(){
-        return textoOpcionesConfig;
-    }
-    
-    public String[] getTextoOpcionesConfigImages(){
-        return textoOpcionesConfigImages;
-    }
-    
-    public String[] getTextoDatosConfig() {
-		return textoDatosConfig;
-	}
-    
-    public String[] getTextoOpcionesAdmin(){
-        return textoOpcionesAdmin;
-    }
-    
-    public String[] getTextoOpcionesAdminImages(){
-        return textoOpcionesAdminImages;
-    }
-    
->>>>>>> ramaLogin
 }

@@ -21,10 +21,9 @@ public class VistaLogin extends JFrame{
     private JPanel panelLogin = new JPanel();
     private JPanel panelLogo = new JPanel();
     private ArrayList<JPanel> todosPaneles = new ArrayList<>();
-	private JButton botonLogin = new JButton("LOGIN");
+	private ArrayList<JButton> todosBotones = new ArrayList<>();
 	private ArrayList<JLabel> todasLabels = new ArrayList<>();
-	private JTextField usuario = new JTextField(30);
-	private JPasswordField password = new JPasswordField(30);
+	private ArrayList<JTextField> cajasTexto = new ArrayList<>();
 	private JButton icono = new JButton();
 
     private JPanel panelCentral = new JPanel();
@@ -59,18 +58,21 @@ public class VistaLogin extends JFrame{
 		crearPaneles();
 
 		// Creacion de botones.
-		configurarBotonLogin();
+		crearBotones();
 
 		// Creacion de labels.
 		crearLabels();
 
+		// Crear cajas de texto.
+		crearCasjas();
+		
 		//Crear icono.
 		crearIcono();
 
 		// Poner propiedades
 		propiedadesVista();
 
-		// Añadir datos a la ventana.
+		// A�adir datos a la ventana.
 		agregarDatos();
 	}
     
@@ -87,21 +89,17 @@ public class VistaLogin extends JFrame{
 	}
 
 	private void agregarDatos() {
+		// TODO Auto-generated method stub
+
 		todosPaneles.get(1).add(todasLabels.get(1));
-<<<<<<< HEAD
 		
-		todosPaneles.get(2).add(usuario);
+		todosPaneles.get(2).add(cajasTexto.get(0));
 
 		todosPaneles.get(3).add(todasLabels.get(2));
 		
-		todosPaneles.get(4).add(password);
+		todosPaneles.get(4).add(cajasTexto.get(1));
 	
-=======
-		todosPaneles.get(2).add(usuario);
-		todosPaneles.get(3).add(todasLabels.get(2));
-		todosPaneles.get(4).add(password);
->>>>>>> ramaLogin
-		todosPaneles.get(5).add(botonLogin);
+		todosPaneles.get(5).add(todosBotones.get(0));
 
 		for (int i = 0; i < todosPaneles.size(); i++) {
 			panelLogin.add(todosPaneles.get(i));
@@ -110,14 +108,17 @@ public class VistaLogin extends JFrame{
 
 	private void crearPaneles() {
 		for (int i = 0; i < 6; i++) {
+
 			JPanel paneles = new JPanel();
 			paneles.setOpaque(false);
 			todosPaneles.add(paneles);
+
 		}
 	}
 
 	private void crearLabels() {
-		
+		// TODO Auto-generated method stub
+
 		JLabel label1 = new JLabel("ACCESO");
 		label1.setForeground(Color.WHITE);
 		label1.setFont(new Font("arial",0,20));
@@ -129,24 +130,37 @@ public class VistaLogin extends JFrame{
 		label2.setFont(new Font("arial",0,20));
 		todasLabels.add(label2);
 		
-		JLabel label3 = new JLabel("CONTRASEÑA");
+		JLabel label3 = new JLabel("CONTRASE�A");
 		label3.setForeground(Color.WHITE);
 		label3.setFont(new Font("arial",0,20));
 		todasLabels.add(label3);
 	}
 
-	private void configurarBotonLogin() {
-		botonLogin.setName("LOGIN");
-		botonLogin.setForeground(Color.WHITE);
-		botonLogin.setFont(new Font("calibri",0,19));
-		botonLogin.setBackground(Color.decode("#193349"));
+	private void crearCasjas() {
+		// TODO Auto-generated method stub
+
+		for (int i = 0; i < 2; i++) {
+
+			JTextField cajas = new JTextField(30);
+			cajasTexto.add(cajas);
+		}
 	}
-	
-	public JButton getBotonLogin() {
-		return botonLogin;
+
+	private void crearBotones() {
+		// TODO Auto-generated method stub
+
+		for (int i = 0; i < 1; i++) {
+
+			JButton botones = new JButton("LOGIN");
+			botones.setForeground(Color.WHITE);
+			botones.setFont(new Font("calibri",0,19));
+			botones.setBackground(Color.decode("#193349"));
+			todosBotones.add(botones);
+		}
 	}
 
 	private void propiedadesVista() {
+		// TODO Auto-generated method stub
 		panelLogo.setLayout(new GridLayout(1,1));
 		panelLogo.setOpaque(false);
 		panelLogin.setLayout(new GridLayout(6,1));
@@ -155,23 +169,7 @@ public class VistaLogin extends JFrame{
         panelCentral.add(panelLogin);
 	}
 
-	public JTextField getUsuario() {
-		return usuario;
-	}
     
-	public JPasswordField getPassword() {
-		return password;
-	}
-	
-<<<<<<< HEAD
-=======
-	/*
-	 * Mensaje Emergente
-	 */
->>>>>>> ramaLogin
-	public void mostrarMensajeEmergente(String titulo, String mensaje) {
-		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
-	}
 }
 
 

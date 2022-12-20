@@ -55,9 +55,9 @@ public class Conexion {
     public ResultSet realizarConsultaRS(String consulta){
 
         try {
-            Statement s = conexion.createStatement();
-            ResultSet rs = s.executeQuery(consulta);
-            return rs;
+                Statement s = conexion.createStatement();
+                ResultSet rs = s.executeQuery(consulta);
+                return rs;
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -67,18 +67,17 @@ public class Conexion {
     }
     
     /* 
-     * Realiza la consulta indicada
+     * Realiza la consulta indicada y devuelve su resultado en forma de ArrayList<String>
      */
-    public int realizarUpdateStatement(String consulta){
+    public void realizarUpdateStatement(String consulta){
 
         try {
             Statement s1 = conexion.createStatement();
-            return s1.executeUpdate(consulta);
+            s1.executeUpdate(consulta);
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;
     }
     
     // Obtener Metadata
@@ -101,7 +100,7 @@ public class Conexion {
     // Obtener Columnas
     public ResultSet getColumns(String nombreTabla) {
         try {
-            return metadatos.getColumns("mokedb", null, nombreTabla, null);
+            return metadatos.getColumns("i1i2", null, nombreTabla, null);
         }
         catch (SQLException e) {
             e.printStackTrace();
