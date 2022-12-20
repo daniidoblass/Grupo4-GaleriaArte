@@ -1,7 +1,7 @@
 package vista;
 
 /**
- * @author Daniel Jesï¿½s Doblas Florido
+ * @author Daniel Jesús Doblas Florido
  * @date 14/12/2022
  * @version 01
  */
@@ -12,14 +12,11 @@ import java.awt.FlowLayout;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
 import conexion.Conexion;
 import controlador.Eventos;
-import controlador.ControladorCrearCarpeta;
 
 import javax.swing.*;
 
@@ -28,19 +25,20 @@ import modelo.Modelo;
 public class VistaCrearCarpeta extends JFrame{
 	
 	private String nombreCarpeta;
-	private ControladorCrearCarpeta controladorCrearCarpeta;
 	private Modelo modelo;
 
-	public VistaCrearCarpeta(Modelo modelo) throws IOException {
-		
+	public VistaCrearCarpeta(Modelo modelo) {
 		this.modelo = modelo;
-
 	}
 	
-	public String crearNombreCarpeta() {
-		
-		 return JOptionPane.showInputDialog(null,"Introducir nombre carpeta", "carpeta");
+	/*
+	 * Mensaje Emergente
+	 */
+	public String crearNombreCarpeta(String titulo, String mensaje) {
+		 return JOptionPane.showInputDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	
+	public void mostrarMensajeEmergente(String titulo, String mensaje) {
+		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
+	}
 }

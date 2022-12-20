@@ -12,6 +12,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import org.apache.commons.net.ftp.FTPClient;
 
@@ -34,7 +35,8 @@ public class Eventos implements ActionListener, MouseListener {
     private Conexion conexion;
     private FTPClient cliente;
     private String ventanaActual = "OPCIONES";
-	private String usuario;
+	private String usuario = "";
+	private ControladorFTPPrincipal controladorFTPPrincipal = null;
 
     public Eventos(Modelo modelo, Vista vista, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
@@ -77,33 +79,18 @@ public class Eventos implements ActionListener, MouseListener {
                 new ControladorSubirArchivo(modelo, vista, this, conexion,cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[1]){                     // Descargar Archivo
-                try {
-					new ControladorDescargarArchivo(modelo, vista, this, conexion,cliente);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+                new ControladorDescargarArchivo(modelo, vista, this, conexion,cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[2]){                     // Eliminar Archivo
-                try {
-					new ControladorEliminarArchivo(modelo, vista, this, conexion,cliente);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+                new ControladorEliminarArchivo(modelo, vista, this, conexion,cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[3]){                     // Crear Carpeta
-                try {
-					new ControladorCrearCarpeta(modelo, vista, this, conexion,cliente);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+                new ControladorCrearCarpeta(modelo, vista, this, conexion,cliente);
             	
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[4]){                     // Eliminar Carpeta
                 //new controladorOpciones(modelo, vista, this, conexion);
-            	new ControladorEliminarCarpeta(modelo, vista, null, conexion, cliente);
+            	new ControladorEliminarCarpeta(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[5]){                     // Eliminar Carpeta
                 //new controladorOpciones(modelo, vista, this, conexion);
@@ -121,12 +108,23 @@ public class Eventos implements ActionListener, MouseListener {
         }
     }
     
+    public void setVentanaActual(String ventanaActual) {
+    	this.ventanaActual = ventanaActual;
+    }
     public String getUsuario() {
-		return usuario;
+    	return usuario;
     }
     
     public void setUsuario(String usuario) {
     	this.usuario = usuario;
+    }
+    
+    public ControladorFTPPrincipal getControladorFTPPrincipal() {
+    	return controladorFTPPrincipal;
+    }
+    
+    public void setControladorFTPPrincipal(ControladorFTPPrincipal controladorFTPPrincipal) {
+    	this.controladorFTPPrincipal = controladorFTPPrincipal;
     }
 
 	/*
@@ -163,5 +161,9 @@ public class Eventos implements ActionListener, MouseListener {
             btn.setBackground(Color.decode("#0c1823"));
         }
     }
+    
+    public int mostrarMensajeConfirmacion(String titulo, String mensaje) {
+		return JOptionPane.showConfirmDialog(null, mensaje, titulo, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+	}
 
 }

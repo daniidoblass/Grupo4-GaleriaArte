@@ -31,7 +31,8 @@ public class ControladorEliminarCarpeta {
 		this.eventos = eventos;
 		this.conexion = conexion;
 		this.cliente = cliente;
-		vistaEliminarCarpeta = new VistaEliminarCarpeta(cliente);
+		vistaEliminarCarpeta = new VistaEliminarCarpeta(cliente,modelo,eventos);
+		eventos.getControladorFTPPrincipal().actualizarContenido();
 		
 	}
 }

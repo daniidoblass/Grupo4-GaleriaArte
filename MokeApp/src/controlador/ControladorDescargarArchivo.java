@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 /**
- * @author Daniel Jesús Doblas Florido
+ * @author Daniel Jesus Doblas Florido
  * @date 14/12/2022
  * @version 01
  */
@@ -33,7 +33,7 @@ public class ControladorDescargarArchivo {
 	private Conexion conexion;
 	private VistaDescargarArchivo vistaDescargarArchivo;
 
-	public ControladorDescargarArchivo(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion,FTPClient cliente) throws SocketException, IOException {
+	public ControladorDescargarArchivo(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion,FTPClient cliente) {
 		
 		this.cliente = cliente;
 		this.modelo = modelo;
@@ -45,38 +45,48 @@ public class ControladorDescargarArchivo {
 		
 	}
 	
-	private void descargarFichero() throws SocketException, IOException {
+	private void descargarFichero() {
 		
-		cliente.setFileType(FTP.BINARY_FILE_TYPE);
+		try {
+			cliente.setFileType(FTP.BINARY_FILE_TYPE);
 
-		String archivoDelServidor = "Documento.docx";
-		
-        int returnVal = vistaDescargarArchivo.mostrarJFileChooser();
-
-        if (returnVal == vistaDescargarArchivo.getjFileChooser().APPROVE_OPTION) {
-        	File f = vistaDescargarArchivo.getjFileChooser().getSelectedFile();
-        	// obtener carpeta de destino
-        	String carpetaDestino = (f.getAbsolutePath()).toString();
-        	System.out.println("destino:" + carpetaDestino);
-        	// ubicación donde se va a descargar
-			BufferedOutputStream buffSalida = new BufferedOutputStream(
-					new FileOutputStream(carpetaDestino + "\\"+archivoDelServidor));
-
-			// Descargar el archivo.
-			boolean descargado = cliente.retrieveFile(archivoDelServidor, buffSalida); // Devuelve TRUE si se ha
-																						// descargado.
-
-			if (descargado) {
-
-				System.out.println("Se ha podido descargar.");
-				
-			} else {
-
-				System.out.println("No se ha podido descargar");
+			String archivoDelServidor = eventos.getControladorFTPPrincipal().getInfoFicheroPulsado();
+			if(archivoDelServidor.isEmpty() || archivoDelServidor.equals("") || archivoDelServidor.contains("carpeta-")) {
+				vistaDescargarArchivo.mostrarMensajeEmergente("Descargar Archivo", "No hay seleccionado ningÃºn archivo");
 			}
-			
-			//Cerrar el buffer.
-			buffSalida.close();
-        }
-}
+			else {
+				archivoDelServidor = archivoDelServidor.replace("fichero-", "");
+				if(vistaDescargarArchivo.mostrarMensajeConfirmacion("Descargar Archivo", "Â¿Desea descargar " + archivoDelServidor + "?") == 0) {
+					int returnVal = vistaDescargarArchivo.mostrarJFileChooser();
+
+			        if (returnVal == vistaDescargarArchivo.getjFileChooser().APPROVE_OPTION) {
+			        	
+			        	// obtener carpeta de destino
+			        	File f = vistaDescargarArchivo.getjFileChooser().getSelectedFile();
+			        	String carpetaDestino = (f.getAbsolutePath()).toString();
+			        	
+			        	// ubicacion donde se va a descargar
+						BufferedOutputStream buffSalida = new BufferedOutputStream(
+								new FileOutputStream(carpetaDestino + "\\"+archivoDelServidor));
+
+						// Descargar el archivo.
+						boolean descargado = cliente.retrieveFile(archivoDelServidor, buffSalida); // Devuelve TRUE si se ha
+																									// descargado
+						if (descargado) {
+							vistaDescargarArchivo.mostrarMensajeEmergente("Descargar Archivo", "Se ha descargado correctamente");
+							
+						} else {
+							vistaDescargarArchivo.mostrarMensajeEmergente("Descargar Archivo", "No se ha podido descargar el archivo");
+						}
+						
+						//Cerrar el buffer.
+						buffSalida.close();
+			        }
+				}
+			}
+		}
+		catch(Exception e) {
+			vistaDescargarArchivo.mostrarMensajeEmergente("Descargar Archivo", "No se ha podido descargar el archivo");
+		}
+	}
 }
