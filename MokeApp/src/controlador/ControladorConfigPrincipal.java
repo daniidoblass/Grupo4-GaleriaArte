@@ -44,10 +44,10 @@ public class ControladorConfigPrincipal {
         vistaConfigPrincipal.configurarPanelesOpciones();
         
         // Configurar Texto de Opciones
-        vistaConfigPrincipal.crearEtiquetaOpciones();
-        
-        // Agregar perfiles de Opciones
-        agregarOpciones();
+        //vistaConfigPrincipal.crearEtiquetaOpciones();
+
+        // Creacion de lista de opciones
+        crearOpcionesMenu();
 
         // Actualizar ventana
         actualizarVentana();
@@ -65,7 +65,7 @@ public class ControladorConfigPrincipal {
         vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
     private void crearPanelesOpciones() {
-        for(int i=0; i<4; i++) {
+        for(int i=0; i<3; i++) {
         	vistaConfigPrincipal.crearPanelesOpciones(i);
         }
     }
@@ -79,5 +79,14 @@ public class ControladorConfigPrincipal {
         	vistaConfigPrincipal.getPerfilesOpciones().get(i).addActionListener(eventos);
         }
     }
+    
+    private void crearOpcionesMenu() {
+        for(int i=0; i<modelo.getTextoOpcionesConfig().length; i++) {
+        	vistaConfigPrincipal.crearBotonMenu(i, modelo.getTextoOpcionesConfig()[i], modelo.getTextoOpcionesConfigImages()[i]);
+        	vistaConfigPrincipal.getBotonesMenu().get(i).addMouseListener(eventos);
+        	vistaConfigPrincipal.getBotonesMenu().get(i).addActionListener(eventos);
+        }
+    }
+
 }
 

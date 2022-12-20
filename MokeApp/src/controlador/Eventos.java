@@ -117,6 +117,7 @@ public class Eventos implements ActionListener, MouseListener {
             else if(btn.getName() == modelo.getTextoConfiguracion()[2]){                     // Soporte Técnico
             	new ControladorSoporteTecnico(modelo, vista, this, conexion, cliente);
             }
+
         }
     }
 
