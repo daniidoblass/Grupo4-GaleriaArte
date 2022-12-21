@@ -2,7 +2,7 @@ package controlador;
 
 import java.awt.HeadlessException;
 /**
- * @author Daniel Jesús Doblas Florido
+ * @author Daniel Jesï¿½s Doblas Florido
  * @date 15/12/2022
  * @version 01
  */
@@ -51,7 +51,6 @@ public class ControladorRenombrar {
 		try {
 			renombrarArchivos(nombreArchivo);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -71,7 +70,7 @@ public class ControladorRenombrar {
 						sufijo = "";
 					} else {
 						vistaRenombrarArchivo.mostrarMensajeEmergente("FICHERO INCORRECTO",
-								"La extensión indicada no coincide\nSe establecera la extensión anterior");
+								"La extension indicada no coincide\nSe establecera la extension anterior");
 						nuevoNombre = nuevoNombre.substring(0, nuevoNombre.lastIndexOf("."));
 					}
 				}

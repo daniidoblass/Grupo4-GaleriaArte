@@ -15,10 +15,6 @@ public class Modelo {
     private String[] textoOpcionesMenuImages;
     private String[] tipoOpciones;
     private String[] textoLogos;
-
-    private String archivoClicado;
-    private String[] textoConfiguracion;
-    private String[] textoSoporteTecnico;
     
     // OPCIONES
     private String[] textoPanelesOpciones;
@@ -40,18 +36,21 @@ public class Modelo {
     private String[] textoOpcionesConfig;
     private String[] textoOpcionesConfigImages;
     private String[] textoDatosConfig;
+    
+    // ADMIN
+    private String[] textoOpcionesAdmin;
+    private String[] textoOpcionesAdminImages;
 
     public Modelo(){
         
         // VENTANA PRINCIPAL
         textoVentanaPrincipal = new String[]{"MOKE APP"};
         textoPanelesVentanaPrincipal = new String[]{"NORTE", "OESTE", "CENTRAL"};
-        textoOpcionesMenu = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta","Renombrar"};
-        textoOpcionesMenuImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta","edit"};
+        textoOpcionesMenu = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta", "Renombrar"};
+        textoOpcionesMenuImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta", "edit"};
         tipoOpciones = new String[]{"FTP_Moke", "Mail_Moke", "Configuracion_Moke", "Moke_Info"};
         textoLogos= new String[]{"MOKE APP", "FTP MOKE", "Mail MOKE", "Configuracion MOKE", "MOKE INFO"};
-        textoConfiguracion= new String[]{"Reestablecer Contraseña", "Cambiar Email Corporativo", "Soporte Tecnico"};
-        textoSoporteTecnico= new String[]{"Si desea informarnos sobre algún problema relacionado con el programa\nContáctanos por:","Télefono: 695138058","Correo Electrónico: adminMokeApp@gmail.com"};        
+        
         // LOGIN
         textoPanelesOpciones = new String[]{"arribaTexto", "medioUsuarios", "abajoFondo"};
         textoOpciones = "Seleccione una opcion";
@@ -60,8 +59,8 @@ public class Modelo {
         textoDatosConexion = new String[]{"jdbc:mysql://" + ip + "/" + archivo + "?serverTimezone=UTC", user, password, "com.mysql.cj.jdbc.Driver"};
         
         // INFO
-        textoOpcionesInfo = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta"};
-        textoOpcionesInfoImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta"};
+        textoOpcionesInfo = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta", "Renombrar"};
+        textoOpcionesInfoImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta", "edit"};
         textoDatosInfo = new String[] {"El usuario podrá subir archivos desde su ordenador al servidor",
         		 "El usuario podrá descargar archivos de otros usuarios (no tiene permitido descargar carpetas)",
         		 "El usuario podrá borrar los archivos creados por él",
@@ -70,23 +69,19 @@ public class Modelo {
         		 "El usuario podrá renombrar las carpetas y archivos subidos por él",
         		 "El usuario podrá acceder a un apartado de correo electrónico donde podrá enviar correos a otros usuarios"};
         
-     // CONFIGURACI�N
-        textoOpcionesConfig = new String[]{"Reestablecer Contrase�a", "Cambiar Correo Corporativo", "Soporte T�cnico"};
+        // CONFIGURACIÓN
+        textoOpcionesConfig = new String[]{"Reestablecer Contraseña", "Cambiar Correo Corporativo", "Soporte Técnico"};
         textoOpcionesConfigImages = new String[]{"password", "gmail", "soporte"};
-        textoDatosConfig = new String[] {"Introduzca la nueva contrase�a",
+        textoDatosConfig = new String[] {"Introduzca la nueva contraseña",
        		 "Introduzca el nuevo correo corporativo",
-       		 "Introduzca un mensaje para el Soporte T�cnico"};
+       		 "Introduzca un mensaje para el Soporte Técnico"};
+        
+        // ADMIN
+        textoOpcionesAdmin = new String[]{"Movimientos", "Usuarios", "Mensajes"};
+        textoOpcionesAdminImages = new String[]{"movements", "contacts", "message"};
     }
     
-    public String[] getTextoConfiguracion() {
-		return textoConfiguracion;
-	}
-
-	public void setTextoConfiguracion(String[] textoConfiguracion) {
-		this.textoConfiguracion = textoConfiguracion;
-	}
-
-	public String[] getTextoVentanaPrincipal(){
+    public String[] getTextoVentanaPrincipal(){
         return textoVentanaPrincipal;
     }
     
@@ -122,17 +117,6 @@ public class Modelo {
         return textoDatosConexion;
     }
 
-	public String getArchivoClicado() {
-		return archivoClicado;
-	}
-
-	public void setArchivoClicado(String archivoClicado) {
-		this.archivoClicado = archivoClicado;
-	}
-	public String[] getTextoSoporteTecnico() {
-		return textoSoporteTecnico;
-	}
-
     public String[] getTextoOpcionesInfo(){
         return textoOpcionesInfo;
     }
@@ -156,5 +140,13 @@ public class Modelo {
     public String[] getTextoDatosConfig() {
 		return textoDatosConfig;
 	}
+    
+    public String[] getTextoOpcionesAdmin(){
+        return textoOpcionesAdmin;
+    }
+    
+    public String[] getTextoOpcionesAdminImages(){
+        return textoOpcionesAdminImages;
+    }
     
 }

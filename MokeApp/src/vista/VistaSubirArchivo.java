@@ -9,9 +9,6 @@ package vista;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import filtros.ImageFileView;
-import filtros.ImageFilter;
-import filtros.ImagePreview;
 import modelo.Modelo;
 
 import java.awt.event.ActionEvent;
@@ -32,10 +29,6 @@ public class VistaSubirArchivo extends JFrame {
     public void configurarJFileChooser() {
         jFileChooser.setDialogTitle("Selecciona un archivo");
     	jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-    	jFileChooser.addChoosableFileFilter(new ImageFilter());
-        jFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("TXT Files",new String[]{"txt"}));
-        jFileChooser.setFileView(new ImageFileView());
-        jFileChooser.setAccessory(new ImagePreview(jFileChooser));
     }
     
     public int mostrarJFileChooser() {
@@ -45,4 +38,5 @@ public class VistaSubirArchivo extends JFrame {
     public JFileChooser getJFileChooser() {
     	return jFileChooser;
     }
+
 }

@@ -6,8 +6,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 
@@ -41,12 +44,22 @@ public class EventosConfig implements ActionListener, MouseListener {
             JButton btn = (JButton)source;
             
         	if(btn.getText().contains(modelo.getTextoOpcionesConfig()[0])){ 		// Reestablecer Contraseña
-        		String respuesta = vistaConfigPrincipal.mostrarInputEmergente(modelo.getTextoOpcionesConfig()[0], modelo.getTextoDatosConfig()[0]);
-        		reestablecerPassword(respuesta);
+        		if(comprobarPassword()) {
+        			String respuesta = vistaConfigPrincipal.mostrarInputEmergente(modelo.getTextoOpcionesConfig()[0], modelo.getTextoDatosConfig()[0]);
+            		reestablecerPassword(respuesta);
+        		}
+        		else {
+        			vistaConfigPrincipal.mostrarMensajeEmergente("Password Incorrecta", "Password introducida incorrecta");
+        		}
             }
         	else if(btn.getText().contains(modelo.getTextoOpcionesConfig()[1])){ 	// Cambio Correo Corporativo
-        		String respuesta = vistaConfigPrincipal.mostrarInputEmergente(modelo.getTextoOpcionesConfig()[1], modelo.getTextoDatosConfig()[1]);
-        		cambiarCorreo(respuesta);
+        		if(comprobarPassword()) {
+        			String respuesta = vistaConfigPrincipal.mostrarInputEmergente(modelo.getTextoOpcionesConfig()[1], modelo.getTextoDatosConfig()[1]);
+            		cambiarCorreo(respuesta);
+        		}
+        		else {
+        			vistaConfigPrincipal.mostrarMensajeEmergente("Password Incorrecta", "Password introducida incorrecta");
+        		}
             }
         	else if(btn.getText().contains(modelo.getTextoOpcionesConfig()[2])){ 	// Soporte Técnico
         		String respuesta = vistaConfigPrincipal.mostrarInputEmergente(modelo.getTextoOpcionesConfig()[2], modelo.getTextoDatosConfig()[2]);
@@ -55,7 +68,27 @@ public class EventosConfig implements ActionListener, MouseListener {
         }
     }
     
-    private void reestablecerPassword(String respuesta) {
+    private boolean comprobarPassword() {
+    	boolean comprobacion = false;
+    	try {
+    		String passwordActual = vistaConfigPrincipal.mostrarInputEmergente("Verificación Usuario", "Introduzca su contraseña actual");
+        	if(!passwordActual.equals("") && !passwordActual.isEmpty()) {
+        		String usuario = eventos.getUsuario();
+        		ResultSet rs = conexion.realizarConsultaRS("SELECT password FROM usuarios WHERE nombre='" + usuario + "'");
+        		try {
+    				while(rs.next()) {
+    					if (passwordActual.equals(rs.getString(1))) {
+    						comprobacion = true;
+    					}
+    				}
+    			} catch (Exception e) {}
+        	}
+    	}
+    	catch(Exception e1) {}
+		return comprobacion;
+	}
+
+	private void reestablecerPassword(String respuesta) {
     	try {
     		if(respuesta.equals("") || respuesta.isEmpty()) {
         		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Vacío", "El campo contraseña no puede estar vacío");
@@ -85,14 +118,21 @@ public class EventosConfig implements ActionListener, MouseListener {
     
     private void cambiarCorreo(String respuesta) {
     	try {
+    		// Patrón para validar el email
+			Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+					+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+					
+			// El email a validar
+			Matcher mather = pattern.matcher(respuesta);
+			
     		if(respuesta.equals("") || respuesta.isEmpty()) {
         		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Vacío", "El campo correo no puede estar vacío");
         	}
         	else if(respuesta.contains(" ")) {
         		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Con Espacios", "El correo corporativo no puede contener espacios");
         	}
-        	else if(!respuesta.contains("@")) {
-        		vistaConfigPrincipal.mostrarMensajeEmergente("Correo Inválido", "No se ha reconocido como correo válido");
+        	else if(!mather.find()) {
+        		vistaConfigPrincipal.mostrarMensajeEmergente("Correo Inválido", "Formato de correo inválido");
         	}
         	else {
         		String usuario = eventos.getUsuario();
@@ -105,7 +145,9 @@ public class EventosConfig implements ActionListener, MouseListener {
         		}
         	}
     	}
-    	catch(Exception e) {}
+    	catch(Exception e) {
+    		vistaConfigPrincipal.mostrarMensajeEmergente("Correo Inválido", "Formato de correo inválido");
+    	}
     }
     
     private void enviarMensajeSoporte(String respuesta) {

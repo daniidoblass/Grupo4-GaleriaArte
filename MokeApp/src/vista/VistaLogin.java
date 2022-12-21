@@ -88,11 +88,9 @@ public class VistaLogin extends JFrame{
 
 	private void agregarDatos() {
 		todosPaneles.get(1).add(todasLabels.get(1));
-		
 		todosPaneles.get(2).add(usuario);
 		todosPaneles.get(3).add(todasLabels.get(2));
 		todosPaneles.get(4).add(password);
-
 		todosPaneles.get(5).add(botonLogin);
 
 		for (int i = 0; i < todosPaneles.size(); i++) {
@@ -158,7 +156,6 @@ public class VistaLogin extends JFrame{
 	/*
 	 * Mensaje Emergente
 	 */
-
 	public void mostrarMensajeEmergente(String titulo, String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
 	}

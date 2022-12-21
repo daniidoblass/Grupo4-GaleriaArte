@@ -1,7 +1,7 @@
 package controlador;
 
 /**
- * @author Daniel Jes�s Doblas Florido
+ * @author Daniel Jesus Doblas Florido
  * @date 14/12/2022
  * @version 01
  */
@@ -43,15 +43,18 @@ public class ControladorCrearCarpeta {
 	    		nombreCarpeta = vistaCrearCarpeta.crearNombreCarpeta("Crear Carpeta", "Nombre de la carpeta");
 				
 				if(nombreCarpeta.isEmpty() || nombreCarpeta.equals("")) {
-					//vistaCrearCarpeta.mostrarMensajeEmergente("El campo nombre no puede estar vacío");
+					vistaCrearCarpeta.mostrarMensajeEmergente("Nombre Carpeta", "El campo nombre no puede estar vacío");
 				}
 				else {
 					try {
-						String directorio = cliente.printWorkingDirectory();
-		
-						directorio += nombreCarpeta.trim(); //quita los espacios en blanco a der e izq.
+						
+						// Eliminar espacios en nombre de carpeta
+						nombreCarpeta = nombreCarpeta.replace(" ", "");
+						
+						// Sustituir guiones
+						nombreCarpeta = nombreCarpeta.replace("-", "_");
 
-						if(cliente.makeDirectory(directorio)) {
+						if(cliente.makeDirectory(nombreCarpeta)) {
 							String mensaje = nombreCarpeta.trim() + " se ha creado correctamente";
 							vistaCrearCarpeta.mostrarMensajeEmergente("Crear Carpeta", mensaje);
 							eventos.getControladorFTPPrincipal().actualizarContenido();

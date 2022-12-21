@@ -36,7 +36,6 @@ public class ControladorFTPPrincipal {
     private ArrayList<String> infoFicheros;
     private EventosFTP eventosFTP;
     private String infoFicheroPulsado = "";
-    private String dir;
 
     
 	public ControladorFTPPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
@@ -53,9 +52,6 @@ public class ControladorFTPPrincipal {
         configurarTitulo();
 
         // Agregar boton de volver
-        try {
-			dir = cliente.printWorkingDirectory();
-		} catch (IOException e) {}
         agregarBotonVolver();
         
         // ficheros de prueba
@@ -68,47 +64,39 @@ public class ControladorFTPPrincipal {
         actualizarVentana();
     }
 
-	private void listarFicherosFTP() {
-		nombreFicheros = new ArrayList<>();
-		infoFicheros = new ArrayList<>();
-		try {
-			// Ficheros en el directorio actual
-			FTPFile[] files = cliente.listFiles();
+    private void listarFicherosFTP() {
+    	nombreFicheros = new ArrayList<>();
+        infoFicheros = new ArrayList<>();
+    	try {
+    		// Ficheros en el directorio actual
+    		FTPFile[] files = cliente.listFiles();
+    		
+    		//array para visualizar el tipo de fichero
+    		String[] tipos = {"fichero", "carpeta", "enlace"};
 
-			// array para visualizar el tipo de fichero
-			String[] tipos = { "fichero", "carpeta", "enlace" };
-
-			for (int i = 0; i < files.length; i++) {
-				if (!files[i].getName().equals(".") && !files[i].getName().equals("..")) {
-					if (cliente.printWorkingDirectory().equals("/Galeria de Arte/Responsables")) {
-						if (files[i].getName().equals(eventos.getUsuario())) {
-							nombreFicheros.add(files[i].getName());
-							infoFicheros.add(tipos[files[i].getType()] + "-" + files[i].getName());
-						}
-					} else {
-						nombreFicheros.add(files[i].getName());
-						infoFicheros.add(tipos[files[i].getType()] + "-" + files[i].getName());
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+    		for (int i = 0; i < files.length; i++) {
+    			if(!files[i].getName().equals(".") && !files[i].getName().equals("..")) {
+    				nombreFicheros.add(files[i].getName());
+    				infoFicheros.add(tipos[files[i].getType()] + "-" + files[i].getName());
+    			}
+    		}
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    	
 	}
 
 	private void agregarCaratulasFicheros() {
 
-		for (int i = 0; i < nombreFicheros.size(); i++) {
-			String formato = extraerFormato(nombreFicheros.get(i));
-			vistaFTPPrincipal.crearCaratulasFicheros(nombreFicheros.get(i), formato, infoFicheros.get(i));
-			vistaFTPPrincipal.getCaratulasProductos().get(vistaFTPPrincipal.getCaratulasProductos().size() - 1)
-					.addMouseListener(eventosFTP);
-			vistaFTPPrincipal.getCaratulasProductos().get(vistaFTPPrincipal.getCaratulasProductos().size() - 1)
-					.addActionListener(eventosFTP);
-		}
+    	for(int i=0; i<nombreFicheros.size(); i++) {
+    		String formato = extraerFormato(nombreFicheros.get(i));
+    		vistaFTPPrincipal.crearCaratulasFicheros(nombreFicheros.get(i), formato, infoFicheros.get(i));
+    		vistaFTPPrincipal.getCaratulasProductos().get(vistaFTPPrincipal.getCaratulasProductos().size() - 1).addMouseListener(eventosFTP);
+    		vistaFTPPrincipal.getCaratulasProductos().get(vistaFTPPrincipal.getCaratulasProductos().size() - 1).addActionListener(eventosFTP);
+    	}
 
-	}
+    }
 
 	private String extraerFormato(String nombreFichero) {
 		
@@ -149,33 +137,37 @@ public class ControladorFTPPrincipal {
         vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
-    public void cambiarDirectorioHijo(String infoFicheroPulsado) {
-		try {
-			String nuevoDirectorio = infoFicheroPulsado.replace("carpeta-", "");
-			if (cliente.changeWorkingDirectory(nuevoDirectorio)) {
-				actualizarContenido();
-			} else {
-				System.out.println("ERROR: no se ha podido acceder al directorio seleccionado");
-			}
-		} catch (Exception e) {
-			vistaFTPPrincipal.mostrarMensajeEmergente("Servidor FTP",
-					"Servidor FTP desconectado. Por favor, reinicie \n" + "el programa para conectarse");
-		}
+	public void cambiarDirectorioHijo(String infoFicheroPulsado) {
+    	try {
+    		String nuevoDirectorio = infoFicheroPulsado.replace("carpeta-", "");
+    		if(cliente.changeWorkingDirectory(nuevoDirectorio)) {
+    			actualizarContenido();
+    		}
+    		else {
+    			System.out.println("ERROR: no se ha podido acceder al directorio seleccionado");
+    		}
+    	}
+    	catch(Exception e) {
+    		vistaFTPPrincipal.mostrarMensajeEmergente("Servidor FTP", "Servidor FTP desconectado. Por favor, reinicie \n"
+					+ "el programa para conectarse");
+    	}
 	}
-
+	
 	public void cambiarDirectorioPadre() {
-		try {
-			if (cliente.changeToParentDirectory()) {
-				actualizarContenido();
-			} else {
-				System.out.println("ERROR: no se ha podido acceder al directorio padre");
-			}
-		} catch (Exception e) {
-			vistaFTPPrincipal.mostrarMensajeEmergente("Servidor FTP",
-					"Servidor FTP desconectado. Por favor, reinicie \n" + "el programa para conectarse");
-		}
+    	try {
+    		if(cliente.changeToParentDirectory()) {
+    			actualizarContenido();
+    		}
+    		else {
+    			System.out.println("ERROR: no se ha podido acceder al directorio padre");
+    		}
+    	}
+    	catch(Exception e) {
+    		vistaFTPPrincipal.mostrarMensajeEmergente("Servidor FTP", "Servidor FTP desconectado. Por favor, reinicie \n"
+					+ "el programa para conectarse");
+    	}
 	}
-
+	
 	public void actualizarContenido() {
 		listarFicherosFTP();
 		vistaFTPPrincipal.limpiarPanelCentral();
@@ -183,18 +175,19 @@ public class ControladorFTPPrincipal {
 		agregarBotonVolver();
 		agregarCaratulasFicheros();
 	}
-
+	
 	private void agregarBotonVolver() {
 		try {
-			if (!dir.equals(cliente.printWorkingDirectory())) {
-				// agregar boton de volver
-				vistaFTPPrincipal.crearCaratulasFicheros("Volver", "return", "carpeta-Volver");
-				vistaFTPPrincipal.getCaratulasProductos().get(0).addMouseListener(eventosFTP);
-				vistaFTPPrincipal.getCaratulasProductos().get(0).addActionListener(eventosFTP);
-			}
-		} catch (Exception e) {
-			vistaFTPPrincipal.mostrarMensajeEmergente("Servidor FTP", "No se ha podido acceder a la carpeta");
-		}
+        	if(!cliente.printWorkingDirectory().equals(eventos.getDirectorioLimite())) {
+    			// agregar boton de volver
+    			vistaFTPPrincipal.crearCaratulasFicheros("Volver", "return", "carpeta-Volver");
+    			vistaFTPPrincipal.getCaratulasProductos().get(0).addMouseListener(eventosFTP);
+        		vistaFTPPrincipal.getCaratulasProductos().get(0).addActionListener(eventosFTP);
+    		}
+        }
+        catch(Exception e) {
+        	vistaFTPPrincipal.mostrarMensajeEmergente("Servidor FTP", "No se ha podido acceder a la carpeta");
+        }
 	}
 	
 	public String getInfoFicheroPulsado() {

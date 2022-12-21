@@ -1,7 +1,7 @@
 package vista;
 
 /**
- * @author Daniel Jesús Doblas Florido
+ * @author Daniel JesÃºs Doblas Florido
  * @date 14/12/2022
  * @version 01
  */

@@ -17,11 +17,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import org.apache.commons.net.ftp.FTPClient;
 
-public class ControladorAdmin implements ActionListener {
+public class ControladorAdmin {
     
     private Modelo modelo;
     private Vista vista;
@@ -30,7 +31,7 @@ public class ControladorAdmin implements ActionListener {
     private Conexion conexion;
     private FTPClient cliente;
     private ArrayList<String> nombreColumnas;
-    private String nombreTabla;
+    private EventosAdmin eventosAdmin;
     
     public ControladorAdmin(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
@@ -39,6 +40,7 @@ public class ControladorAdmin implements ActionListener {
         vistaAdmin = new VistaAdmin(modelo, vista);
         this.conexion = conexion;
         this.cliente = cliente;
+        eventosAdmin = new EventosAdmin(modelo, this);
 
         // Configurar titulo de la pagina
         configurarTitulo();
@@ -47,8 +49,7 @@ public class ControladorAdmin implements ActionListener {
         configurarPanelesAdmin();
         
         // Configurar tabla
-        nombreTabla = "usuarios";
-        configurarTabla(nombreTabla);
+        configurarTabla("movimientos");
         
         // Configurar boton cambiar tabla
         configurarBotonCambiarTabla();
@@ -58,22 +59,14 @@ public class ControladorAdmin implements ActionListener {
     }
 
     private void configurarBotonCambiarTabla() {
-    	vistaAdmin.configurarBotonCambiarTabla();
-    	vistaAdmin.getBotonCambiarTabla().addActionListener(this);
+    	for(int i=0; i<modelo.getTextoOpcionesAdmin().length; i++) {
+    		vistaAdmin.configurarBotonCambiarTabla(modelo.getTextoOpcionesAdmin()[i], modelo.getTextoOpcionesAdminImages()[i]);
+    		vistaAdmin.getBotonesCambiarTabla().get(i).addMouseListener(eventosAdmin);
+        	vistaAdmin.getBotonesCambiarTabla().get(i).addActionListener(eventosAdmin);
+    	}
 	}
     
-    @Override
-	public void actionPerformed(ActionEvent e) {
-    	if(nombreTabla.equals("usuarios")) {
-    		nombreTabla = "movimientos";
-    		actualizarTabla(nombreTabla);
-    	}
-    	else {
-    		nombreTabla = "usuarios";
-    		actualizarTabla(nombreTabla);
-    	}
-	}
-
+    
 	private void configurarTabla(String nombreTabla) {
     	// Rellenar Titulos
         rellenarTitulos(nombreTabla);
@@ -85,7 +78,7 @@ public class ControladorAdmin implements ActionListener {
         rellenarDatos("SELECT * FROM " + nombreTabla);
 	}
 	
-	private void actualizarTabla(String nombreTabla) {
+	public void actualizarTabla(String nombreTabla) {
     	// Rellenar Titulos
         rellenarTitulos(nombreTabla);
 
@@ -126,7 +119,7 @@ public class ControladorAdmin implements ActionListener {
             // Bucle para cada resultado en la consulta
             while (rs.next()) {
                 
-               // Se crea un array que será una de las filas de la tabla
+               // Se crea un array que sera una de las filas de la tabla
                Object[] fila = new Object[nombreColumnas.size()]; 
 
                for (int i=0;i<nombreColumnas.size();i++){
@@ -134,7 +127,7 @@ public class ControladorAdmin implements ActionListener {
                }
                   
 
-               // Se añade al modelo la fila completa.
+               // Se aï¿½ade al modelo la fila completa.
                vistaAdmin.insertRow(fila);
             }
             
@@ -158,6 +151,7 @@ public class ControladorAdmin implements ActionListener {
 	private void configurarTitulo() {
 		vista.setIcono("src/opcionesprincipal/4.png");
 		vista.setTitulo("Administracion MOKE");
+		eventos.setVentanaActual("ADMIN");
 	}
 
     private void actualizarVentana() {

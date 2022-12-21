@@ -42,7 +42,6 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 	private JTable tabla = new JTable();
 	private JButton cambiarTabla = new JButton();
 	private JButton VerMensaje = new JButton();
-	private JButton actualizarTabla = new JButton();
 
 	public VistaMailPrincipal(Modelo modelo, Vista vista) {
 		this.modelo = modelo;
@@ -127,7 +126,6 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 		tabla.getTableHeader().setBackground(new Color(66, 120, 147));
 		tabla.getTableHeader().setForeground(new Color(255, 255, 255));
 		tabla.setRowHeight(25);
-		tabla.setDefaultEditor(Object.class, null);
 
 		panelesAdmin.get(2).add(scroll);
 	}
@@ -196,37 +194,9 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 
 		panelesAdmin.get(1).add(VerMensaje);
 	}
-	
-	public void configurarBotonActualizar() {
-		ImageIcon icon = new ImageIcon("src/subiconos/actualizar.png");
-
-		// ponerle texto e icono
-		actualizarTabla.setText("Actualizar");
-		actualizarTabla.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
-
-		// Texto en el centro y debajo del icono
-		actualizarTabla.setHorizontalTextPosition(SwingConstants.RIGHT);
-		actualizarTabla.setVerticalTextPosition(SwingConstants.CENTER);
-
-		// Configurar propiedades del boton
-		actualizarTabla.setBackground(new Color(66, 120, 147));
-		actualizarTabla.setBorderPainted(false);
-		actualizarTabla.setPreferredSize(new Dimension(200, 60));
-		actualizarTabla.setHorizontalAlignment(SwingConstants.LEFT);
-
-		// Personalizar texto
-		actualizarTabla.setForeground(Color.WHITE);
-		actualizarTabla.setFont(new Font("arial", 0, 20));
-
-		panelesAdmin.get(1).add(actualizarTabla);
-	}
 
 	public JButton getBotonCambiarTabla() {
 		return cambiarTabla;
-	}
-	
-	public JButton getBotonActualizarTabla() {
-		return actualizarTabla;
 	}
 	
 	public JButton getBotonVerMensaje() {

@@ -57,6 +57,7 @@ public class ControladorOpciones {
     private void configurarTitulo() {
 		vista.setIcono("src/iconos/app.png");
 		vista.setTitulo("MOKE APP");
+		eventos.setVentanaActual("OPCIONES");
 	}
 
 	private void crearPanelesOpciones() {

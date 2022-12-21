@@ -55,9 +55,9 @@ public class Conexion {
     public ResultSet realizarConsultaRS(String consulta){
 
         try {
-                Statement s = conexion.createStatement();
-                ResultSet rs = s.executeQuery(consulta);
-                return rs;
+            Statement s = conexion.createStatement();
+            ResultSet rs = s.executeQuery(consulta);
+            return rs;
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -67,7 +67,7 @@ public class Conexion {
     }
     
     /* 
-     * Realiza la consulta indicada y devuelve su resultado en forma de ArrayList<String>
+     * Realiza la consulta indicada
      */
     public int realizarUpdateStatement(String consulta){
 
@@ -78,7 +78,6 @@ public class Conexion {
         catch (SQLException e) {
             e.printStackTrace();
         }
-        
         return 0;
     }
     

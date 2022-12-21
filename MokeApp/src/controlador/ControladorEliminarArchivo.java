@@ -49,11 +49,11 @@ public class ControladorEliminarArchivo {
 		try {
 			String archivoDelServidor = eventos.getControladorFTPPrincipal().getInfoFicheroPulsado();
 			if(archivoDelServidor.isEmpty() || archivoDelServidor.equals("") || archivoDelServidor.contains("carpeta-")) {
-				vistaEliminarArchivo.mostrarMensajeEmergente("Eliminar Archivo", "No hay seleccionado ningún archivo");
+				vistaEliminarArchivo.mostrarMensajeEmergente("Eliminar Archivo", "No hay seleccionado ningÃºn archivo");
 			}
 			else {
 				archivoDelServidor = archivoDelServidor.replace("fichero-", "");
-				if(vistaEliminarArchivo.mostrarMensajeConfirmacion("Eliminar Archivo", "¿Desea eliminar " + archivoDelServidor + "?") == 0) {
+				if(vistaEliminarArchivo.mostrarMensajeConfirmacion("Eliminar Archivo", "Â¿Desea eliminar " + archivoDelServidor + "?") == 0) {
 					if(cliente.deleteFile(archivoDelServidor)) {
 						eventos.getControladorFTPPrincipal().actualizarContenido();
 						vistaEliminarArchivo.mostrarMensajeEmergente("Eliminar Archivo", "Archivo eliminado correctamente");

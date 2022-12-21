@@ -1,7 +1,6 @@
 package vista;
-
 /**
- * @author Daniel Jesús Doblas Florido
+ * @author Daniel JesÃºs Doblas Florido
  * @date 14/12/2022
  * @version 01
  */
@@ -22,25 +21,24 @@ import org.apache.commons.net.ftp.FTPClient;
 import controlador.ControladorDescargarArchivo;
 import modelo.Modelo;
 
-public class VistaEliminarArchivo extends JFrame {
+public class VistaEliminarArchivo extends JFrame{
 
 	private Modelo modelo;
 	private JFileChooser jFileChooser;
-
-	public VistaEliminarArchivo(Modelo modelo) {
+	
+	public  VistaEliminarArchivo(Modelo modelo) {
 		this.modelo = modelo;
 	}
-
+	
 	/*
 	 * Mensaje Emergente
 	 */
 	public void mostrarMensajeEmergente(String titulo, String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
 	}
-
+	
 	public int mostrarMensajeConfirmacion(String titulo, String mensaje) {
-		return JOptionPane.showConfirmDialog(null, mensaje, titulo, JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.QUESTION_MESSAGE);
+		return JOptionPane.showConfirmDialog(null, mensaje, titulo, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 	}
-
+	
 }

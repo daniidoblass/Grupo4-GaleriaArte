@@ -20,7 +20,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
 
 import modelo.Modelo;
 import vista.Vista;
@@ -35,8 +34,9 @@ public class Eventos implements ActionListener, MouseListener {
     private Conexion conexion;
     private FTPClient cliente;
     private String ventanaActual = "OPCIONES";
-	private String usuario = "";
-	private ControladorFTPPrincipal controladorFTPPrincipal = null;
+    private String usuario = "";
+    private ControladorFTPPrincipal controladorFTPPrincipal = null;
+    private String directorioLimite = "";
 
     public Eventos(Modelo modelo, Vista vista, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
@@ -70,40 +70,34 @@ public class Eventos implements ActionListener, MouseListener {
                 ventanaActual = "INFO";
             }
             else if(btn.getName() == modelo.getTextoLogos()[0]){                            // Pulsado Icono Barra Superior
-            	if(!ventanaActual.equals("LOGIN") && !ventanaActual.equals("OPCIONES")) {
+            	if(!ventanaActual.equals("LOGIN") && !ventanaActual.equals("OPCIONES") && !ventanaActual.equals("ADMIN")) {
             		new ControladorOpciones(modelo, vista, this, conexion, cliente);
             		ventanaActual = "OPCIONES";
             	}
+            	else if(ventanaActual.equals("OPCIONES") || ventanaActual.equals("ADMIN")){
+            		if(mostrarMensajeConfirmacion("Cerrar Sesión", "¿Seguro que quiere cerrar sesión?") == 0) {
+            			new ControladorLogin(modelo, vista, this, conexion, cliente);
+            			ventanaActual = "LOGIN";
+            		}
+            	}
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[0]){                     // Subir Archivo
-                new ControladorSubirArchivo(modelo, vista, this, conexion,cliente);
+                new ControladorSubirArchivo(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[1]){                     // Descargar Archivo
-                new ControladorDescargarArchivo(modelo, vista, this, conexion,cliente);
+                new ControladorDescargarArchivo(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[2]){                     // Eliminar Archivo
-                new ControladorEliminarArchivo(modelo, vista, this, conexion,cliente);
+            	new ControladorEliminarArchivo(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[3]){                     // Crear Carpeta
-                new ControladorCrearCarpeta(modelo, vista, this, conexion,cliente);
-            	
+            	new ControladorCrearCarpeta(modelo, vista, this, conexion, cliente);
             }
             else if(btn.getName() == modelo.getTextoOpcionesMenu()[4]){                     // Eliminar Carpeta
-                //new controladorOpciones(modelo, vista, this, conexion);
             	new ControladorEliminarCarpeta(modelo, vista, this, conexion, cliente);
             }
-            else if(btn.getName() == modelo.getTextoOpcionesMenu()[5]){                     // Eliminar Carpeta
-                //new controladorOpciones(modelo, vista, this, conexion);
-            	new ControladorRenombrar(modelo, vista, this, conexion, cliente);
-            }
-            else if(btn.getName() == modelo.getTextoConfiguracion()[0]){                     // Restablecer Contra
-            	new ControladorRestablecerContra(modelo, vista, this, conexion, cliente);
-            }
-            else if(btn.getName() == modelo.getTextoConfiguracion()[1]){                     // Cambiar Email
-            	new ControladorCambiarEmail(modelo, vista, this, conexion, cliente);
-            }
-            else if(btn.getName() == modelo.getTextoConfiguracion()[2]){                     // Soporte Técnico
-            	new ControladorSoporteTecnico(modelo, vista, this, conexion, cliente);
+            else if(btn.getName() == modelo.getTextoOpcionesMenu()[5]){                     // Renombrar
+                new ControladorRenombrar(modelo, vista, this, conexion, cliente);
             }
         }
     }
@@ -111,6 +105,7 @@ public class Eventos implements ActionListener, MouseListener {
     public void setVentanaActual(String ventanaActual) {
     	this.ventanaActual = ventanaActual;
     }
+    
     public String getUsuario() {
     	return usuario;
     }
@@ -126,6 +121,21 @@ public class Eventos implements ActionListener, MouseListener {
     public void setControladorFTPPrincipal(ControladorFTPPrincipal controladorFTPPrincipal) {
     	this.controladorFTPPrincipal = controladorFTPPrincipal;
     }
+    
+    public String getDirectorioLimite() {
+		return directorioLimite;
+	}
+
+	public void setDirectorioLimite(String directorioLimite) {
+		this.directorioLimite = directorioLimite;
+	}
+
+    /*
+	 * Mensaje Emergente
+	 */
+    public int mostrarMensajeConfirmacion(String titulo, String mensaje) {
+		return JOptionPane.showConfirmDialog(null, mensaje, titulo, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+	}
 
 	/*
      * HOVER EN OPCIONES PRINCIPALES
@@ -161,9 +171,5 @@ public class Eventos implements ActionListener, MouseListener {
             btn.setBackground(Color.decode("#0c1823"));
         }
     }
-    
-    public int mostrarMensajeConfirmacion(String titulo, String mensaje) {
-		return JOptionPane.showConfirmDialog(null, mensaje, titulo, JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-	}
 
 }

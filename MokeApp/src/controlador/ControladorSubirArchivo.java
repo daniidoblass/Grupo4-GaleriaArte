@@ -21,9 +21,9 @@ import vista.VistaSubirArchivo;
 public class ControladorSubirArchivo {
 
 	private Modelo modelo;
+	private Eventos eventos;
 	private VistaSubirArchivo vistaSubirArchivo;
 	private FTPClient cliente;
-	private Eventos eventos;
 
 	public ControladorSubirArchivo(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) {
 		this.modelo = modelo;
@@ -34,6 +34,9 @@ public class ControladorSubirArchivo {
 		obtenerFicheroSeleccionado();
 	}
 
+	/*
+	 * Obtiene fichero seleccionado y lo sube a servidor FTP
+	 */
 	public void obtenerFicheroSeleccionado() {
 		if (vistaSubirArchivo.mostrarJFileChooser() == JFileChooser.APPROVE_OPTION) {
 			File f = vistaSubirArchivo.getJFileChooser().getSelectedFile();
@@ -42,7 +45,6 @@ public class ControladorSubirArchivo {
 
 			try {
 				if (subirFichero(archivo, nombreArchivo)) {
-
 					JOptionPane.showMessageDialog(vistaSubirArchivo.getJFileChooser(),
 							"Se ha subido correctamente el archivo " + nombreArchivo);
 					eventos.getControladorFTPPrincipal().actualizarContenido();
@@ -56,10 +58,14 @@ public class ControladorSubirArchivo {
 		}
 	}
 
+	/*
+	 * Sube fichero pasado por parámetro al servidor FTP
+	 */
 	private boolean subirFichero(String archivo, String nombreArchivo) throws IOException {
 		cliente.setFileType(FTP.BINARY_FILE_TYPE);
 		BufferedInputStream in = new BufferedInputStream(new FileInputStream(archivo));
-		
-		return cliente.storeFile(nombreArchivo, in);
+		boolean operacion = cliente.storeFile(nombreArchivo, in);
+		in.close();
+		return operacion;
 	}
 }
