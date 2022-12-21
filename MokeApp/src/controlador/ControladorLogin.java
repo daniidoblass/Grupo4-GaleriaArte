@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JFrame;
 
@@ -90,16 +91,30 @@ public class ControladorLogin implements ActionListener {
 		else if(categoria.equals("Responsable")) {
 			new ControladorOpciones(modelo, vista, eventos, conexion, cliente);
 			eventos.setUsuario(usuario);
-			eventos.setDirectorioLimite("/Galeria de Arte");
+			eventos.setDirectorioLimite("/Galeria de Arte/Responsables/"+usuario);
 			try {
 				cliente.makeDirectory("/Galeria de Arte/Responsables/" + usuario);
 				cliente.changeWorkingDirectory(eventos.getDirectorioLimite());
 			} catch (Exception e1) {}
 		}
 		else {
+			
+			//Creamos la consulta para obtener el nombre del responsable asignado.
+			String consulta = "SELECT ResponsableAsignado FROM `usuarios` WHERE nombre LIKE '"+usuario+"'";
+			ResultSet rs = conexion.realizarConsultaRS(consulta);
+			String responsableAsignado = "";
+			try {
+				while(rs.next()) {
+					
+					responsableAsignado = rs.getString(1);
+				}
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
 			new ControladorOpciones(modelo, vista, eventos, conexion, cliente);
 			eventos.setUsuario(usuario);
-			eventos.setDirectorioLimite("/Galeria de Arte/Marchantes/" + usuario);
+			eventos.setDirectorioLimite("/Galeria de Arte/Responsables/"+responsableAsignado+"/Marchantes/" + usuario);
 			try {
 				cliente.makeDirectory(eventos.getDirectorioLimite());
 				cliente.changeWorkingDirectory(eventos.getDirectorioLimite());
