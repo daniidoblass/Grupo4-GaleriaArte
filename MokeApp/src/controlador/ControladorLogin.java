@@ -133,11 +133,10 @@ public class ControladorLogin implements ActionListener {
 		String categoria = "null";
 		
 		try {
-			ResultSet usuarios = conexion.realizarConsultaRS("SELECT * FROM usuarios");
-			while(usuarios.next() && categoria.equals("null")) {
-				if(usuarios.getString(2).equals(usuario) && usuarios.getString(4).equals(password)) {
-					categoria = usuarios.getString(5);
-				}
+			ResultSet usuarios = conexion.realizarConsultaRS("SELECT categoria FROM `usuarios` WHERE password like PASSWORD('"+password+"') AND nombre like '"+usuario+"'");
+
+			if(usuarios.next()) {
+				categoria = usuarios.getString(1);
 			}
 		}
 		catch(Exception e) {
