@@ -91,9 +91,9 @@ public class ControladorLogin implements ActionListener {
 		else if(categoria.equals("Responsable")) {
 			new ControladorOpciones(modelo, vista, eventos, conexion, cliente);
 			eventos.setUsuario(usuario);
-			eventos.setDirectorioLimite("/Galeria de Arte/Responsables/"+usuario);
+			eventos.setDirectorioLimite("/GaleriaDeArte/Responsables/"+usuario);
 			try {
-				cliente.makeDirectory("/Galeria de Arte/Responsables/" + usuario);
+				cliente.makeDirectory("/GaleriaDeArte/Responsables/" + usuario);
 				cliente.changeWorkingDirectory(eventos.getDirectorioLimite());
 			} catch (Exception e1) {}
 		}
@@ -114,7 +114,7 @@ public class ControladorLogin implements ActionListener {
 			}
 			new ControladorOpciones(modelo, vista, eventos, conexion, cliente);
 			eventos.setUsuario(usuario);
-			eventos.setDirectorioLimite("/Galeria de Arte/Responsables/"+responsableAsignado+"/Marchantes/" + usuario);
+			eventos.setDirectorioLimite("/GaleriaDeArte/Responsables/"+responsableAsignado+"/Marchantes/" + usuario);
 			try {
 				cliente.makeDirectory(eventos.getDirectorioLimite());
 				cliente.changeWorkingDirectory(eventos.getDirectorioLimite());
