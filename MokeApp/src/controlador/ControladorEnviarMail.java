@@ -58,15 +58,19 @@ public class ControladorEnviarMail {
 		props.put("mail.smtp.auth", "true"); // Usar autenticaci�n mediante usuario y clave
 		props.put("mail.smtp.starttls.enable", "true"); // Para conectar de manera segura al servidor SMTP
 		props.put("mail.smtp.port", "587"); // El puerto SMTP seguro de Google
-		BodyPart texto = new MimeBodyPart();
-		texto.setText(asunto);
-		BodyPart adjunto = new MimeBodyPart();
-		adjunto.setDataHandler(new DataHandler(new FileDataSource(ruta)));
-		adjunto.setFileName(nombreArchivo);
+		
 		MimeMultipart multiParte = new MimeMultipart();
-		multiParte.addBodyPart(texto);
-		multiParte.addBodyPart(adjunto);
-
+		
+		if(ruta != null) {
+			BodyPart texto = new MimeBodyPart();
+			texto.setText(asunto);
+			BodyPart adjunto = new MimeBodyPart();
+			adjunto.setDataHandler(new DataHandler(new FileDataSource(ruta)));
+			adjunto.setFileName(nombreArchivo);
+			multiParte.addBodyPart(texto);
+			multiParte.addBodyPart(adjunto);
+		}
+		
 		Session session = Session.getDefaultInstance(props);
 		MimeMessage message = new MimeMessage(session);
 
@@ -74,8 +78,14 @@ public class ControladorEnviarMail {
 			message.setFrom(new InternetAddress(remitente));
 			message.addRecipients(Message.RecipientType.TO, destinatarios); // Se podr�an a�adir varios de la misma
 																			// manera
-			message.setSubject(asunto);
-			message.setContent(multiParte);
+			if(ruta != null) {
+				message.setSubject(asunto);
+				message.setContent(multiParte);
+				
+			} else {
+				message.setSubject(asunto);
+				message.setText(cuerpo);
+			}
 			Transport transport = session.getTransport("smtp");
 			transport.connect("smtp.gmail.com", remitente, clave);
 			transport.sendMessage(message, message.getAllRecipients());
