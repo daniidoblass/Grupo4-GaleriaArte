@@ -1,12 +1,10 @@
 package vista;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.mail.MessagingException;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -16,8 +14,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import conexion.Conexion;
 import controlador.ControladorAdjuntarArchivoGmail;
 import controlador.ControladorEnviarMail;
+import controlador.Eventos;
 
 public class VistaMailEnviarCorreo extends JFrame {
 
@@ -31,15 +31,19 @@ public class VistaMailEnviarCorreo extends JFrame {
 	private JLabel lblCuerpo;
 	private JButton btnEnviar;
 	private JButton btnCancelar;
-	private JButton adjuntarArchivo;
+	private JButton AdjuntarArchivo;
 	private JFileChooser jFileChooser;
 	private ControladorAdjuntarArchivoGmail controladorAdjuntarArchivoGmail;
 	private String ruta;
 	private String nombreArchivo;
+	private Conexion conexion ;
+	private Eventos eventos;
 
-	public VistaMailEnviarCorreo() {
+	public VistaMailEnviarCorreo(Eventos eventos, Conexion conexion) {
 		this.controladorAdjuntarArchivoGmail = new ControladorAdjuntarArchivoGmail(this);
-		this.cliente = new ControladorEnviarMail(this);
+		this.conexion = conexion;
+		this.eventos = eventos;
+		this.cliente = new ControladorEnviarMail(this,conexion,eventos);
 		this.jFileChooser = new JFileChooser();
 		propiedades();
 		generarContenido();
@@ -64,26 +68,22 @@ public class VistaMailEnviarCorreo extends JFrame {
 
 		lblAsunto = new JLabel("ASUNTO");
 		lblAsunto.setForeground(Color.WHITE);
-		lblAsunto.setFont(new Font("arial",0,12));
 		lblAsunto.setBounds(48, 126, 60, 13);
 		contentPane.add(lblAsunto);
 
 		lblDestinatario = new JLabel("DESTINATARIO");
 		lblDestinatario.setForeground(Color.WHITE);
-		lblDestinatario.setFont(new Font("arial",0,12));
 		lblDestinatario.setBounds(48, 55, 89, 13);
 		contentPane.add(lblDestinatario);
 
 		lblCuerpo = new JLabel("CUERPO");
 		lblCuerpo.setForeground(Color.WHITE);
-		lblCuerpo.setFont(new Font("arial",0,12));
 		lblCuerpo.setBounds(48, 199, 60, 13);
 		contentPane.add(lblCuerpo);
 
 		btnEnviar = new JButton("Enviar");
 		btnEnviar.setForeground(Color.WHITE);
-		btnEnviar.setFont(new Font("calibri",0,12));
-		btnEnviar.setBackground(Color.decode("#193349"));
+		btnEnviar.setBackground(new java.awt.Color(27, 79, 142, 255));
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -95,7 +95,10 @@ public class VistaMailEnviarCorreo extends JFrame {
 						cuerpo.setText("");
 						dispose();
 					}
-				} catch (Exception e1) {}
+				} catch (MessagingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnEnviar.setBounds(329, 441, 85, 21);
@@ -103,8 +106,7 @@ public class VistaMailEnviarCorreo extends JFrame {
 
 		btnCancelar = new JButton("Cancelar");
 		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setFont(new Font("calibri",0,12));
-		btnCancelar.setBackground(Color.decode("#193349"));
+		btnCancelar.setBackground(new java.awt.Color(27, 79, 142, 255));
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				destinatario.setText("");
@@ -116,30 +118,27 @@ public class VistaMailEnviarCorreo extends JFrame {
 		btnCancelar.setBounds(48, 441, 85, 21);
 		contentPane.add(btnCancelar);
 
-		adjuntarArchivo = new JButton("Adjuntar");
-		adjuntarArchivo.setForeground(Color.WHITE);
-		adjuntarArchivo.setFont(new Font("calibri",0,12));
-		adjuntarArchivo.setBackground(Color.decode("#193349"));
-		adjuntarArchivo.setBounds(190, 441, 85, 21);
-		adjuntarArchivo.addActionListener(new ActionListener() {
+		AdjuntarArchivo = new JButton("Enviar Adjunto");
+		AdjuntarArchivo.setForeground(Color.WHITE);
+		AdjuntarArchivo.setBackground(new Color(27, 79, 142));
+		AdjuntarArchivo.setBounds(190, 441, 85, 21);
+		AdjuntarArchivo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controladorAdjuntarArchivoGmail.obtenerFicheroSeleccionado();
 			}
 
 		});
-		contentPane.add(adjuntarArchivo);
+		contentPane.add(AdjuntarArchivo);
 	}
 
 	private void propiedades() {
 		setBounds(100, 100, 485, 532);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(8, 143, 173));
+		contentPane.setBackground(new java.awt.Color(61, 116, 181, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setLocationRelativeTo(null);
-		setIconImage(new ImageIcon("src/subiconos/enviar.png").getImage());
-		setTitle("Redactar");
 	}
 
 	public void configurarJFileChooser() {

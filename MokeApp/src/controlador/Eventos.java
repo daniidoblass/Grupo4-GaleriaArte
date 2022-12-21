@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.mail.MessagingException;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -58,7 +59,12 @@ public class Eventos implements ActionListener, MouseListener {
                 ventanaActual = "FTP";
             }
             else if(btn.getName() == modelo.getTipoOpciones()[1]){                          // Pulsado Boton Mail Moke
-                new ControladorMailPrincipal(modelo, vista, this, conexion, cliente);
+                try {
+					new ControladorMailPrincipal(modelo, vista, this, conexion, cliente);
+				} catch (MessagingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
                 ventanaActual = "MAIL";
             }
             else if(btn.getName() == modelo.getTipoOpciones()[2]){                          // Pulsado Boton Configuracion Moke

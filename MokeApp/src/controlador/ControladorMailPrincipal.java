@@ -10,6 +10,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -49,14 +51,17 @@ public class ControladorMailPrincipal implements ActionListener {
 	private TipoMensaje tipoMensaje = new TipoMensaje();
 	private VistaMailEnviarCorreo vistaMailEnviarCorreo;
 	private ControladorEnviarMail controladorenviarmail;
+	private final int TIEMPO_REFRESCO = 60000;
+	private Hilo hiloActualizar;
 
-	public ControladorMailPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) {
+	public ControladorMailPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente)
+			throws MessagingException {
 		this.modelo = modelo;
 		this.vista = vista;
 		this.eventos = eventos;
-		controladorenviarmail = new ControladorEnviarMail(vistaMailEnviarCorreo);
+		controladorenviarmail = new ControladorEnviarMail(vistaMailEnviarCorreo,conexion,eventos);
 		vistaMailPrincipal = new VistaMailPrincipal(modelo, vista);
-		vistaMailEnviarCorreo = new VistaMailEnviarCorreo();
+		vistaMailEnviarCorreo = new VistaMailEnviarCorreo(eventos,conexion);
 		tipoMensaje = new TipoMensaje();
 		this.conexion = conexion;
 		this.cliente = cliente;
@@ -73,70 +78,91 @@ public class ControladorMailPrincipal implements ActionListener {
 
 		// Configurar boton cambiar tabla
 		configurarBotonCambiarTabla();
-		
+
 		configurarBottonVerMensaje();
-		
-		Hilo h1 = new Hilo(this);
-		h1.start();
+
+		configurarBotonActualizarTabla();
+
+		hiloActualizar = new Hilo(this, TIEMPO_REFRESCO);
+		hiloActualizar.start();
 	}
-	
+
 	public synchronized void controladorGmail() throws MessagingException {
 		rellenarDatos();
-
 	}
 
 	private void configurarBotonCambiarTabla() {
 		vistaMailPrincipal.configurarBotonCambiarTabla();
 		vistaMailPrincipal.getBotonCambiarTabla().addActionListener(this);
 	}
-	
+
 	private void configurarBottonVerMensaje() {
 		vistaMailPrincipal.configuracionBottonVerMensaje();
 		vistaMailPrincipal.getBotonVerMensaje().addActionListener(this);
-		
+	}
+
+	private void configurarBotonActualizarTabla() {
+		vistaMailPrincipal.configurarBotonActualizar();
+		vistaMailPrincipal.getBotonActualizarTabla().addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println(e.getActionCommand());
-		
-		if(e.getActionCommand().equals("Ver mensaje")) {
+
+		if (e.getActionCommand().equals("Ver mensaje")) {
 			try {
 				verMensaje();
-			} catch (MessagingException e1) {}
-		}
-		else {
+			} catch (MessagingException e1) {
+				e1.printStackTrace();
+			}
+		} else if (e.getActionCommand().equals("Actualizar")) {
+			System.out.println(hiloActualizar.getContador());
+			hiloActualizar.setContador(TIEMPO_REFRESCO);
+		} else {
 			vistaMailEnviarCorreo.setVisible(true);
+
+//			if (nombreTabla.equals("usuarios")) {
+//				nombreTabla = "movimientos";
+//				try {
+//					actualizarTabla(nombreTabla);
+//				} catch (MessagingException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//			} else {
+//				nombreTabla = "usuarios";
+//				try {
+//					actualizarTabla(nombreTabla);
+//				} catch (MessagingException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//			}
 		}
 
 	}
-	
-	private void configurarTabla(String nombreTabla) {
-		try {
-			// Rellenar Titulos
-			rellenarTitulos(nombreTabla);
 
-			// Configurar tabla con datos
-			vistaMailPrincipal.configuracionJTable1(nombreColumnas.toArray(new String[nombreColumnas.size()]));
+	private void configurarTabla(String nombreTabla) throws MessagingException {
+		// Rellenar Titulos
+		rellenarTitulos(nombreTabla);
 
-			// Rellenar Datos
-			rellenarDatos();
-		}
-		catch(Exception e) {}
+		// Configurar tabla con datos
+		vistaMailPrincipal.configuracionJTable1(nombreColumnas.toArray(new String[nombreColumnas.size()]));
+
+		// Rellenar Datos
+		rellenarDatos();
 	}
 
-	private void actualizarTabla(String nombreTabla) {
-		try {
-			// Rellenar Titulos
-			rellenarTitulos(nombreTabla);
+	private void actualizarTabla(String nombreTabla) throws MessagingException {
+		// Rellenar Titulos
+		rellenarTitulos(nombreTabla);
 
-			// Actualizar tabla con datos
-			vistaMailPrincipal.modificarModeloTabla(nombreColumnas.toArray(new String[nombreColumnas.size()]));
+		// Actualizar tabla con datos
+		vistaMailPrincipal.modificarModeloTabla(nombreColumnas.toArray(new String[nombreColumnas.size()]));
 
-			// Rellenar Datos
-			rellenarDatos();
-		}
-		catch(Exception e) {}
+		// Rellenar Datos
+		rellenarDatos();
 	}
 
 	private void rellenarTitulos(String nombreTablaSeleccionada) {
@@ -156,37 +182,68 @@ public class ControladorMailPrincipal implements ActionListener {
 			recibirCorreos();
 			System.out.println(mensajes[0].getContent());
 
-		} catch (Exception e) {}
+		} catch (MessagingException e) {
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		try {
 
 			// Bucle para cada resultado en la consulta
-			for (int j = 0; j <mensajes.length; j++) {
+			for (int j = 0; j < mensajes.length; j++) {
 
 				// Se crea un array que ser� una de las filas de la tabla
 				Object[] fila = new Object[nombreColumnas.size()];
 
 				ArrayList<String> String = new ArrayList<>();
-				
-				String [] destinatario = mensajes[j].getFrom()[0].toString().split("<");
+
+				String[] destinatario = mensajes[j].getFrom()[0].toString().split("<");
 				destinatario[destinatario.length - 1] = destinatario[destinatario.length - 1].replace('>', ' ');
-				
+
 				String.add(destinatario[destinatario.length - 1]);
 				String.add(mensajes[j].getSubject());
 				String.add(mensajes[j].getSentDate().toString());
 				String.add(mensajes[j].getContent().toString());
-				
-				
+
 				for (int i = 0; i < nombreColumnas.size(); i++) {
 					fila[i] = String.get(i); // El primer indice en rs es el 1, no el cero, por eso se suma 1.
 				}
-				
-				
-				// Se añade al modelo la fila completa.
+
+				// Se a�ade al modelo la fila completa.
 				vistaMailPrincipal.insertRow(fila);
 			}
 
-		} catch (Exception ex) {}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+//        try {
+//            // Obtener datos de Tabla seleccionada
+//            ResultSet rs = conexion.realizarConsultaRS(select);
+//            
+//            
+//            // Bucle para cada resultado en la consulta
+//            while (rs.next()) {
+//                
+//               // Se crea un array que ser� una de las filas de la tabla
+//               Object[] fila = new Object[nombreColumnas.size()]; 
+//
+//               for (int i=0;i<nombreColumnas.size();i++){
+//                   fila[i] = rs.getObject(i+1); // El primer indice en rs es el 1, no el cero, por eso se suma 1.
+//               }
+//                  
+//
+//               // Se a�ade al modelo la fila completa.
+//               vistaMailPrincipal.insertRow(fila);
+//            }
+//            
+//            
+//        } catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
+
 	}
 
 	private void configurarPanelesAdmin() {
@@ -225,14 +282,33 @@ public class ControladorMailPrincipal implements ActionListener {
 		prop.setProperty("mail.pop3.socketFactory.port", "995");
 
 		Session sesion = Session.getInstance(prop);
-		//sesion.setDebug(true); // Esta linea es para mostrar mas informacion
+		// sesion.setDebug(true); // Esta linea es para mostrar mas informacion
 
 		Store store = sesion.getStore("pop3");
 		// System.out.println(Vlogin.getEmailText());
-		String correo = "joseantoniogarciavegas.sanjose@alumnado.fundacionloyola.net";// Vlogin.getEmailText(); //correo
-																						// de la persona que rebibe los
-																						// correo para leerlo
-		String password = "67842291";// Vlogin.getPassword().getText();// y su contraseña
+
+		// Crear las variables y obtener el usuario que se ha registrado.
+		String usuario = eventos.getUsuario().toString();
+		String correo = "";
+		String password = "";
+
+		// Consulta para obtener el correo y la password del usuario que ha iniciado
+		// sesion
+		String consulta = "SELECT correo,contraseniaGmail FROM `usuarios` WHERE nombre like '" + usuario + "'";
+		ResultSet rs = conexion.realizarConsultaRS(consulta);
+
+		try {
+
+			while (rs.next()) {
+
+				correo = rs.getString(1);
+				password = rs.getString(2);
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// System.out.println("hoal" + correo + password);
 		store.connect("pop.gmail.com", correo, password);
 		Folder folder = store.getFolder("INBOX");
@@ -241,22 +317,25 @@ public class ControladorMailPrincipal implements ActionListener {
 		Collections.reverse(Arrays.asList(mensajes)); // darle la vuelta al array para que aparezaca el correo ultimo
 														// recibido el primero
 	}
-	
+
 	public void verMensaje() throws MessagingException {
 		String mensaje = "";
-		String [] destinatario = null;
+		String[] destinatario = null;
 		try {
 			mensaje = TipoMensaje.getTextFromMessage(mensajes[vistaMailPrincipal.getFila()]);
 			destinatario = mensajes[vistaMailPrincipal.getFila()].getFrom()[0].toString().split("<");
 			destinatario[destinatario.length - 1] = destinatario[destinatario.length - 1].replace('>', ' ');
-		} catch (Exception e) {}
-		
+
+		} catch (MessagingException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String info = "INFO PERSONA\n";
 		info += "Remitente: " + destinatario[destinatario.length - 1] + "\n" + "" + "\n";
 		info += "Asunto: " + mensajes[vistaMailPrincipal.getFila()].getSubject() + "\n";
 		info += "Fecha: " + mensajes[vistaMailPrincipal.getFila()].getSentDate().toString() + "\n" + "" + "\n";
 		info += "Mensaje: " + mensaje + "\n" + "" + "\n";
-		
+
 		JTextArea textArea = new JTextArea();
 		textArea.setText(info);
 		JScrollPane scrollPane = new JScrollPane(textArea);
