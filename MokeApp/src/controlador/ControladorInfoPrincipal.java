@@ -47,8 +47,8 @@ public class ControladorInfoPrincipal {
     }
 
     private void configurarTitulo() {
-		vista.setIcono("src/opcionesprincipal/3.png");
-		vista.setTitulo("MOKE Info");
+		vista.setIcono(modelo.getRutasIconos()[3]);
+		vista.setTitulo(modelo.getTipoOpciones()[3]);
 	}
 
     private void actualizarVentana() {

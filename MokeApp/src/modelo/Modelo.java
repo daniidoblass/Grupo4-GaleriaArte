@@ -46,6 +46,17 @@ public class Modelo {
 
 	// CONSULTAS
 	private String consultaParaObtenerTodosLosDatos = "SELECT * FROM ";
+	private String comillaSimple = "'";
+	
+	// Consulta para obtener el correo y password de quien se ha registrado el app
+	private String consultaCorreoPassword = "SELECT correo,contraseniaGmail FROM `usuarios` WHERE nombre like '";
+	
+	//Consulta para obtener el responsable asignado.
+	private String consultaResponsableAsignado = "SELECT ResponsableAsignado FROM `usuarios` WHERE nombre LIKE '";
+	
+	//Consulta para obtener la password encriptado.
+	private String consultaPasswordEncriptado01 = "SELECT categoria FROM `usuarios` WHERE password like PASSWORD('";
+	private String consultaPasswordEncriptado02 = "') AND nombre like '";
 
 	// RUTAS
 	private String[] rutasIconos;
@@ -54,6 +65,8 @@ public class Modelo {
 	private String servidorFTP = "ftpupload.net";
 	private String usuarioFTP = "b3_33188433";
 	private String contrasenaFTP = "2wknvh9m";
+	private String nombreFichero = "fichero";
+	private String nombreEnlace = "enlace";
 
 	// TEXTOS PARA CREAR UNA CARPETA
 	private String espacioEnBLanco = " ";
@@ -77,19 +90,39 @@ public class Modelo {
 	private String barra = "/";
 	private String[] textosEliminarCarpetas;
 	private String punto = ".";
+	private String puntoDoble = "..";
+
+	// SERVIDOR SMTP DE GOOGLE
+	private String[] textosSmtp;
+
+	// EXTENSIONES
+	private String[] formatos;
+	private String[] extensiones;
+
+	// MENSAJES GENERALES
+	private String[] textosGenerales;
+
+	// CATEGORIAS
+	private String[] categorias;
+	private String[] rutasUsers;
 
 	public Modelo() {
 
 		// VENTANA PRINCIPAL
 		textoVentanaPrincipal = new String[] { "MOKE APP" };
+
 		textoPanelesVentanaPrincipal = new String[] { "NORTE", "OESTE", "CENTRAL" };
+
 		textoOpcionesMenu = new String[] { "Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta",
 				"Eliminar Carpeta", "Renombrar" };
+
 		textoOpcionesMenuImages = new String[] { "subir_fichero", "descargar_fichero", "eliminar_fichero",
 				"crear_carpeta", "eliminar_carpeta", "edit" };
+
 		tipoOpciones = new String[] { "FTP_Moke", "Mail_Moke", "Configuracion_Moke", "Moke_Info" };
+
 		textoLogos = new String[] { "MOKE APP", "FTP MOKE", "Mail MOKE", "Configuracion MOKE", "MOKE INFO",
-				"Administracion MOKE", "ADMIN" };
+				"Administracion MOKE", "ADMIN", "MOKE LOGIN" };
 
 		// LOGIN
 		textoPanelesOpciones = new String[] { "arribaTexto", "medioUsuarios", "abajoFondo" };
@@ -124,7 +157,8 @@ public class Modelo {
 		textoOpcionesAdminImages = new String[] { "movements", "contacts", "message" };
 
 		// RUTAS DE LOS ICONOS
-		rutasIconos = new String[] { "src/opcionesprincipal/4.png", "src/opcionesprincipal/2.png" };
+		rutasIconos = new String[] { "src/opcionesprincipal/4.png", "src/opcionesprincipal/2.png",
+				"src/opcionesprincipal/0.png", "src/opcionesprincipal/3.png", "src/subiconos/usuario.png" };
 
 		// TEXTOS CREAR UNA CARPETA
 		textosCrearCarpetas = new String[] { "Crear Carpeta", "Nombre Carpeta", " se ha creado correctamente",
@@ -142,6 +176,27 @@ public class Modelo {
 		textosEliminarCarpetas = new String[] { "ERROR: la carpeta seleccionada contiene espacios",
 				"¿Deseas eliminar la carpeta ", "Eliminar Carpeta", " se ha eliminado correctamente",
 				"seleccionada la opcion si" };
+
+		// TEXTOS SMTP
+		textosSmtp = new String[] { "mail.smtp.host", "smtp.gmail.com", "mail.smtp.user", "mail.smtp.clave",
+				"mail.smtp.auth", "true", "mail.smtp.starttls.enable", "mail.smtp.port", "587", "smtp",
+				"Correo Enviado", "El correo no existe", "No puedes dejar campos vacios" };
+
+		// FORMATOS
+		formatos = new String[] { "file", "movie", "music", "document", "image", "folder" };
+
+		// TEXTOS EXTENSIONES
+		extensiones = new String[] { ".mp4", ".avi", ".mp3", ".wav", ".txt", ".docx", ".pdf", ".png", ".jpg", ".jpeg" };
+
+		// TEXTOS GENERALES
+		textosGenerales = new String[] { "Servidor FTP",
+				"Servidor FTP desconectado. Por favor, reinicie \nel programa para conectarse",
+				"No se ha podido acceder a la carpeta", "Volver", "return", "carpeta-Volver", "LOGIN",
+				"ERROR AL INICIAR SESION", "Usuario o contraseña incorrectos, vuelva a intentarlo" };
+
+		// CATEGORIAS
+		categorias = new String[] { "admin", "null", "Responsable" };
+		rutasUsers = new String[] { "/GaleriaDeArte/Responsables/", "/Marchantes/" };
 	}
 
 	public String[] getTextoVentanaPrincipal() {
@@ -412,4 +467,117 @@ public class Modelo {
 		this.punto = punto;
 	}
 
+	public String getComillaSimple() {
+		return comillaSimple;
+	}
+
+	public void setComillaSimple(String comillaSimple) {
+		this.comillaSimple = comillaSimple;
+	}
+
+	public String getConsultaCorreoPassword() {
+		return consultaCorreoPassword;
+	}
+
+	public void setConsultaCorreoPassword(String consultaCorreoPassword) {
+		this.consultaCorreoPassword = consultaCorreoPassword;
+	}
+
+	public String[] getTextosSmtp() {
+		return textosSmtp;
+	}
+
+	public void setTextosSmtp(String[] textosSmtp) {
+		this.textosSmtp = textosSmtp;
+	}
+
+	public String getNombreFichero() {
+		return nombreFichero;
+	}
+
+	public void setNombreFichero(String nombreFichero) {
+		this.nombreFichero = nombreFichero;
+	}
+
+	public String getNombreEnlace() {
+		return nombreEnlace;
+	}
+
+	public void setNombreEnlace(String nombreEnlace) {
+		this.nombreEnlace = nombreEnlace;
+	}
+
+	public String getPuntoDoble() {
+		return puntoDoble;
+	}
+
+	public void setPuntoDoble(String puntoDoble) {
+		this.puntoDoble = puntoDoble;
+	}
+
+	public String[] getExtensiones() {
+		return extensiones;
+	}
+
+	public void setExtensiones(String[] extensiones) {
+		this.extensiones = extensiones;
+	}
+
+	public String[] getFormatos() {
+		return formatos;
+	}
+
+	public void setFormatos(String[] formatos) {
+		this.formatos = formatos;
+	}
+
+	public String[] getTextosGenerales() {
+		return textosGenerales;
+	}
+
+	public void setTextosGenerales(String[] textosGenerales) {
+		this.textosGenerales = textosGenerales;
+	}
+
+	public String[] getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(String[] categorias) {
+		this.categorias = categorias;
+	}
+
+	public String[] getRutasUsers() {
+		return rutasUsers;
+	}
+
+	public void setRutasUsers(String[] rutasUsers) {
+		this.rutasUsers = rutasUsers;
+	}
+
+	public String getConsultaResponsableAsignado() {
+		return consultaResponsableAsignado;
+	}
+
+	public void setConsultaResponsableAsignado(String consultaResponsableAsignado) {
+		this.consultaResponsableAsignado = consultaResponsableAsignado;
+	}
+
+	public String getConsultaPasswordEncriptado01() {
+		return consultaPasswordEncriptado01;
+	}
+
+	public void setConsultaPasswordEncriptado01(String consultaPasswordEncriptado01) {
+		this.consultaPasswordEncriptado01 = consultaPasswordEncriptado01;
+	}
+
+	public String getConsultaPasswordEncriptado02() {
+		return consultaPasswordEncriptado02;
+	}
+
+	public void setConsultaPasswordEncriptado02(String consultaPasswordEncriptado02) {
+		this.consultaPasswordEncriptado02 = consultaPasswordEncriptado02;
+	}
+
+	
 }

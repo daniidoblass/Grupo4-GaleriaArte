@@ -18,6 +18,7 @@ import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
 
 import conexion.Conexion;
+import modelo.Modelo;
 import vista.VistaMailEnviarCorreo;
 
 /**
@@ -28,6 +29,7 @@ import vista.VistaMailEnviarCorreo;
 public class ControladorEnviarMail {
 	private Conexion conexion;
 	private Eventos eventos;
+	private Modelo modelo;
 	private VistaMailEnviarCorreo vCorreo;
 
 	/**
@@ -36,8 +38,9 @@ public class ControladorEnviarMail {
 	 * @param Vlogin es la vista del login que me paso a esta clase para utilizarla
 	 */
 	@SuppressWarnings("static-access")
-	public ControladorEnviarMail(VistaMailEnviarCorreo vCorreo,Conexion conexion, Eventos eventos) {
+	public ControladorEnviarMail(VistaMailEnviarCorreo vCorreo,Conexion conexion, Eventos eventos,Modelo modelo) {
 		this.vCorreo = vCorreo;
+		this.modelo = modelo;
 		this.conexion = conexion;
 		this.eventos = eventos;
 	}
@@ -62,7 +65,7 @@ public class ControladorEnviarMail {
 
 		// Consulta para obtener el correo y la password del usuario que ha iniciado
 		// sesion
-		String consulta = "SELECT correo,contraseniaGmail FROM `usuarios` WHERE nombre like '" + usuario + "'";
+		String consulta = modelo.getConsultaCorreoPassword() + usuario + modelo.getComillaSimple();
 		ResultSet rs = conexion.realizarConsultaRS(consulta);
 
 		try {
@@ -81,12 +84,12 @@ public class ControladorEnviarMail {
 		@SuppressWarnings("deprecation")
 
 		Properties props = System.getProperties();
-		props.put("mail.smtp.host", "smtp.gmail.com"); // El servidor SMTP de Google
-		props.put("mail.smtp.user", correo); // remitente de la cuenta
-		props.put("mail.smtp.clave", password); // La clave de la cuenta
-		props.put("mail.smtp.auth", "true"); // Usar autenticaci�n mediante usuario y clave
-		props.put("mail.smtp.starttls.enable", "true"); // Para conectar de manera segura al servidor SMTP
-		props.put("mail.smtp.port", "587"); // El puerto SMTP seguro de Google
+		props.put(modelo.getTextosSmtp()[0], modelo.getTextosSmtp()[1]); // El servidor SMTP de Google
+		props.put(modelo.getTextosSmtp()[2], correo); // remitente de la cuenta
+		props.put(modelo.getTextosSmtp()[3], password); // La clave de la cuenta
+		props.put(modelo.getTextosSmtp()[4], modelo.getTextosSmtp()[5]); // Usar autenticaci�n mediante usuario y clave
+		props.put(modelo.getTextosSmtp()[6], modelo.getTextosSmtp()[5]); // Para conectar de manera segura al servidor SMTP
+		props.put(modelo.getTextosSmtp()[7], modelo.getTextosSmtp()[8]); // El puerto SMTP seguro de Google
 
 		MimeMultipart multiParte = new MimeMultipart();
 
@@ -115,22 +118,22 @@ public class ControladorEnviarMail {
 				message.setSubject(asunto);
 				message.setText(cuerpo);
 			}
-			Transport transport = session.getTransport("smtp");
-			transport.connect("smtp.gmail.com", correo, password);
+			Transport transport = session.getTransport(modelo.getTextosSmtp()[9]);
+			transport.connect(modelo.getTextosSmtp()[1], correo, password);
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
-			mensaje = "Correo Enviado";
-			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.INFORMATION_MESSAGE);// mensaje enviado
+			mensaje = modelo.getTextosSmtp()[10];
+			JOptionPane.showMessageDialog(null, mensaje, modelo.getNada(), JOptionPane.INFORMATION_MESSAGE);// mensaje enviado
 			return mensaje;
 
 		} catch (MessagingException me) {
-			mensaje = "El correo no existe";
-			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE); // correo inexistente
+			mensaje = modelo.getTextosSmtp()[11];
+			JOptionPane.showMessageDialog(null, mensaje, modelo.getNada(), JOptionPane.ERROR_MESSAGE); // correo inexistente
 			return mensaje;
 
 		} catch (NullPointerException e) {
-			mensaje = "No puedes dejar campos vacios";
-			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);// campos vacios
+			mensaje = modelo.getTextosSmtp()[12];
+			JOptionPane.showMessageDialog(null, mensaje, modelo.getNada(), JOptionPane.ERROR_MESSAGE);// campos vacios
 			return mensaje;
 		}
 	}

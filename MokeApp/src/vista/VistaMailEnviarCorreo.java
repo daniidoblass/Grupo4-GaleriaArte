@@ -18,6 +18,7 @@ import conexion.Conexion;
 import controlador.ControladorAdjuntarArchivoGmail;
 import controlador.ControladorEnviarMail;
 import controlador.Eventos;
+import modelo.Modelo;
 
 public class VistaMailEnviarCorreo extends JFrame {
 
@@ -37,13 +38,15 @@ public class VistaMailEnviarCorreo extends JFrame {
 	private String ruta;
 	private String nombreArchivo;
 	private Conexion conexion ;
+	private Modelo modelo;
 	private Eventos eventos;
 
 	public VistaMailEnviarCorreo(Eventos eventos, Conexion conexion) {
 		this.controladorAdjuntarArchivoGmail = new ControladorAdjuntarArchivoGmail(this);
 		this.conexion = conexion;
+		this.modelo = modelo;
 		this.eventos = eventos;
-		this.cliente = new ControladorEnviarMail(this,conexion,eventos);
+		this.cliente = new ControladorEnviarMail(this,conexion,eventos,modelo);
 		this.jFileChooser = new JFileChooser();
 		propiedades();
 		generarContenido();

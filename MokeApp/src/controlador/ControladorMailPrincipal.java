@@ -59,7 +59,7 @@ public class ControladorMailPrincipal implements ActionListener {
 		this.modelo = modelo;
 		this.vista = vista;
 		this.eventos = eventos;
-		controladorenviarmail = new ControladorEnviarMail(vistaMailEnviarCorreo,conexion,eventos);
+		controladorenviarmail = new ControladorEnviarMail(vistaMailEnviarCorreo,conexion,eventos,modelo);
 		vistaMailPrincipal = new VistaMailPrincipal(modelo, vista);
 		vistaMailEnviarCorreo = new VistaMailEnviarCorreo(eventos,conexion);
 		tipoMensaje = new TipoMensaje();
