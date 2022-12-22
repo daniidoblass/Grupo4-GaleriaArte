@@ -34,9 +34,12 @@ public class Modelo {
     
     // CONFIGURACIÓN
     private String[] textoOpcionesConfig;
+    private String[] textoRestablecerPassword;
     private String[] textoOpcionesConfigImages;
+    private String[] textoPasswordExcepciones;
     private String[] textoDatosConfig;
-    
+    private String[] textoCorreo;
+    private String[] textoSoporteTecnico;
     // ADMIN
     private String[] textoOpcionesAdmin;
     private String[] textoOpcionesAdminImages;
@@ -70,18 +73,35 @@ public class Modelo {
         		 "El usuario podrá acceder a un apartado de correo electrónico donde podrá enviar correos a otros usuarios"};
         
         // CONFIGURACIÓN
+        textoPasswordExcepciones= new String[] {"Texto Vacío", "El campo contraseña no puede estar vacío","Texto Con Espacios","La contraseña no puede contener espacios","Texto Demasiado Corto","El campo contraseña debe tener entre 6 y 30 caracteres","Texto Demasiado Largo","El campo contraseña debe tener entre 6 y 30 caracteres","Password Incorrecta","Password introducida incorrecta"};
+        textoRestablecerPassword=new String[] {"Reestablecer Contraseña","Contraseña cambiada correctamente","ERROR Reestablecer Contraseña","La contraseña no se ha podido modificar"};
         textoOpcionesConfig = new String[]{"Reestablecer Contraseña", "Cambiar Correo Corporativo", "Soporte Técnico"};
         textoOpcionesConfigImages = new String[]{"password", "gmail", "soporte"};
-        textoDatosConfig = new String[] {"Introduzca la nueva contraseña",
-       		 "Introduzca el nuevo correo corporativo",
-       		"Si desea informarnos sobre algún problema relacionado con el programa\nContáctanos por:\n\nTeléfono: 695138058\nCorreo Electrónico: adminMokeApp@gmail.com\n\nTambien puede enviar un mensaje desde aqui:","Confirme la contraseña","Contraseña Incorrecta","Proximamente..."};
-        
+        textoDatosConfig = new String[] {"Introduzca la nueva contraseña","Introduzca el nuevo correo corporativo","Si desea informarnos sobre algún problema relacionado con el programa\nContáctanos por:\n\nTeléfono: 695138058\nCorreo Electrónico: adminMokeApp@gmail.com\n\nTambien puede enviar un mensaje desde aqui:","Confirme la contraseña","Contraseña Incorrecta","Proximamente...","Verificación Usuario","Introduzca su contraseña actual"};
+        textoCorreo= new String[] {"Texto Vacío", "El campo correo no puede estar vacío","Texto Con Espacios","El correo corporativo no puede contener espacios","Correo Inválido", "Formato de correo inválido","Cambio Correo Corporativo","Correo Corporativo cambiado correctamente","ERROR Correo Corporativo","El correo no se ha podido modificar"};
+        textoSoporteTecnico= new String[] {"Texto Vacío", "El campo mensaje no puede estar vacío","Soporte Técnico","Mensaje enviado a administradores","ERROR Soporte Técnico","El mensaje no se ha podido enviar","ERROR INESPERADO", "No se ha podido enviar mensaje"};
         // ADMIN
         textoOpcionesAdmin = new String[]{"Movimientos", "Usuarios", "Mensajes"};
         textoOpcionesAdminImages = new String[]{"movements", "contacts", "message"};
     }
     
-    public String[] getTextoVentanaPrincipal(){
+    
+    public String[] getTextoCorreo() {
+		return textoCorreo;
+	}
+
+
+	public String[] getTextoRestablecerPassword() {
+		return textoRestablecerPassword;
+	}
+
+
+	public String[] getTextoContraexcepciones() {
+		return textoPasswordExcepciones;
+	}
+
+
+	public String[] getTextoVentanaPrincipal(){
         return textoVentanaPrincipal;
     }
     
@@ -148,5 +168,10 @@ public class Modelo {
     public String[] getTextoOpcionesAdminImages(){
         return textoOpcionesAdminImages;
     }
+
+
+	public String[] getTextoSoporteTecnico() {
+		return textoSoporteTecnico;
+	}
     
 }

@@ -54,7 +54,7 @@ public class EventosConfig implements ActionListener, MouseListener {
 								modelo.getTextoOpcionesConfig()[0], modelo.getTextoDatosConfig()[0]);
 						if (opcionComprobar == 0) {
 							contraNueva = vistaConfigPrincipal.recogerContra();
-							opcionComprobar = comprobarContra(contraNueva,opcionComprobar);
+							opcionComprobar = excepcionesPassword(contraNueva,opcionComprobar);
 						}else {
 							opcion=1;
 						}
@@ -73,8 +73,7 @@ public class EventosConfig implements ActionListener, MouseListener {
 						}
 					}
 				} else {
-					vistaConfigPrincipal.mostrarMensajeEmergente("Password Incorrecta",
-							"Password introducida incorrecta");
+					vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoContraexcepciones()[8],modelo.getTextoContraexcepciones()[9]);
 				}
 			} else if (btn.getText().contains(modelo.getTextoOpcionesConfig()[1]))
 			{ // Cambio Correo Corporativo
@@ -94,24 +93,21 @@ public class EventosConfig implements ActionListener, MouseListener {
 		}
 	}
 
-	private int comprobarContra(String respuesta, int opcion) {
+	private int excepcionesPassword(String respuesta, int opcion) {
 		int comprobado = 1;
 		if (opcion == 1) {
 		} else {
 			if (respuesta.equals("") || respuesta.isEmpty()) {
-				vistaConfigPrincipal.mostrarMensajeEmergente("Texto Vacío", "El campo contraseña no puede estar vacío");
+				vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoContraexcepciones()[0],modelo.getTextoContraexcepciones()[1]);
 				comprobado = 0;
 			} else if (respuesta.contains(" ")) {
-				vistaConfigPrincipal.mostrarMensajeEmergente("Texto Con Espacios",
-						"La contraseña no puede contener espacios");
+				vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoContraexcepciones()[2],modelo.getTextoContraexcepciones()[3]);
 				comprobado = 0;
 			} else if (respuesta.length() < 6) {
-				vistaConfigPrincipal.mostrarMensajeEmergente("Texto Demasiado Corto",
-						"El campo contraseña debe tener entre 6 y 30 caracteres");
+				vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoContraexcepciones()[4],modelo.getTextoContraexcepciones()[5]);
 				comprobado = 0;
 			} else if (respuesta.length() > 30) {
-				vistaConfigPrincipal.mostrarMensajeEmergente("Texto Demasiado Largo",
-						"El campo contraseña debe tener entre 6 y 30 caracteres");
+				vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoContraexcepciones()[6],modelo.getTextoContraexcepciones()[7]);
 				comprobado = 0;
 			}
 		}
@@ -121,8 +117,7 @@ public class EventosConfig implements ActionListener, MouseListener {
 	private boolean comprobarPassword() {
 		boolean comprobacion = false;
 		try {
-			int opcion = vistaConfigPrincipal.mostrarMensajePassword("Verificación Usuario",
-					"Introduzca su contraseña actual");
+			int opcion = vistaConfigPrincipal.mostrarMensajePassword(modelo.getTextoDatosConfig()[6],modelo.getTextoDatosConfig()[7]);
 			if (opcion == 0) {
 				String passwordActual = vistaConfigPrincipal.recogerContra();
 				if (!passwordActual.equals("") && !passwordActual.isEmpty()) {
@@ -150,11 +145,9 @@ public class EventosConfig implements ActionListener, MouseListener {
 			int num = conexion.realizarUpdateStatement(
 					"UPDATE usuarios SET password='" + respuesta + "' WHERE nombre = '" + usuario + "'");
 			if (num > 0) {
-				vistaConfigPrincipal.mostrarMensajeEmergente("Reestablecer Contraseña",
-						"Contraseña cambiada correctamente");
+				vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoRestablecerPassword()[0],modelo.getTextoRestablecerPassword()[1]);
 			} else {
-				vistaConfigPrincipal.mostrarMensajeEmergente("ERROR Reestablecer Contraseña",
-						"La contraseña no se ha podido modificar");
+				vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoRestablecerPassword()[2],modelo.getTextoRestablecerPassword()[3]);
 			}
 		} catch (Exception e) {
 		}
@@ -170,33 +163,30 @@ public class EventosConfig implements ActionListener, MouseListener {
 			Matcher mather = pattern.matcher(respuesta);
 
 			if (respuesta.equals("") || respuesta.isEmpty()) {
-				vistaConfigPrincipal.mostrarMensajeEmergente("Texto Vacío", "El campo correo no puede estar vacío");
+				vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoCorreo()[0],modelo.getTextoCorreo()[1]);
 			} else if (respuesta.contains(" ")) {
-				vistaConfigPrincipal.mostrarMensajeEmergente("Texto Con Espacios",
-						"El correo corporativo no puede contener espacios");
+				vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoCorreo()[2],modelo.getTextoCorreo()[3]);
 			} else if (!mather.find()) {
-				vistaConfigPrincipal.mostrarMensajeEmergente("Correo Inválido", "Formato de correo inválido");
+				vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoCorreo()[4],modelo.getTextoCorreo()[5]);
 			} else {
 				String usuario = eventos.getUsuario();
 				int num = conexion.realizarUpdateStatement(
 						"UPDATE usuarios SET correo='" + respuesta + "' WHERE nombre = '" + usuario + "'");
 				if (num > 0) {
-					vistaConfigPrincipal.mostrarMensajeEmergente("Cambio Correo Corporativo",
-							"Correo Corporativo cambiado correctamente");
+					vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoCorreo()[6],modelo.getTextoCorreo()[7]);
 				} else {
-					vistaConfigPrincipal.mostrarMensajeEmergente("ERROR Correo Corporativo",
-							"El correo no se ha podido modificar");
+					vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoCorreo()[8],modelo.getTextoCorreo()[9]);
 				}
 			}
 		} catch (Exception e) {
-			vistaConfigPrincipal.mostrarMensajeEmergente("Correo Inválido", "Formato de correo inválido");
+			vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoCorreo()[4],modelo.getTextoCorreo()[5]);
 		}
 	}
 
 	private void enviarMensajeSoporte(String respuesta) {
 		try {
 			if (respuesta.equals("") || respuesta.isEmpty()) {
-				vistaConfigPrincipal.mostrarMensajeEmergente("Texto Vacío", "El campo mensaje no puede estar vacío");
+				vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoSoporteTecnico()[0],modelo.getTextoSoporteTecnico()[1]);
 			} else {
 				int id = 0;
 				String usuario = eventos.getUsuario();
@@ -219,14 +209,12 @@ public class EventosConfig implements ActionListener, MouseListener {
 									+ "VALUES(" + id + ", '" + usuario + "', '" + categoria + "', '" + respuesta
 									+ "', '" + fecha.format(date) + "', '" + hora.format(date) + "')");
 					if (num > 0) {
-						vistaConfigPrincipal.mostrarMensajeEmergente("Soporte Técnico",
-								"Mensaje enviado a administradores");
+						vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoSoporteTecnico()[2],modelo.getTextoSoporteTecnico()[3]);
 					} else {
-						vistaConfigPrincipal.mostrarMensajeEmergente("ERROR Soporte Técnico",
-								"El mensaje no se ha podido enviar");
+						vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoSoporteTecnico()[4],modelo.getTextoSoporteTecnico()[5]);
 					}
 				} catch (Exception e) {
-					vistaConfigPrincipal.mostrarMensajeEmergente("ERROR INESPERADO", "No se ha podido enviar mensaje");
+					vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextoSoporteTecnico()[6],modelo.getTextoSoporteTecnico()[7]);
 				}
 
 			}
