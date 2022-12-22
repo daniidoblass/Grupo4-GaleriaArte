@@ -2,14 +2,16 @@ package controlador;
 
 import org.apache.commons.net.ftp.FTPClient;
 
+import modelo.Modelo;
+
 public class ControladorClienteFTP {
 
 	private FTPClient cliente;
-	private String servidorFTP = "ftpupload.net";
-	private String usuario = "b3_33188433";
-	private String contrasena = "2wknvh9m";
+	private Modelo modelo;
 	
 	public ControladorClienteFTP() {
+		
+		this.modelo = modelo;
 		
 		try {
 			
@@ -17,10 +19,10 @@ public class ControladorClienteFTP {
 			cliente = new FTPClient();
 
 			// conectarse a ese servidor
-			cliente.connect(servidorFTP);
+			cliente.connect(modelo.getServidorFTP());
 
 			// iniciar sesión en el servidor
-			boolean loginCorrecto = cliente.login(usuario, contrasena);
+			boolean loginCorrecto = cliente.login(modelo.getUsuarioFTP(), modelo.getContrasenaFTP());
 			if(!loginCorrecto) {
 				System.out.print("ERROR: usuario o contraseña incorrectas");
 				cliente.disconnect();

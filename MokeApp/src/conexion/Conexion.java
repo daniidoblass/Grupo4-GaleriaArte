@@ -89,7 +89,7 @@ public class Conexion {
     // Obtener Tablas
     public ResultSet getTables() {
         try {
-            return metadatos.getTables("mokedb", null, null, new String[]{"TABLE"});
+            return metadatos.getTables(modelo.getArchivo(), null, null, new String[]{modelo.getNombreTable()});
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -101,7 +101,7 @@ public class Conexion {
     // Obtener Columnas
     public ResultSet getColumns(String nombreTabla) {
         try {
-            return metadatos.getColumns("mokedb", null, nombreTabla, null);
+            return metadatos.getColumns(modelo.getArchivo(), null, nombreTabla, null);
         }
         catch (SQLException e) {
             e.printStackTrace();

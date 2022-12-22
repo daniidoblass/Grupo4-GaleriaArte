@@ -75,7 +75,7 @@ public class ControladorAdmin {
         vistaAdmin.configuracionJTable1(nombreColumnas.toArray(new String[nombreColumnas.size()]));
         
         // Rellenar Datos
-        rellenarDatos("SELECT * FROM " + nombreTabla);
+        rellenarDatos(modelo.getConsultaParaObtenerTodosLosDatos() + nombreTabla);
 	}
 	
 	public void actualizarTabla(String nombreTabla) {
@@ -86,7 +86,7 @@ public class ControladorAdmin {
         vistaAdmin.modificarModeloTabla(nombreColumnas.toArray(new String[nombreColumnas.size()]));
         
         // Rellenar Datos
-        rellenarDatos("SELECT * FROM " + nombreTabla);
+        rellenarDatos(modelo.getConsultaParaObtenerTodosLosDatos() + nombreTabla);
 	}
     
     private void rellenarTitulos(String nombreTablaSeleccionada) {
@@ -98,7 +98,7 @@ public class ControladorAdmin {
 
         try {
             while (rsColumnas.next()) {
-                nombreColumnas.add(rsColumnas.getString("COLUMN_NAME"));
+                nombreColumnas.add(rsColumnas.getString(modelo.getNombreColumna()));
             } 
         }
         catch (SQLException ex) {
@@ -149,9 +149,9 @@ public class ControladorAdmin {
 	}
 
 	private void configurarTitulo() {
-		vista.setIcono("src/opcionesprincipal/4.png");
-		vista.setTitulo("Administracion MOKE");
-		eventos.setVentanaActual("ADMIN");
+		vista.setIcono(modelo.getRutasIconos()[0]);
+		vista.setTitulo(modelo.getTextoLogos()[5]);
+		eventos.setVentanaActual(modelo.getTextoLogos()[6]);
 	}
 
     private void actualizarVentana() {

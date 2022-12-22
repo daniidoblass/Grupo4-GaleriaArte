@@ -27,6 +27,10 @@ public class Modelo {
     private String user = "root";
     private String password = "";
     
+    // TABLE
+    private String nombreTable = "TABLE";
+    private String nombreColumna = "COLUMN_NAME";
+    
     // INFO
     private String[] textoOpcionesInfo;
     private String[] textoOpcionesInfoImages;
@@ -40,6 +44,17 @@ public class Modelo {
     // ADMIN
     private String[] textoOpcionesAdmin;
     private String[] textoOpcionesAdminImages;
+    
+    // CONSULTAS
+    private String consultaParaObtenerTodosLosDatos = "SELECT * FROM ";
+    
+    // RUTAS
+    private String [] rutasIconos;
+    
+    // FTP
+    private String servidorFTP = "ftpupload.net";
+	private String usuarioFTP = "b3_33188433";
+	private String contrasenaFTP = "2wknvh9m"; 
 
     public Modelo(){
         
@@ -49,7 +64,7 @@ public class Modelo {
         textoOpcionesMenu = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta", "Renombrar"};
         textoOpcionesMenuImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta", "edit"};
         tipoOpciones = new String[]{"FTP_Moke", "Mail_Moke", "Configuracion_Moke", "Moke_Info"};
-        textoLogos= new String[]{"MOKE APP", "FTP MOKE", "Mail MOKE", "Configuracion MOKE", "MOKE INFO"};
+        textoLogos= new String[]{"MOKE APP", "FTP MOKE", "Mail MOKE", "Configuracion MOKE", "MOKE INFO","Administracion MOKE","ADMIN"};
         
         // LOGIN
         textoPanelesOpciones = new String[]{"arribaTexto", "medioUsuarios", "abajoFondo"};
@@ -79,6 +94,9 @@ public class Modelo {
         // ADMIN
         textoOpcionesAdmin = new String[]{"Movimientos", "Usuarios", "Mensajes"};
         textoOpcionesAdminImages = new String[]{"movements", "contacts", "message"};
+        
+        //RUTAS DE LOS ICONOS
+        rutasIconos = new String [] {"src/opcionesprincipal/4.png",""};
     }
     
     public String[] getTextoVentanaPrincipal(){
@@ -148,5 +166,86 @@ public class Modelo {
     public String[] getTextoOpcionesAdminImages(){
         return textoOpcionesAdminImages;
     }
+
+	public String getArchivo() {
+		return archivo;
+	}
+
+	public void setArchivo(String archivo) {
+		this.archivo = archivo;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getNombreTable() {
+		return nombreTable;
+	}
+
+	public void setNombreTable(String nombreTable) {
+		this.nombreTable = nombreTable;
+	}
+
+	public String getConsultaParaObtenerTodosLosDatos() {
+		return consultaParaObtenerTodosLosDatos;
+	}
+
+	public void setConsultaParaObtenerTodosLosDatos(String consultaParaObtenerTodosLosDatos) {
+		this.consultaParaObtenerTodosLosDatos = consultaParaObtenerTodosLosDatos;
+	}
+
+	public String getNombreColumna() {
+		return nombreColumna;
+	}
+
+	public void setNombreColumna(String nombreColumna) {
+		this.nombreColumna = nombreColumna;
+	}
+
+	public String[] getRutasIconos() {
+		return rutasIconos;
+	}
+
+	public void setRutasIconos(String[] rutasIconos) {
+		this.rutasIconos = rutasIconos;
+	}
+
+	public String getServidorFTP() {
+		return servidorFTP;
+	}
+
+	public void setServidorFTP(String servidorFTP) {
+		this.servidorFTP = servidorFTP;
+	}
+
+	public String getUsuarioFTP() {
+		return usuarioFTP;
+	}
+
+	public void setUsuarioFTP(String usuarioFTP) {
+		this.usuarioFTP = usuarioFTP;
+	}
+
+	public String getContrasenaFTP() {
+		return contrasenaFTP;
+	}
+
+	public void setContrasenaFTP(String contrasenaFTP) {
+		this.contrasenaFTP = contrasenaFTP;
+	}
+    
     
 }
