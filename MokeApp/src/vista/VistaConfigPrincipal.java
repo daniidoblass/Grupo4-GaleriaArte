@@ -20,15 +20,15 @@ public class VistaConfigPrincipal extends JFrame{
    
     private JPanel panelCentral = new JPanel();
     private ArrayList<JButton> botonesMenu = new ArrayList<>();
-
+    private JPasswordField pass;
     public VistaConfigPrincipal(Modelo modelo, Vista vista){
         this.modelo = modelo;
         this.vista = vista;
         actualizarVentanaPrincipal();
         configurarPanelCentral();
     }
-    
-    /*
+  
+	/*
      * Actualizamos la ventana principal
     */
     private void actualizarVentanaPrincipal() {
@@ -89,6 +89,29 @@ public class VistaConfigPrincipal extends JFrame{
     public void mostrarMensajeEmergente(String titulo, String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
 	}
+    
+    public int mostrarMensajePassword(String titulo, String mensaje) {
+    	JPanel panel = new JPanel();
+    	panel.setPreferredSize(new Dimension(200,50));
+    	panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    	JLabel label = new JLabel(mensaje);
+    	label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    	pass= new JPasswordField(30);
+    	pass.setPreferredSize(new Dimension(50,10));
+    	pass.setAlignmentX(Component.LEFT_ALIGNMENT);
+    	panel.add(label);
+    	panel.add(pass);
+    	String[] options = new String[]{"Aceptar", "Cancelar"};
+    	int option = JOptionPane.showOptionDialog(null, panel, "Restablecer Contraseña",
+    	                         JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+    	                         null, options, options[1]);
+		return option;
+    }
+    
+    public String recogerContra() {
+		return pass.getText();
+	}
+
 }
 
 
