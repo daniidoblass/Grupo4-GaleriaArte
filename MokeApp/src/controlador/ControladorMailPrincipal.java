@@ -52,7 +52,7 @@ public class ControladorMailPrincipal implements ActionListener {
 	private VistaMailEnviarCorreo vistaMailEnviarCorreo;
 	private ControladorEnviarMail controladorenviarmail;
 	private final int TIEMPO_REFRESCO = 60000;
-	private Hilo hiloActualizar;
+	private HiloActualizarCorreo hiloActualizarCorreo;
 
 	public ControladorMailPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente)
 			throws MessagingException {
@@ -82,8 +82,10 @@ public class ControladorMailPrincipal implements ActionListener {
 		configurarBottonVerMensaje();
 
 		configurarBotonActualizarTabla();
-
-		hiloActualizar = new Hilo(this, TIEMPO_REFRESCO);
+		
+		hiloActualizarCorreo = new HiloActualizarCorreo(this, TIEMPO_REFRESCO);
+		
+		Thread hiloActualizar = new Thread(hiloActualizarCorreo);
 		hiloActualizar.start();
 	}
 
@@ -117,8 +119,8 @@ public class ControladorMailPrincipal implements ActionListener {
 				e1.printStackTrace();
 			}
 		} else if (e.getActionCommand().equals("Actualizar")) {
-			System.out.println(hiloActualizar.getContador());
-			hiloActualizar.setContador(TIEMPO_REFRESCO);
+			System.out.println(hiloActualizarCorreo.getContador());
+			hiloActualizarCorreo.setContador(TIEMPO_REFRESCO);
 		} else {
 			vistaMailEnviarCorreo.setVisible(true);
 

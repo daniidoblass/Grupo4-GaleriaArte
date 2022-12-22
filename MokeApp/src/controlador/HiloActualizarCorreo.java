@@ -2,28 +2,36 @@ package controlador;
 
 import javax.mail.MessagingException;
 
-public class Hilo extends Thread {
+public class HiloActualizarCorreo implements Runnable {
 	private ControladorMailPrincipal controlMail;
 	private int contador;
 	private int tiempoRefresco;
 
-	public Hilo(ControladorMailPrincipal controlMail, int tiempoRefresco) {
+	/**
+	 * Constructor parametrizado de la clase HiloActualizarCorreo, que recibe el controlador del mail para poder
+	 * actualizarlo y el tiempo de refresco que indicará cada cuantos milisegundos se actualiza 
+	 * @param controlMail
+	 * @param tiempoRefresco
+	 */
+	public HiloActualizarCorreo(ControladorMailPrincipal controlMail, int tiempoRefresco) {
 		this.controlMail = controlMail;
-		this.setName("hilo1");
 		this.tiempoRefresco = tiempoRefresco;
 		this.contador = 0;
 
 	}
 
+	/**
+	 * Método que se ejecutará al iniciar el hilo y que actualizará el email cada 60 segundos
+	 */
 	@Override
 	public void run() {
 		while (true) {
 			try {
 				controlMail.controladorGmail();
 				while (contador < tiempoRefresco) {
-					sleep(1000);
+					Thread.sleep(1000);
+					System.out.println("Contador --> " + contador);
 					contador += 1000;
-					System.out.println("Contador actual --> " + contador);
 				}
 				contador = 0;
 
