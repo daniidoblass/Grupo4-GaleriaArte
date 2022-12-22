@@ -119,7 +119,6 @@ public class ControladorMailPrincipal implements ActionListener {
 				e1.printStackTrace();
 			}
 		} else if (e.getActionCommand().equals("Actualizar")) {
-			System.out.println(hiloActualizarCorreo.getContador());
 			hiloActualizarCorreo.setContador(TIEMPO_REFRESCO);
 		} else {
 			vistaMailEnviarCorreo.setVisible(true);
