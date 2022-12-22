@@ -74,7 +74,7 @@ public class Modelo {
         textoOpcionesConfigImages = new String[]{"password", "gmail", "soporte"};
         textoDatosConfig = new String[] {"Introduzca la nueva contraseña",
        		 "Introduzca el nuevo correo corporativo",
-       		"Si desea informarnos sobre algún problema relacionado con el programa\nContáctanos por:\n\nTélefono: 695138058\nCorreo Electrónico: adminMokeApp@gmail.com\n\nTambien puede enviar un mensaje desde aqui:","Confirme la contraseña","Contraseña Incorrecta","Proximamente..."};
+       		"Si desea informarnos sobre algún problema relacionado con el programa\nContáctanos por:\n\nTeléfono: 695138058\nCorreo Electrónico: adminMokeApp@gmail.com\n\nTambien puede enviar un mensaje desde aqui:","Confirme la contraseña","Contraseña Incorrecta","Proximamente..."};
         
         // ADMIN
         textoOpcionesAdmin = new String[]{"Movimientos", "Usuarios", "Mensajes"};
