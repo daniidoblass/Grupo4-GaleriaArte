@@ -43,27 +43,27 @@ public class ControladorEliminarCarpeta {
 		
 		try {
 			
-			if (nombreArchivo.contains("carpeta")) {
+			if (nombreArchivo.contains(modelo.getCarpetaNombre())) {
 
-				if(nombreArchivo.contains(" ")) {
-					JOptionPane.showMessageDialog(null, "ERROR: la carpeta seleccionada contiene espacios");
+				if(nombreArchivo.contains(modelo.getEspacioEnBLanco())) {
+					JOptionPane.showMessageDialog(null, modelo.getTextosEliminarCarpetas()[0]);
 				}
 				else {
-					nombreArchivo = nombreArchivo.replace("carpeta-", "");
+					nombreArchivo = nombreArchivo.replace(modelo.getCarpetaGuion(), modelo.getNada());
 					
 					int opcion = JOptionPane.showConfirmDialog(null,
-							"¿Deseas eliminar la carpeta " + nombreArchivo + "?",
-							"Eliminar Carpeta", JOptionPane.YES_NO_OPTION);
+							modelo.getTextosEliminarCarpetas()[1] + nombreArchivo + modelo.getSignoPregunta(),
+							modelo.getTextosEliminarCarpetas()[2], JOptionPane.YES_NO_OPTION);
 					
 					if (opcion == JOptionPane.YES_OPTION) {
-						System.out.println("seleccionada la opcion si");
-						if (cliente.printWorkingDirectory().equals("/")) {
+						System.out.println(modelo.getTextosEliminarCarpetas()[4]);
+						if (cliente.printWorkingDirectory().equals(modelo.getBarra())) {
 							nombreArchivo = cliente.printWorkingDirectory() + nombreArchivo;
 						} else {
-							nombreArchivo = cliente.printWorkingDirectory() + "/" + nombreArchivo;
+							nombreArchivo = cliente.printWorkingDirectory() + modelo.getBarra() + nombreArchivo;
 						}
 						eliminarCarpeta(cliente, nombreArchivo, directorioActual);
-						JOptionPane.showMessageDialog(null, nombreArchivo + " se ha eliminado correctamente");
+						JOptionPane.showMessageDialog(null, nombreArchivo + modelo.getTextosEliminarCarpetas()[3]);
 					}
 				}
 			} 
@@ -83,8 +83,8 @@ public class ControladorEliminarCarpeta {
 		
 		// guardamos el nombre de la carpeta
 		String listaDirectorios = nombreArchivo;
-		if (!directorioActual.equals("")) {
-			listaDirectorios += "/" + directorioActual;
+		if (!directorioActual.equals(modelo.getNada())) {
+			listaDirectorios += modelo.getBarra() + directorioActual;
 		}
 		
 		
@@ -92,13 +92,13 @@ public class ControladorEliminarCarpeta {
 		if (subFicheros != null && subFicheros.length > 0) {
 			for (FTPFile aFile : subFicheros) {
 				String currentFileName = aFile.getName();
-				if (currentFileName.equals(".") || currentFileName.equals("..")) {
+				if (currentFileName.equals(modelo.getPunto()) || currentFileName.equals("..")) {
 					// skip parent directory and the directory itself
 					continue;
 				}
-				String filePath = nombreArchivo + "/" + currentFileName;
-				if (directorioActual.equals("")) {
-					filePath = nombreArchivo + "/" + currentFileName;
+				String filePath = nombreArchivo + modelo.getBarra() + currentFileName;
+				if (directorioActual.equals(modelo.getNada())) {
+					filePath = nombreArchivo + modelo.getBarra() + currentFileName;
 				}
 				if (aFile.isDirectory()) {
 					System.out.println("el fichero es un directorio");

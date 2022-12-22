@@ -48,24 +48,24 @@ public class ControladorEliminarArchivo {
 		
 		try {
 			String archivoDelServidor = eventos.getControladorFTPPrincipal().getInfoFicheroPulsado();
-			if(archivoDelServidor.isEmpty() || archivoDelServidor.equals("") || archivoDelServidor.contains("carpeta-")) {
-				vistaEliminarArchivo.mostrarMensajeEmergente("Eliminar Archivo", "No hay seleccionado ningún archivo");
+			if(archivoDelServidor.isEmpty() || archivoDelServidor.equals(modelo.getNada()) || archivoDelServidor.contains(modelo.getCarpetaGuion())) {
+				vistaEliminarArchivo.mostrarMensajeEmergente(modelo.getTextosEliminarArchivos()[0], modelo.getTextosEliminarArchivos()[1]);
 			}
 			else {
-				archivoDelServidor = archivoDelServidor.replace("fichero-", "");
-				if(vistaEliminarArchivo.mostrarMensajeConfirmacion("Eliminar Archivo", "¿Desea eliminar " + archivoDelServidor + "?") == 0) {
+				archivoDelServidor = archivoDelServidor.replace(modelo.getFicheroGuion(), modelo.getNada());
+				if(vistaEliminarArchivo.mostrarMensajeConfirmacion(modelo.getTextosEliminarArchivos()[0], modelo.getTextosEliminarArchivos()[2]+ archivoDelServidor + modelo.getSignoPregunta()) == 0) {
 					if(cliente.deleteFile(archivoDelServidor)) {
 						eventos.getControladorFTPPrincipal().actualizarContenido();
-						vistaEliminarArchivo.mostrarMensajeEmergente("Eliminar Archivo", "Archivo eliminado correctamente");
+						vistaEliminarArchivo.mostrarMensajeEmergente(modelo.getTextosEliminarArchivos()[0], modelo.getTextosEliminarArchivos()[3]);
 					}
 					else {
-						vistaEliminarArchivo.mostrarMensajeEmergente("Eliminar Archivo", "No se ha podido eliminar el archivo");
+						vistaEliminarArchivo.mostrarMensajeEmergente(modelo.getTextosEliminarArchivos()[0], modelo.getTextosEliminarArchivos()[4]);
 					}
 				}
 			}
 		}
 		catch(Exception e) {
-			vistaEliminarArchivo.mostrarMensajeEmergente("Eliminar Archivo", "No se ha podido eliminar el archivo");
+			vistaEliminarArchivo.mostrarMensajeEmergente(modelo.getTextosEliminarArchivos()[0], modelo.getTextosEliminarArchivos()[4]);
 		}
 	}
 }

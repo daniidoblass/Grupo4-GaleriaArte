@@ -5,177 +5,212 @@
  */
 package modelo;
 
-
 public class Modelo {
-    
-    // VENTANA PRINCIPAL
-    private String[] textoVentanaPrincipal;
-    private String[] textoPanelesVentanaPrincipal;
-    private String[] textoOpcionesMenu;
-    private String[] textoOpcionesMenuImages;
-    private String[] tipoOpciones;
-    private String[] textoLogos;
-    
-    // OPCIONES
-    private String[] textoPanelesOpciones;
-    private String textoOpciones;
 
-    // CONEXION
-    private String[] textoDatosConexion;
-    private String archivo = "mokedb";
-    private String ip = "localhost";
-    private String user = "root";
-    private String password = "";
-    
-    // TABLE
-    private String nombreTable = "TABLE";
-    private String nombreColumna = "COLUMN_NAME";
-    
-    // INFO
-    private String[] textoOpcionesInfo;
-    private String[] textoOpcionesInfoImages;
-    private String[] textoDatosInfo;
-    
-    // CONFIGURACIÓN
-    private String[] textoOpcionesConfig;
-    private String[] textoOpcionesConfigImages;
-    private String[] textoDatosConfig;
-    
-    // ADMIN
-    private String[] textoOpcionesAdmin;
-    private String[] textoOpcionesAdminImages;
-    
-    // CONSULTAS
-    private String consultaParaObtenerTodosLosDatos = "SELECT * FROM ";
-    
-    // RUTAS
-    private String [] rutasIconos;
-    
-    // FTP
-    private String servidorFTP = "ftpupload.net";
+	// VENTANA PRINCIPAL
+	private String[] textoVentanaPrincipal;
+	private String[] textoPanelesVentanaPrincipal;
+	private String[] textoOpcionesMenu;
+	private String[] textoOpcionesMenuImages;
+	private String[] tipoOpciones;
+	private String[] textoLogos;
+
+	// OPCIONES
+	private String[] textoPanelesOpciones;
+	private String textoOpciones;
+
+	// CONEXION
+	private String[] textoDatosConexion;
+	private String archivo = "mokedb";
+	private String ip = "localhost";
+	private String user = "root";
+	private String password = "";
+
+	// TABLE
+	private String nombreTable = "TABLE";
+	private String nombreColumna = "COLUMN_NAME";
+
+	// INFO
+	private String[] textoOpcionesInfo;
+	private String[] textoOpcionesInfoImages;
+	private String[] textoDatosInfo;
+
+	// CONFIGURACIÓN
+	private String[] textoOpcionesConfig;
+	private String[] textoOpcionesConfigImages;
+	private String[] textoDatosConfig;
+
+	// ADMIN
+	private String[] textoOpcionesAdmin;
+	private String[] textoOpcionesAdminImages;
+
+	// CONSULTAS
+	private String consultaParaObtenerTodosLosDatos = "SELECT * FROM ";
+
+	// RUTAS
+	private String[] rutasIconos;
+
+	// FTP
+	private String servidorFTP = "ftpupload.net";
 	private String usuarioFTP = "b3_33188433";
-	private String contrasenaFTP = "2wknvh9m"; 
-	
-	//TEXTOS PARA CREAR UNA CARPETA
+	private String contrasenaFTP = "2wknvh9m";
+
+	// TEXTOS PARA CREAR UNA CARPETA
 	private String espacioEnBLanco = " ";
 	private String nada = "";
 	private String guionMedio = "-";
 	private String guionBajo = "_";
-	private String [] textosCrearCarpetas;
+	private String[] textosCrearCarpetas;
 
-    public Modelo(){
-        
-        // VENTANA PRINCIPAL
-        textoVentanaPrincipal = new String[]{"MOKE APP"};
-        textoPanelesVentanaPrincipal = new String[]{"NORTE", "OESTE", "CENTRAL"};
-        textoOpcionesMenu = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta", "Renombrar"};
-        textoOpcionesMenuImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta", "edit"};
-        tipoOpciones = new String[]{"FTP_Moke", "Mail_Moke", "Configuracion_Moke", "Moke_Info"};
-        textoLogos= new String[]{"MOKE APP", "FTP MOKE", "Mail MOKE", "Configuracion MOKE", "MOKE INFO","Administracion MOKE","ADMIN"};
-        
-        // LOGIN
-        textoPanelesOpciones = new String[]{"arribaTexto", "medioUsuarios", "abajoFondo"};
-        textoOpciones = "Seleccione una opcion";
+	// TEXTOS DESCARGAR ARCHIVOS
+	private String[] textosDescargarArchivos;
+	private String carpetaGuion = "carpeta-";
+	private String ficheroGuion = "fichero-";
+	private String signoPregunta = "?";
+	private String dobleBarraInvertida = "\\";
 
-        // CONEXION
-        textoDatosConexion = new String[]{"jdbc:mysql://" + ip + "/" + archivo + "?serverTimezone=UTC", user, password, "com.mysql.cj.jdbc.Driver"};
-        
-        // INFO
-        textoOpcionesInfo = new String[]{"Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta", "Eliminar Carpeta", "Renombrar"};
-        textoOpcionesInfoImages = new String[]{"subir_fichero", "descargar_fichero", "eliminar_fichero", "crear_carpeta", "eliminar_carpeta", "edit"};
-        textoDatosInfo = new String[] {"El usuario podrá subir archivos desde su ordenador al servidor",
-        		 "El usuario podrá descargar archivos de otros usuarios (no tiene permitido descargar carpetas)",
-        		 "El usuario podrá borrar los archivos creados por él",
-        		 "El usuario podrá crear carpetas donde subir los archivos",
-        		 "El usuario podrá borrar las carpetas creadas por él",
-        		 "El usuario podrá renombrar las carpetas y archivos subidos por él",
-        		 "El usuario podrá acceder a un apartado de correo electrónico donde podrá enviar correos a otros usuarios"};
-        
-        // CONFIGURACIÓN
-        textoOpcionesConfig = new String[]{"Reestablecer Contraseña", "Cambiar Correo Corporativo", "Soporte Técnico"};
-        textoOpcionesConfigImages = new String[]{"password", "gmail", "soporte"};
-        textoDatosConfig = new String[] {"Introduzca la nueva contraseña",
-       		 "Introduzca el nuevo correo corporativo",
-       		 "Introduzca un mensaje para el Soporte Técnico"};
-        
-        // ADMIN
-        textoOpcionesAdmin = new String[]{"Movimientos", "Usuarios", "Mensajes"};
-        textoOpcionesAdminImages = new String[]{"movements", "contacts", "message"};
-        
-        //RUTAS DE LOS ICONOS
-        rutasIconos = new String [] {"src/opcionesprincipal/4.png","src/opcionesprincipal/2.png"};
-        
-        //TEXTOS CREAR UNA CARPETA
-        textosCrearCarpetas = new String [] {"Crear Carpeta","Nombre Carpeta", " se ha creado correctamente"," no se ha podido crear","El campo nombre no puede estar vacío"};
-    }
-    
-    public String[] getTextoVentanaPrincipal(){
-        return textoVentanaPrincipal;
-    }
-    
-    public String[] getTextoPanelesVentanaPrincipal(){
-        return textoPanelesVentanaPrincipal;
-    }
-    
-    public String[] getTextoOpcionesMenu(){
-        return textoOpcionesMenu;
-    }
-    
-    public String[] getTextoOpcionesMenuImages(){
-        return textoOpcionesMenuImages;
-    }
-    
-    public String[] getTipoOpciones(){
-        return tipoOpciones;
-    }
-    
-    public String[] getTextoPanelesOpciones(){
-        return textoPanelesOpciones;
-    }
-    
-    public String[] getTextoLogos(){
-        return textoLogos;
-    }
-    
-    public String getTextoOpciones(){
-        return textoOpciones;
-    }
+	// TEXTOS ELIMINAR ARCHIVOS
+	private String[] textosEliminarArchivos;
 
-    public String[] getTextoDatosConexion(){
-        return textoDatosConexion;
-    }
+	// TEXTOS ELIMINAR CARPETAS
+	private String carpetaNombre = "carpeta";
+	private String barra = "/";
+	private String[] textosEliminarCarpetas;
+	private String punto = ".";
 
-    public String[] getTextoOpcionesInfo(){
-        return textoOpcionesInfo;
-    }
-    
-    public String[] getTextoOpcionesInfoImages(){
-        return textoOpcionesInfoImages;
-    }
-    
-    public String[] getTextoDatosInfo() {
+	public Modelo() {
+
+		// VENTANA PRINCIPAL
+		textoVentanaPrincipal = new String[] { "MOKE APP" };
+		textoPanelesVentanaPrincipal = new String[] { "NORTE", "OESTE", "CENTRAL" };
+		textoOpcionesMenu = new String[] { "Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta",
+				"Eliminar Carpeta", "Renombrar" };
+		textoOpcionesMenuImages = new String[] { "subir_fichero", "descargar_fichero", "eliminar_fichero",
+				"crear_carpeta", "eliminar_carpeta", "edit" };
+		tipoOpciones = new String[] { "FTP_Moke", "Mail_Moke", "Configuracion_Moke", "Moke_Info" };
+		textoLogos = new String[] { "MOKE APP", "FTP MOKE", "Mail MOKE", "Configuracion MOKE", "MOKE INFO",
+				"Administracion MOKE", "ADMIN" };
+
+		// LOGIN
+		textoPanelesOpciones = new String[] { "arribaTexto", "medioUsuarios", "abajoFondo" };
+		textoOpciones = "Seleccione una opcion";
+
+		// CONEXION
+		textoDatosConexion = new String[] { "jdbc:mysql://" + ip + "/" + archivo + "?serverTimezone=UTC", user,
+				password, "com.mysql.cj.jdbc.Driver" };
+
+		// INFO
+		textoOpcionesInfo = new String[] { "Subir Archivo", "Descargar Archivo", "Eliminar Archivo", "Crear Carpeta",
+				"Eliminar Carpeta", "Renombrar" };
+		textoOpcionesInfoImages = new String[] { "subir_fichero", "descargar_fichero", "eliminar_fichero",
+				"crear_carpeta", "eliminar_carpeta", "edit" };
+		textoDatosInfo = new String[] { "El usuario podrá subir archivos desde su ordenador al servidor",
+				"El usuario podrá descargar archivos de otros usuarios (no tiene permitido descargar carpetas)",
+				"El usuario podrá borrar los archivos creados por él",
+				"El usuario podrá crear carpetas donde subir los archivos",
+				"El usuario podrá borrar las carpetas creadas por él",
+				"El usuario podrá renombrar las carpetas y archivos subidos por él",
+				"El usuario podrá acceder a un apartado de correo electrónico donde podrá enviar correos a otros usuarios" };
+
+		// CONFIGURACIÓN
+		textoOpcionesConfig = new String[] { "Reestablecer Contraseña", "Cambiar Correo Corporativo",
+				"Soporte Técnico" };
+		textoOpcionesConfigImages = new String[] { "password", "gmail", "soporte" };
+		textoDatosConfig = new String[] { "Introduzca la nueva contraseña", "Introduzca el nuevo correo corporativo",
+				"Introduzca un mensaje para el Soporte Técnico" };
+
+		// ADMIN
+		textoOpcionesAdmin = new String[] { "Movimientos", "Usuarios", "Mensajes" };
+		textoOpcionesAdminImages = new String[] { "movements", "contacts", "message" };
+
+		// RUTAS DE LOS ICONOS
+		rutasIconos = new String[] { "src/opcionesprincipal/4.png", "src/opcionesprincipal/2.png" };
+
+		// TEXTOS CREAR UNA CARPETA
+		textosCrearCarpetas = new String[] { "Crear Carpeta", "Nombre Carpeta", " se ha creado correctamente",
+				" no se ha podido crear", "El campo nombre no puede estar vacío" };
+
+		// TEXTOS DESCARGAR ARCHIVOS
+		textosDescargarArchivos = new String[] { "Descargar Archivo", "No hay seleccionado ningún archivo",
+				"¿Desea descargar ", "Se ha descargado correctamente", "No se ha podido descargar el archivo" };
+
+		// TEXTOS ELIMINAR ARCHIVOS
+		textosEliminarArchivos = new String[] { "Eliminar Archivo", "No hay seleccionado ningún archivo",
+				"¿Desea eliminar ", "Archivo eliminado correctamente", "No se ha podido eliminar el archivo" };
+
+		// TEXTOS ELIMINAR CARPETAS
+		textosEliminarCarpetas = new String[] { "ERROR: la carpeta seleccionada contiene espacios",
+				"¿Deseas eliminar la carpeta ", "Eliminar Carpeta", " se ha eliminado correctamente",
+				"seleccionada la opcion si" };
+	}
+
+	public String[] getTextoVentanaPrincipal() {
+		return textoVentanaPrincipal;
+	}
+
+	public String[] getTextoPanelesVentanaPrincipal() {
+		return textoPanelesVentanaPrincipal;
+	}
+
+	public String[] getTextoOpcionesMenu() {
+		return textoOpcionesMenu;
+	}
+
+	public String[] getTextoOpcionesMenuImages() {
+		return textoOpcionesMenuImages;
+	}
+
+	public String[] getTipoOpciones() {
+		return tipoOpciones;
+	}
+
+	public String[] getTextoPanelesOpciones() {
+		return textoPanelesOpciones;
+	}
+
+	public String[] getTextoLogos() {
+		return textoLogos;
+	}
+
+	public String getTextoOpciones() {
+		return textoOpciones;
+	}
+
+	public String[] getTextoDatosConexion() {
+		return textoDatosConexion;
+	}
+
+	public String[] getTextoOpcionesInfo() {
+		return textoOpcionesInfo;
+	}
+
+	public String[] getTextoOpcionesInfoImages() {
+		return textoOpcionesInfoImages;
+	}
+
+	public String[] getTextoDatosInfo() {
 		return textoDatosInfo;
 	}
-    
-    public String[] getTextoOpcionesConfig(){
-        return textoOpcionesConfig;
-    }
-    
-    public String[] getTextoOpcionesConfigImages(){
-        return textoOpcionesConfigImages;
-    }
-    
-    public String[] getTextoDatosConfig() {
+
+	public String[] getTextoOpcionesConfig() {
+		return textoOpcionesConfig;
+	}
+
+	public String[] getTextoOpcionesConfigImages() {
+		return textoOpcionesConfigImages;
+	}
+
+	public String[] getTextoDatosConfig() {
 		return textoDatosConfig;
 	}
-    
-    public String[] getTextoOpcionesAdmin(){
-        return textoOpcionesAdmin;
-    }
-    
-    public String[] getTextoOpcionesAdminImages(){
-        return textoOpcionesAdminImages;
-    }
+
+	public String[] getTextoOpcionesAdmin() {
+		return textoOpcionesAdmin;
+	}
+
+	public String[] getTextoOpcionesAdminImages() {
+		return textoOpcionesAdminImages;
+	}
 
 	public String getArchivo() {
 		return archivo;
@@ -296,6 +331,85 @@ public class Modelo {
 	public void setTextosCrearCarpetas(String[] textosCrearCarpetas) {
 		this.textosCrearCarpetas = textosCrearCarpetas;
 	}
-    
-    
+
+	public String[] getTextosDescargarArchivos() {
+		return textosDescargarArchivos;
+	}
+
+	public void setTextosDescargarArchivos(String[] textosDescargarArchivos) {
+		this.textosDescargarArchivos = textosDescargarArchivos;
+	}
+
+	public String getCarpetaGuion() {
+		return carpetaGuion;
+	}
+
+	public void setCarpetaGuion(String carpetaGuion) {
+		this.carpetaGuion = carpetaGuion;
+	}
+
+	public String getFicheroGuion() {
+		return ficheroGuion;
+	}
+
+	public void setFicheroGuion(String ficheroGuion) {
+		this.ficheroGuion = ficheroGuion;
+	}
+
+	public String getSignoPregunta() {
+		return signoPregunta;
+	}
+
+	public void setSignoPregunta(String signoPregunta) {
+		this.signoPregunta = signoPregunta;
+	}
+
+	public String getDobleBarraInvertida() {
+		return dobleBarraInvertida;
+	}
+
+	public void setDobleBarraInvertida(String dobleBarraInvertida) {
+		this.dobleBarraInvertida = dobleBarraInvertida;
+	}
+
+	public String[] getTextosEliminarArchivos() {
+		return textosEliminarArchivos;
+	}
+
+	public void setTextosEliminarArchivos(String[] textosEliminarArchivos) {
+		this.textosEliminarArchivos = textosEliminarArchivos;
+	}
+
+	public String[] getTextosEliminarCarpetas() {
+		return textosEliminarCarpetas;
+	}
+
+	public void setTextosEliminarCarpetas(String[] textosEliminarCarpetas) {
+		this.textosEliminarCarpetas = textosEliminarCarpetas;
+	}
+
+	public String getCarpetaNombre() {
+		return carpetaNombre;
+	}
+
+	public void setCarpetaNombre(String carpetaNombre) {
+		this.carpetaNombre = carpetaNombre;
+	}
+
+	public String getBarra() {
+		return barra;
+	}
+
+	public void setBarra(String barra) {
+		this.barra = barra;
+	}
+
+	public String getPunto() {
+		return punto;
+	}
+
+	public void setPunto(String punto) {
+		this.punto = punto;
+	}
+
 }

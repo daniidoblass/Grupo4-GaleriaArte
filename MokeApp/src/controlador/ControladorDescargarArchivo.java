@@ -51,12 +51,12 @@ public class ControladorDescargarArchivo {
 			cliente.setFileType(FTP.BINARY_FILE_TYPE);
 
 			String archivoDelServidor = eventos.getControladorFTPPrincipal().getInfoFicheroPulsado();
-			if(archivoDelServidor.isEmpty() || archivoDelServidor.equals("") || archivoDelServidor.contains("carpeta-")) {
-				vistaDescargarArchivo.mostrarMensajeEmergente("Descargar Archivo", "No hay seleccionado ningún archivo");
+			if(archivoDelServidor.isEmpty() || archivoDelServidor.equals("") || archivoDelServidor.contains(modelo.getCarpetaGuion())) {
+				vistaDescargarArchivo.mostrarMensajeEmergente(modelo.getTextosDescargarArchivos()[0], modelo.getTextosDescargarArchivos()[1]);
 			}
 			else {
-				archivoDelServidor = archivoDelServidor.replace("fichero-", "");
-				if(vistaDescargarArchivo.mostrarMensajeConfirmacion("Descargar Archivo", "¿Desea descargar " + archivoDelServidor + "?") == 0) {
+				archivoDelServidor = archivoDelServidor.replace(modelo.getFicheroGuion(), modelo.getNada());
+				if(vistaDescargarArchivo.mostrarMensajeConfirmacion(modelo.getTextosDescargarArchivos()[0], modelo.getTextosDescargarArchivos()[2] + archivoDelServidor + modelo.getSignoPregunta()) == 0) {
 					int returnVal = vistaDescargarArchivo.mostrarJFileChooser();
 
 			        if (returnVal == vistaDescargarArchivo.getjFileChooser().APPROVE_OPTION) {
@@ -67,16 +67,16 @@ public class ControladorDescargarArchivo {
 			        	
 			        	// ubicacion donde se va a descargar
 						BufferedOutputStream buffSalida = new BufferedOutputStream(
-								new FileOutputStream(carpetaDestino + "\\"+archivoDelServidor));
+								new FileOutputStream(carpetaDestino + modelo.getDobleBarraInvertida()+archivoDelServidor));
 
 						// Descargar el archivo.
 						boolean descargado = cliente.retrieveFile(archivoDelServidor, buffSalida); // Devuelve TRUE si se ha
 																									// descargado
 						if (descargado) {
-							vistaDescargarArchivo.mostrarMensajeEmergente("Descargar Archivo", "Se ha descargado correctamente");
+							vistaDescargarArchivo.mostrarMensajeEmergente(modelo.getTextosDescargarArchivos()[0], modelo.getTextosDescargarArchivos()[3]);
 							
 						} else {
-							vistaDescargarArchivo.mostrarMensajeEmergente("Descargar Archivo", "No se ha podido descargar el archivo");
+							vistaDescargarArchivo.mostrarMensajeEmergente(modelo.getTextosDescargarArchivos()[0], modelo.getTextosDescargarArchivos()[4]);
 						}
 						
 						//Cerrar el buffer.
@@ -86,7 +86,7 @@ public class ControladorDescargarArchivo {
 			}
 		}
 		catch(Exception e) {
-			vistaDescargarArchivo.mostrarMensajeEmergente("Descargar Archivo", "No se ha podido descargar el archivo");
+			vistaDescargarArchivo.mostrarMensajeEmergente(modelo.getTextosDescargarArchivos()[0], modelo.getTextosDescargarArchivos()[4]);
 		}
 	}
 }
