@@ -52,14 +52,14 @@ public class ControladorMailPrincipal implements ActionListener {
 	private VistaMailEnviarCorreo vistaMailEnviarCorreo;
 	private ControladorEnviarMail controladorenviarmail;
 	private final int TIEMPO_REFRESCO = 60000;
-	private Hilo hiloActualizar;
+	private HiloActualizarCorreo hiloActualizarCorreo;
 
 	public ControladorMailPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente)
 			throws MessagingException {
 		this.modelo = modelo;
 		this.vista = vista;
 		this.eventos = eventos;
-		controladorenviarmail = new ControladorEnviarMail(vistaMailEnviarCorreo,conexion,eventos,modelo);
+		controladorenviarmail = new ControladorEnviarMail(vistaMailEnviarCorreo,conexion,eventos);
 		vistaMailPrincipal = new VistaMailPrincipal(modelo, vista);
 		vistaMailEnviarCorreo = new VistaMailEnviarCorreo(eventos,conexion);
 		tipoMensaje = new TipoMensaje();
@@ -73,7 +73,7 @@ public class ControladorMailPrincipal implements ActionListener {
 		configurarPanelesAdmin();
 
 		// Configurar tabla
-		nombreTabla = "usuarios";
+		nombreTabla = modelo.getTextosGenerales()[9];
 		configurarTabla(nombreTabla);
 
 		// Configurar boton cambiar tabla
@@ -82,8 +82,10 @@ public class ControladorMailPrincipal implements ActionListener {
 		configurarBottonVerMensaje();
 
 		configurarBotonActualizarTabla();
-
-		hiloActualizar = new Hilo(this, TIEMPO_REFRESCO);
+		
+		hiloActualizarCorreo = new HiloActualizarCorreo(this, TIEMPO_REFRESCO);
+		
+		Thread hiloActualizar = new Thread(hiloActualizarCorreo);
 		hiloActualizar.start();
 	}
 
@@ -110,15 +112,14 @@ public class ControladorMailPrincipal implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		System.out.println(e.getActionCommand());
 
-		if (e.getActionCommand().equals("Ver mensaje")) {
+		if (e.getActionCommand().equals(modelo.getTextosGenerales()[10])) {
 			try {
 				verMensaje();
 			} catch (MessagingException e1) {
 				e1.printStackTrace();
 			}
-		} else if (e.getActionCommand().equals("Actualizar")) {
-			System.out.println(hiloActualizar.getContador());
-			hiloActualizar.setContador(TIEMPO_REFRESCO);
+		} else if (e.getActionCommand().equals(modelo.getTextosGenerales()[11])) {
+			hiloActualizarCorreo.setContador(TIEMPO_REFRESCO);
 		} else {
 			vistaMailEnviarCorreo.setVisible(true);
 
@@ -168,9 +169,9 @@ public class ControladorMailPrincipal implements ActionListener {
 	private void rellenarTitulos(String nombreTablaSeleccionada) {
 
 		nombreColumnas = new ArrayList<>();
-		nombreColumnas.add("Destinatario");
-		nombreColumnas.add("Asunto");
-		nombreColumnas.add("Fecha");
+		nombreColumnas.add(modelo.getNombresColumns()[0]);
+		nombreColumnas.add(modelo.getNombresColumns()[1]);
+		nombreColumnas.add(modelo.getNombresColumns()[2]);
 
 	}
 
@@ -199,7 +200,7 @@ public class ControladorMailPrincipal implements ActionListener {
 
 				ArrayList<String> String = new ArrayList<>();
 
-				String[] destinatario = mensajes[j].getFrom()[0].toString().split("<");
+				String[] destinatario = mensajes[j].getFrom()[0].toString().split(modelo.getSignoMenor());
 				destinatario[destinatario.length - 1] = destinatario[destinatario.length - 1].replace('>', ' ');
 
 				String.add(destinatario[destinatario.length - 1]);
@@ -257,8 +258,8 @@ public class ControladorMailPrincipal implements ActionListener {
 	}
 
 	private void configurarTitulo() {
-		vista.setIcono("src/opcionesprincipal/1.png");
-		vista.setTitulo("Mail MOKE");
+		vista.setIcono(modelo.getRutasIconos()[5]);
+		vista.setTitulo(modelo.getTextoLogos()[2]);
 	}
 
 	private void actualizarVentana() {
@@ -271,20 +272,20 @@ public class ControladorMailPrincipal implements ActionListener {
 		Properties prop = new Properties();
 
 		// Deshabilitamos TLS
-		prop.setProperty("mail.pop3.starttls.enable", "false");
+		prop.setProperty(modelo.getPropiedadesMail()[0], modelo.getPropiedadesMail()[1]);
 
 		// Hay que usar SSL
-		prop.setProperty("mail.pop3.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-		prop.setProperty("mail.pop3.socketFactory.fallback", "false");
+		prop.setProperty(modelo.getPropiedadesMail()[2], modelo.getPropiedadesMail()[3]);
+		prop.setProperty(modelo.getPropiedadesMail()[4], modelo.getPropiedadesMail()[1]);
 
 		// Puerto 995 para conectarse.
-		prop.setProperty("mail.pop3.port", "995");
-		prop.setProperty("mail.pop3.socketFactory.port", "995");
+		prop.setProperty(modelo.getPropiedadesMail()[5], modelo.getPropiedadesMail()[6]);
+		prop.setProperty(modelo.getPropiedadesMail()[7], modelo.getPropiedadesMail()[6]);
 
 		Session sesion = Session.getInstance(prop);
 		// sesion.setDebug(true); // Esta linea es para mostrar mas informacion
 
-		Store store = sesion.getStore("pop3");
+		Store store = sesion.getStore(modelo.getPropiedadesMail()[8]);
 		// System.out.println(Vlogin.getEmailText());
 
 		// Crear las variables y obtener el usuario que se ha registrado.
@@ -294,7 +295,7 @@ public class ControladorMailPrincipal implements ActionListener {
 
 		// Consulta para obtener el correo y la password del usuario que ha iniciado
 		// sesion
-		String consulta = "SELECT correo,contraseniaGmail FROM `usuarios` WHERE nombre like '" + usuario + "'";
+		String consulta = modelo.getConsultaCorreoPassword() + usuario + modelo.getComillaSimple();
 		ResultSet rs = conexion.realizarConsultaRS(consulta);
 
 		try {

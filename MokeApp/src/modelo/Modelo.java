@@ -47,14 +47,14 @@ public class Modelo {
 	// CONSULTAS
 	private String consultaParaObtenerTodosLosDatos = "SELECT * FROM ";
 	private String comillaSimple = "'";
-	
+
 	// Consulta para obtener el correo y password de quien se ha registrado el app
 	private String consultaCorreoPassword = "SELECT correo,contraseniaGmail FROM `usuarios` WHERE nombre like '";
-	
-	//Consulta para obtener el responsable asignado.
+
+	// Consulta para obtener el responsable asignado.
 	private String consultaResponsableAsignado = "SELECT ResponsableAsignado FROM `usuarios` WHERE nombre LIKE '";
-	
-	//Consulta para obtener la password encriptado.
+
+	// Consulta para obtener la password encriptado.
 	private String consultaPasswordEncriptado01 = "SELECT categoria FROM `usuarios` WHERE password like PASSWORD('";
 	private String consultaPasswordEncriptado02 = "') AND nombre like '";
 
@@ -101,10 +101,19 @@ public class Modelo {
 
 	// MENSAJES GENERALES
 	private String[] textosGenerales;
+	private String signoMenor = "<";
+	private String signoMayor = ">";
 
 	// CATEGORIAS
 	private String[] categorias;
 	private String[] rutasUsers;
+
+	// NOMBRE COLUMNAS MAIL
+	private String[] nombresColumns;
+
+	// PROPIEDADES MAIL
+	private String[] propiedadesMail;
+	private String[] infoMail;
 
 	public Modelo() {
 
@@ -158,7 +167,8 @@ public class Modelo {
 
 		// RUTAS DE LOS ICONOS
 		rutasIconos = new String[] { "src/opcionesprincipal/4.png", "src/opcionesprincipal/2.png",
-				"src/opcionesprincipal/0.png", "src/opcionesprincipal/3.png", "src/subiconos/usuario.png" };
+				"src/opcionesprincipal/0.png", "src/opcionesprincipal/3.png", "src/subiconos/usuario.png",
+				"src/opcionesprincipal/1.png" };
 
 		// TEXTOS CREAR UNA CARPETA
 		textosCrearCarpetas = new String[] { "Crear Carpeta", "Nombre Carpeta", " se ha creado correctamente",
@@ -192,11 +202,23 @@ public class Modelo {
 		textosGenerales = new String[] { "Servidor FTP",
 				"Servidor FTP desconectado. Por favor, reinicie \nel programa para conectarse",
 				"No se ha podido acceder a la carpeta", "Volver", "return", "carpeta-Volver", "LOGIN",
-				"ERROR AL INICIAR SESION", "Usuario o contraseña incorrectos, vuelva a intentarlo" };
+				"ERROR AL INICIAR SESION", "Usuario o contraseña incorrectos, vuelva a intentarlo", "usuarios",
+				"Ver mensaje", "Actualizar", "Correo" };
 
 		// CATEGORIAS
 		categorias = new String[] { "admin", "null", "Responsable" };
 		rutasUsers = new String[] { "/GaleriaDeArte/Responsables/", "/Marchantes/" };
+
+		// NOMBRE COLUMNAS MAIL
+		nombresColumns = new String[] { "Destinatario", "Asunto", "Fecha" };
+
+		// PROPIEDADES DEL MAIL
+		propiedadesMail = new String[] { "mail.pop3.starttls.enable", "false", "mail.pop3.socketFactory.class",
+				"javax.net.ssl.SSLSocketFactory", "mail.pop3.socketFactory.fallback", "mail.pop3.port", "995",
+				"mail.pop3.socketFactory.port", "pop3", };
+
+		// INFO MAIL
+		infoMail = new String[] { "INFO PERSONA\n", "Remitente: ", "Asunto: ", "Fecha: ", "Mensaje: " };
 	}
 
 	public String[] getTextoVentanaPrincipal() {
@@ -579,5 +601,44 @@ public class Modelo {
 		this.consultaPasswordEncriptado02 = consultaPasswordEncriptado02;
 	}
 
-	
+	public String[] getNombresColumns() {
+		return nombresColumns;
+	}
+
+	public void setNombresColumns(String[] nombresColumns) {
+		this.nombresColumns = nombresColumns;
+	}
+
+	public String getSignoMenor() {
+		return signoMenor;
+	}
+
+	public void setSignoMenor(String signoMenor) {
+		this.signoMenor = signoMenor;
+	}
+
+	public String getSignoMayor() {
+		return signoMayor;
+	}
+
+	public void setSignoMayor(String signoMayor) {
+		this.signoMayor = signoMayor;
+	}
+
+	public String[] getPropiedadesMail() {
+		return propiedadesMail;
+	}
+
+	public void setPropiedadesMail(String[] propiedadesMail) {
+		this.propiedadesMail = propiedadesMail;
+	}
+
+	public String[] getInfoMail() {
+		return infoMail;
+	}
+
+	public void setInfoMail(String[] infoMail) {
+		this.infoMail = infoMail;
+	}
+
 }

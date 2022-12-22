@@ -46,7 +46,7 @@ public class VistaMailEnviarCorreo extends JFrame {
 		this.conexion = conexion;
 		this.modelo = modelo;
 		this.eventos = eventos;
-		this.cliente = new ControladorEnviarMail(this,conexion,eventos,modelo);
+		this.cliente = new ControladorEnviarMail(this,conexion,eventos);
 		this.jFileChooser = new JFileChooser();
 		propiedades();
 		generarContenido();
