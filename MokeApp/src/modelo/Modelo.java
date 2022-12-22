@@ -55,6 +55,13 @@ public class Modelo {
     private String servidorFTP = "ftpupload.net";
 	private String usuarioFTP = "b3_33188433";
 	private String contrasenaFTP = "2wknvh9m"; 
+	
+	//TEXTOS PARA CREAR UNA CARPETA
+	private String espacioEnBLanco = " ";
+	private String nada = "";
+	private String guionMedio = "-";
+	private String guionBajo = "_";
+	private String [] textosCrearCarpetas;
 
     public Modelo(){
         
@@ -96,7 +103,10 @@ public class Modelo {
         textoOpcionesAdminImages = new String[]{"movements", "contacts", "message"};
         
         //RUTAS DE LOS ICONOS
-        rutasIconos = new String [] {"src/opcionesprincipal/4.png",""};
+        rutasIconos = new String [] {"src/opcionesprincipal/4.png","src/opcionesprincipal/2.png"};
+        
+        //TEXTOS CREAR UNA CARPETA
+        textosCrearCarpetas = new String [] {"Crear Carpeta","Nombre Carpeta", " se ha creado correctamente"," no se ha podido crear","El campo nombre no puede estar vacío"};
     }
     
     public String[] getTextoVentanaPrincipal(){
@@ -245,6 +255,46 @@ public class Modelo {
 
 	public void setContrasenaFTP(String contrasenaFTP) {
 		this.contrasenaFTP = contrasenaFTP;
+	}
+
+	public String getEspacioEnBLanco() {
+		return espacioEnBLanco;
+	}
+
+	public void setEspacioEnBLanco(String espacioEnBLanco) {
+		this.espacioEnBLanco = espacioEnBLanco;
+	}
+
+	public String getNada() {
+		return nada;
+	}
+
+	public void setNada(String nada) {
+		this.nada = nada;
+	}
+
+	public String getGuionMedio() {
+		return guionMedio;
+	}
+
+	public void setGuionMedio(String guionMedio) {
+		this.guionMedio = guionMedio;
+	}
+
+	public String getGuionBajo() {
+		return guionBajo;
+	}
+
+	public void setGuionBajo(String guionBajo) {
+		this.guionBajo = guionBajo;
+	}
+
+	public String[] getTextosCrearCarpetas() {
+		return textosCrearCarpetas;
+	}
+
+	public void setTextosCrearCarpetas(String[] textosCrearCarpetas) {
+		this.textosCrearCarpetas = textosCrearCarpetas;
 	}
     
     

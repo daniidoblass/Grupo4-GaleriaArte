@@ -40,30 +40,30 @@ public class ControladorCrearCarpeta {
 	    private void crearCarpeta() {
 	    	
 	    	try {
-	    		nombreCarpeta = vistaCrearCarpeta.crearNombreCarpeta("Crear Carpeta", "Nombre de la carpeta");
+	    		nombreCarpeta = vistaCrearCarpeta.crearNombreCarpeta(modelo.getTextosCrearCarpetas()[0], modelo.getTextosCrearCarpetas()[1]);
 				
-				if(nombreCarpeta.isEmpty() || nombreCarpeta.equals("")) {
-					vistaCrearCarpeta.mostrarMensajeEmergente("Nombre Carpeta", "El campo nombre no puede estar vacío");
+				if(nombreCarpeta.isEmpty() || nombreCarpeta.equals(modelo.getNada())) {
+					vistaCrearCarpeta.mostrarMensajeEmergente( modelo.getTextosCrearCarpetas()[1],  modelo.getTextosCrearCarpetas()[4]);
 				}
 				else {
 					try {
 						
 						// Eliminar espacios en nombre de carpeta
-						nombreCarpeta = nombreCarpeta.replace(" ", "");
+						nombreCarpeta = nombreCarpeta.replace(modelo.getEspacioEnBLanco(), modelo.getNada());
 						
 						// Sustituir guiones
-						nombreCarpeta = nombreCarpeta.replace("-", "_");
+						nombreCarpeta = nombreCarpeta.replace(modelo.getGuionMedio(), modelo.getGuionBajo());
 
 						if(cliente.makeDirectory(nombreCarpeta)) {
-							String mensaje = nombreCarpeta.trim() + " se ha creado correctamente";
-							vistaCrearCarpeta.mostrarMensajeEmergente("Crear Carpeta", mensaje);
+							String mensaje = nombreCarpeta.trim() + modelo.getTextosCrearCarpetas()[2];
+							vistaCrearCarpeta.mostrarMensajeEmergente(modelo.getTextosCrearCarpetas()[0], mensaje);
 							eventos.getControladorFTPPrincipal().actualizarContenido();
 						}else {
-							vistaCrearCarpeta.mostrarMensajeEmergente("Crear Carpeta", nombreCarpeta.trim()+ " no se ha podido crear");
+							vistaCrearCarpeta.mostrarMensajeEmergente(modelo.getTextosCrearCarpetas()[0], nombreCarpeta.trim()+ modelo.getTextosCrearCarpetas()[3]);
 						}
 						
 					}catch (Exception e) {
-						vistaCrearCarpeta.mostrarMensajeEmergente("Crear Carpeta", nombreCarpeta.trim()+ " no se ha podido crear");
+						vistaCrearCarpeta.mostrarMensajeEmergente(modelo.getTextosCrearCarpetas()[0], nombreCarpeta.trim()+ modelo.getTextosCrearCarpetas()[3]);
 					}
 				}
 	    	}

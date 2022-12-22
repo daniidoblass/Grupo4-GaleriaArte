@@ -9,7 +9,7 @@ public class ControladorClienteFTP {
 	private FTPClient cliente;
 	private Modelo modelo;
 	
-	public ControladorClienteFTP() {
+	public ControladorClienteFTP(Modelo modelo) {
 		
 		this.modelo = modelo;
 		

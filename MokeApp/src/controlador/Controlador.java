@@ -28,7 +28,7 @@ public class Controlador {
         modelo = new Modelo();
         conexion = new Conexion();
         vista = new Vista(modelo, conexion);
-        controladorClienteFTP = new ControladorClienteFTP();
+        controladorClienteFTP = new ControladorClienteFTP(modelo);
         FTPClient cliente = controladorClienteFTP.getFTPClient();
         eventos = new Eventos(modelo,vista,conexion,cliente);
         

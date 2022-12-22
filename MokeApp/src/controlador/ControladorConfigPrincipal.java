@@ -47,8 +47,8 @@ public class ControladorConfigPrincipal {
     }
 
     private void configurarTitulo() {
-		vista.setIcono("src/opcionesprincipal/2.png");
-		vista.setTitulo("Configuracion MOKE");
+		vista.setIcono(modelo.getRutasIconos()[1]);
+		vista.setTitulo(modelo.getTipoOpciones()[2]);
 	}
 
     private void actualizarVentana() {
