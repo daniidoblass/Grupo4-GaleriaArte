@@ -1,6 +1,6 @@
 /**
  * @author Samuel Acosta Fernandez
- * @date 22/03/2022
+ * @date 09/12/2022
  * @version 01
  */
 package controlador;
@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.mail.MessagingException;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -34,7 +35,6 @@ public class Eventos implements ActionListener, MouseListener {
     private Conexion conexion;
     private FTPClient cliente;
     private String ventanaActual = "OPCIONES";
-    private String usuario = "";
     private ControladorFTPPrincipal controladorFTPPrincipal = null;
     private String directorioLimite = "";
 
@@ -58,7 +58,9 @@ public class Eventos implements ActionListener, MouseListener {
                 ventanaActual = "FTP";
             }
             else if(btn.getName() == modelo.getTipoOpciones()[1]){                          // Pulsado Boton Mail Moke
-                new ControladorMailPrincipal(modelo, vista, this, conexion, cliente);
+                try {
+					new ControladorMailPrincipal(modelo, vista, this, conexion, cliente);
+				} catch (Exception e1) {}
                 ventanaActual = "MAIL";
             }
             else if(btn.getName() == modelo.getTipoOpciones()[2]){                          // Pulsado Boton Configuracion Moke
@@ -100,20 +102,14 @@ public class Eventos implements ActionListener, MouseListener {
                 new ControladorRenombrar(modelo, vista, this, conexion, cliente);
             }
         }
+        
+        
     }
     
     public void setVentanaActual(String ventanaActual) {
     	this.ventanaActual = ventanaActual;
     }
-    
-    public String getUsuario() {
-    	return usuario;
-    }
-    
-    public void setUsuario(String usuario) {
-    	this.usuario = usuario;
-    }
-    
+
     public ControladorFTPPrincipal getControladorFTPPrincipal() {
     	return controladorFTPPrincipal;
     }

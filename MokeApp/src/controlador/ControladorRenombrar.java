@@ -2,7 +2,7 @@ package controlador;
 
 import java.awt.HeadlessException;
 /**
- * @author Daniel Jes�s Doblas Florido
+ * @author Daniel Jesús Doblas Florido
  * @date 15/12/2022
  * @version 01
  */
@@ -51,7 +51,7 @@ public class ControladorRenombrar {
 		try {
 			renombrarArchivos(nombreArchivo);
 		} catch (Exception e) {
-			e.printStackTrace();
+			conexion.registrarMovimiento("Renombrar", "no", "Error interno al renombrar");
 		}
 
 		eventos.getControladorFTPPrincipal().actualizarContenido();
@@ -69,20 +69,23 @@ public class ControladorRenombrar {
 					if (nuevoNombre.substring(nuevoNombre.lastIndexOf(".")).equals(sufijo)) {
 						sufijo = "";
 					} else {
-						vistaRenombrarArchivo.mostrarMensajeEmergente("FICHERO INCORRECTO",
+						vistaRenombrarArchivo.mostrarMensajeEmergente("FORMATO INCORRECTO",
 								"La extension indicada no coincide\nSe establecera la extension anterior");
 						nuevoNombre = nuevoNombre.substring(0, nuevoNombre.lastIndexOf("."));
 					}
 				}
 
 			}
+			nuevoNombre = nuevoNombre.replace(" ", "");
 			nuevoNombre = nuevoNombre.replace("-", "_");
 			if (cliente.rename(nombreArchivo, nuevoNombre + sufijo)) {
 				vistaRenombrarArchivo.mostrarMensajeEmergente("Renombrar",
 						"Se ha renombrado el archivo " + nombreArchivo + " a " + nuevoNombre+sufijo);
+				conexion.registrarMovimiento("Eliminar Carpeta", "si", "");
 			} else {
 				vistaRenombrarArchivo.mostrarMensajeEmergente("Renombrar",
 						"No se ha podido renombrar el archivo a " + nuevoNombre);
+				conexion.registrarMovimiento("Eliminar Carpeta", "no", "Formato de nombre a renombrar inválido");
 			}
 		}
 	}

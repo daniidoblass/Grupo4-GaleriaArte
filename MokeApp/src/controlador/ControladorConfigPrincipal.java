@@ -1,6 +1,6 @@
 /**
  * @author Samuel Acosta Fernandez
- * @date 09/02/2022
+ * @date 09/12/2022
  * @version 01
  */
 
@@ -42,11 +42,24 @@ public class ControladorConfigPrincipal {
         // Creacion de lista de opciones
         crearOpcionesMenu();
         
+        // Configurar Opciones Correo Corporativo
+        configurarEntradaCorreo();
+        
         // Actualizar ventana
         actualizarVentana();
     }
 
-    private void configurarTitulo() {
+    private void configurarEntradaCorreo() {
+		try {
+			ResultSet rs = conexion.realizarConsultaRS("SELECT * FROM correos");
+			while(rs.next()) {
+				vistaConfigPrincipal.agregarCorreoComboBox(rs.getString(2));
+			}
+		}
+		catch(Exception e) {}
+	}
+
+	private void configurarTitulo() {
 		vista.setIcono("src/opcionesprincipal/2.png");
 		vista.setTitulo("Configuracion MOKE");
 	}

@@ -43,10 +43,10 @@ public class EventosConfig implements ActionListener, MouseListener {
             
             JButton btn = (JButton)source;
             
-        	if(btn.getText().contains(modelo.getTextoOpcionesConfig()[0])){ 		// Reestablecer Contraseña
+        	if(btn.getText().contains(modelo.getTextoOpcionesConfig()[0])){ 		// Restablecer Contraseña
         		if(comprobarPassword()) {
-        			String respuesta = vistaConfigPrincipal.mostrarInputEmergente(modelo.getTextoOpcionesConfig()[0], modelo.getTextoDatosConfig()[0]);
-            		reestablecerPassword(respuesta);
+        			String respuesta = vistaConfigPrincipal.mostrarMensajePassword(modelo.getTextoOpcionesConfig()[0], modelo.getTextoDatosConfig()[0]);
+            		restablecerPassword(respuesta);
         		}
         		else {
         			vistaConfigPrincipal.mostrarMensajeEmergente("Password Incorrecta", "Password introducida incorrecta");
@@ -54,7 +54,7 @@ public class EventosConfig implements ActionListener, MouseListener {
             }
         	else if(btn.getText().contains(modelo.getTextoOpcionesConfig()[1])){ 	// Cambio Correo Corporativo
         		if(comprobarPassword()) {
-        			String respuesta = vistaConfigPrincipal.mostrarInputEmergente(modelo.getTextoOpcionesConfig()[1], modelo.getTextoDatosConfig()[1]);
+        			String respuesta = vistaConfigPrincipal.mostrarComboBoxEmergente(modelo.getTextoOpcionesConfig()[1], modelo.getTextoDatosConfig()[1]);
             		cambiarCorreo(respuesta);
         		}
         		else {
@@ -62,7 +62,9 @@ public class EventosConfig implements ActionListener, MouseListener {
         		}
             }
         	else if(btn.getText().contains(modelo.getTextoOpcionesConfig()[2])){ 	// Soporte Técnico
-        		String respuesta = vistaConfigPrincipal.mostrarInputEmergente(modelo.getTextoOpcionesConfig()[2], modelo.getTextoDatosConfig()[2]);
+        		String respuesta = vistaConfigPrincipal.mostrarInputEmergente(modelo.getTextoOpcionesConfig()[2], 
+        				"Si desea informarnos sobre algún problema relacionado con el programa\nContáctanos por:\n\n"
+        				+ "Teléfono: 695138058\nCorreo Electrónico: adminMokeApp@gmail.com\n\nTambién puede enviar un mensaje desde aqui:");
         		enviarMensajeSoporte(respuesta);
             }
         }
@@ -71,9 +73,9 @@ public class EventosConfig implements ActionListener, MouseListener {
     private boolean comprobarPassword() {
     	boolean comprobacion = false;
     	try {
-    		String passwordActual = vistaConfigPrincipal.mostrarInputEmergente("Verificación Usuario", "Introduzca su contraseña actual");
+    		String passwordActual = vistaConfigPrincipal.mostrarMensajePassword("Verificación Usuario", "Introduzca su contraseña actual");
         	if(!passwordActual.equals("") && !passwordActual.isEmpty()) {
-        		String usuario = eventos.getUsuario();
+        		String usuario = modelo.getUsuario();
         		ResultSet rs = conexion.realizarConsultaRS("SELECT password FROM usuarios WHERE nombre='" + usuario + "'");
         		try {
     				while(rs.next()) {
@@ -88,28 +90,35 @@ public class EventosConfig implements ActionListener, MouseListener {
 		return comprobacion;
 	}
 
-	private void reestablecerPassword(String respuesta) {
+	private void restablecerPassword(String respuesta) {
     	try {
     		if(respuesta.equals("") || respuesta.isEmpty()) {
         		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Vacío", "El campo contraseña no puede estar vacío");
+        		conexion.registrarMovimiento("Restablecer Password", "no", "El campo contraseña no puede estar vacío");
         	}
         	else if(respuesta.contains(" ")) {
         		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Con Espacios", "La contraseña no puede contener espacios");
+        		conexion.registrarMovimiento("Restablecer Password", "no", "La contraseña no puede contener espacios");
         	}
         	else if(respuesta.length() < 6) {
         		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Demasiado Corto", "El campo contraseña debe tener entre 6 y 30 caracteres");
+        		conexion.registrarMovimiento("Restablecer Password", "no", "El campo contraseña debe tener entre 6 y 30 caracteres");
         	}
         	else if(respuesta.length() > 30) {
         		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Demasiado Largo", "El campo contraseña debe tener entre 6 y 30 caracteres");
+        		conexion.registrarMovimiento("Restablecer Password", "no", "El campo contraseña debe tener entre 6 y 30 caracteres");
         	}
         	else {
-        		String usuario = eventos.getUsuario();
+        		String usuario = modelo.getUsuario();
         		int num = conexion.realizarUpdateStatement("UPDATE usuarios SET password='" + respuesta + "' WHERE nombre = '" + usuario + "'");
         		if(num > 0) {
-        			vistaConfigPrincipal.mostrarMensajeEmergente("Reestablecer Contraseña", "Contraseña cambiada correctamente");
+        			modelo.setPasswordUsuario(respuesta);
+        			vistaConfigPrincipal.mostrarMensajeEmergente("Restablecer Contraseña", "Contraseña cambiada correctamente");
+        			conexion.registrarMovimiento("Restablecer Password", "si", "Cambio password a " + respuesta);
         		}
         		else {
-        			vistaConfigPrincipal.mostrarMensajeEmergente("ERROR Reestablecer Contraseña", "La contraseña no se ha podido modificar");
+        			vistaConfigPrincipal.mostrarMensajeEmergente("ERROR Restablecer Contraseña", "La contraseña no se ha podido modificar");
+        			conexion.registrarMovimiento("Restablecer Password", "no", "Error interno al restablecer password");
         		}
         	}
     	}
@@ -127,26 +136,38 @@ public class EventosConfig implements ActionListener, MouseListener {
 			
     		if(respuesta.equals("") || respuesta.isEmpty()) {
         		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Vacío", "El campo correo no puede estar vacío");
+        		conexion.registrarMovimiento("Cambiar Correo Corporativo", "no", "El campo correo no puede estar vacío");
         	}
         	else if(respuesta.contains(" ")) {
         		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Con Espacios", "El correo corporativo no puede contener espacios");
+        		conexion.registrarMovimiento("Cambiar Correo Corporativo", "no", "El correo corporativo no puede contener espacios");
         	}
         	else if(!mather.find()) {
         		vistaConfigPrincipal.mostrarMensajeEmergente("Correo Inválido", "Formato de correo inválido");
+        		conexion.registrarMovimiento("Cambiar Correo Corporativo", "no", "Formato de correo inválido");
         	}
         	else {
-        		String usuario = eventos.getUsuario();
+        		String usuario = modelo.getUsuario();
         		int num = conexion.realizarUpdateStatement("UPDATE usuarios SET correo='" + respuesta + "' WHERE nombre = '" + usuario + "'");
         		if(num > 0) {
+        			// Guardar datos del correo en el modelo
+        			modelo.setCorreo(respuesta);
+        			ResultSet correo = conexion.realizarConsultaRS("SELECT * FROM correos WHERE correo='" + respuesta + "'");
+    				while(correo.next()) {
+    					modelo.setPasswordCorreo(correo.getString(3));		// passwordCorreo
+    				}
         			vistaConfigPrincipal.mostrarMensajeEmergente("Cambio Correo Corporativo", "Correo Corporativo cambiado correctamente");
+        			conexion.registrarMovimiento("Cambiar Correo Corporativo", "si", "Cambio correo a " + respuesta);
         		}
         		else {
         			vistaConfigPrincipal.mostrarMensajeEmergente("ERROR Correo Corporativo", "El correo no se ha podido modificar");
+        			conexion.registrarMovimiento("Cambiar Correo Corporativo", "no", "Error interno al cambiar correo");
         		}
         	}
     	}
     	catch(Exception e) {
     		vistaConfigPrincipal.mostrarMensajeEmergente("Correo Inválido", "Formato de correo inválido");
+    		conexion.registrarMovimiento("Cambiar Correo Corporativo", "no", "Error interno al cambiar correo");
     	}
     }
     
@@ -154,10 +175,11 @@ public class EventosConfig implements ActionListener, MouseListener {
     	try {
     		if(respuesta.equals("") || respuesta.isEmpty()) {
         		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Vacío", "El campo mensaje no puede estar vacío");
+        		conexion.registrarMovimiento("Enviar Mensaje Soporte Técnico", "no", "El campo mensaje no puede estar vacío");
         	}
         	else {
         		int id = 0;
-        		String usuario = eventos.getUsuario();
+        		String usuario = modelo.getUsuario();
         		String categoria = "";
         		SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd"); 
         		SimpleDateFormat hora = new SimpleDateFormat("HH:mm:ss"); 
@@ -176,18 +198,23 @@ public class EventosConfig implements ActionListener, MouseListener {
             				+ "VALUES(" + id + ", '" + usuario + "', '" + categoria + "', '" + respuesta + "', '" + fecha.format(date) + "', '" + hora.format(date) + "')");
             		if(num > 0) {
             			vistaConfigPrincipal.mostrarMensajeEmergente("Soporte Técnico", "Mensaje enviado a administradores");
+            			conexion.registrarMovimiento("Enviar Mensaje Soporte Técnico", "si", "Enviado mensaje con contenido '" + respuesta + "'");
             		}
             		else {
             			vistaConfigPrincipal.mostrarMensajeEmergente("ERROR Soporte Técnico", "El mensaje no se ha podido enviar");
+            			conexion.registrarMovimiento("Enviar Mensaje Soporte Técnico", "no", "Error interno al enviar el correo");
             		}
         		}
         		catch(Exception e) {
         			vistaConfigPrincipal.mostrarMensajeEmergente("ERROR INESPERADO", "No se ha podido enviar mensaje");
+        			conexion.registrarMovimiento("Enviar Mensaje Soporte Técnico", "no", "Error interno al enviar el correo");
         		}
 
         	}
     	}
-    	catch(Exception e) {}
+    	catch(Exception e) {
+    		conexion.registrarMovimiento("Enviar Mensaje Soporte Técnico", "no", "Error interno al enviar el correo");
+    	}
     }
 
 	/*

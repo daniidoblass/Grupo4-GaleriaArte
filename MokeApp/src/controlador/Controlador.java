@@ -1,6 +1,6 @@
 /**
  * @author Samuel Acosta Fernandez
- * @date 09/02/2022
+ * @date 09/12/2022
  * @version 01
  */
 
@@ -26,7 +26,7 @@ public class Controlador {
     
     public Controlador(){
         modelo = new Modelo();
-        conexion = new Conexion();
+        conexion = new Conexion(modelo);
         vista = new Vista(modelo, conexion);
         controladorClienteFTP = new ControladorClienteFTP();
         FTPClient cliente = controladorClienteFTP.getFTPClient();

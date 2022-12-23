@@ -27,7 +27,15 @@ public class Modelo {
     private String user = "root";
     private String password = "";
     
-    // INFO
+    // LOGIN
+    private String id;
+    private String usuario;
+	private String passwordUsuario;
+	private String categoria;
+	private String correo;
+	private String passwordCorreo;
+
+	// INFO
     private String[] textoOpcionesInfo;
     private String[] textoOpcionesInfoImages;
     private String[] textoDatosInfo;
@@ -51,7 +59,7 @@ public class Modelo {
         tipoOpciones = new String[]{"FTP_Moke", "Mail_Moke", "Configuracion_Moke", "Moke_Info"};
         textoLogos= new String[]{"MOKE APP", "FTP MOKE", "Mail MOKE", "Configuracion MOKE", "MOKE INFO"};
         
-        // LOGIN
+        // OPCIONES
         textoPanelesOpciones = new String[]{"arribaTexto", "medioUsuarios", "abajoFondo"};
         textoOpciones = "Seleccione una opcion";
 
@@ -70,7 +78,7 @@ public class Modelo {
         		 "El usuario podrá acceder a un apartado de correo electrónico donde podrá enviar correos a otros usuarios"};
         
         // CONFIGURACIÓN
-        textoOpcionesConfig = new String[]{"Reestablecer Contraseña", "Cambiar Correo Corporativo", "Soporte Técnico"};
+        textoOpcionesConfig = new String[]{"Restablecer Contraseña", "Cambiar Correo Corporativo", "Soporte Técnico"};
         textoOpcionesConfigImages = new String[]{"password", "gmail", "soporte"};
         textoDatosConfig = new String[] {"Introduzca la nueva contraseña",
        		 "Introduzca el nuevo correo corporativo",
@@ -149,4 +157,52 @@ public class Modelo {
         return textoOpcionesAdminImages;
     }
     
+    // LOGIN
+    public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+    public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getPasswordUsuario() {
+		return passwordUsuario;
+	}
+
+	public void setPasswordUsuario(String passwordUsuario) {
+		this.passwordUsuario = passwordUsuario;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+	
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+	public String getPasswordCorreo() {
+		return passwordCorreo;
+	}
+
+	public void setPasswordCorreo(String passwordCorreo) {
+		this.passwordCorreo = passwordCorreo;
+	}
 }

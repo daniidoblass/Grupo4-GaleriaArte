@@ -69,14 +69,16 @@ public class ControladorDescargarArchivo {
 						BufferedOutputStream buffSalida = new BufferedOutputStream(
 								new FileOutputStream(carpetaDestino + "\\"+archivoDelServidor));
 
-						// Descargar el archivo.
+						// Descargar el archivo
 						boolean descargado = cliente.retrieveFile(archivoDelServidor, buffSalida); // Devuelve TRUE si se ha
 																									// descargado
 						if (descargado) {
 							vistaDescargarArchivo.mostrarMensajeEmergente("Descargar Archivo", "Se ha descargado correctamente");
+							conexion.registrarMovimiento("Descargar Archivo", "si", "Descargado archivo " + archivoDelServidor);
 							
 						} else {
 							vistaDescargarArchivo.mostrarMensajeEmergente("Descargar Archivo", "No se ha podido descargar el archivo");
+							conexion.registrarMovimiento("Descargar Archivo", "no", "Ruta de descarga cliente sin permisos para " + archivoDelServidor);
 						}
 						
 						//Cerrar el buffer.
@@ -87,6 +89,7 @@ public class ControladorDescargarArchivo {
 		}
 		catch(Exception e) {
 			vistaDescargarArchivo.mostrarMensajeEmergente("Descargar Archivo", "No se ha podido descargar el archivo");
+			conexion.registrarMovimiento("Descargar Archivo", "no", "Error interno al descargar el archivo");
 		}
 	}
 }

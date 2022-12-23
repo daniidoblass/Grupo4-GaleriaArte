@@ -1,9 +1,9 @@
 package controlador;
 
 /**
- *
+ * 
  * @author Samuel Acosta Fernandez
- * @date 22/03/2022
+ * @date 09/12/2022
  * @version 01
  * 
  */

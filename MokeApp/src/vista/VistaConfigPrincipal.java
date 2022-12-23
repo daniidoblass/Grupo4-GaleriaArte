@@ -1,6 +1,6 @@
 /**
  * @author Samuel Acosta Fernandez
- * @date 09/02/2022
+ * @date 12/12/2022
  * @version 01
  */
 package vista;
@@ -16,10 +16,11 @@ public class VistaConfigPrincipal extends JFrame{
     
     private Modelo modelo;
     private Vista vista;
-    private Eventos eventos;
    
     private JPanel panelCentral = new JPanel();
     private ArrayList<JButton> botonesMenu = new ArrayList<>();
+    private JComboBox<String> comboCorreos = new JComboBox<String>();
+    private JPasswordField password;
 
     public VistaConfigPrincipal(Modelo modelo, Vista vista){
         this.modelo = modelo;
@@ -80,6 +81,13 @@ public class VistaConfigPrincipal extends JFrame{
     }
     
     /*
+     * Configurar ComboBox Correo
+     */
+    public void agregarCorreoComboBox(String texto) {
+    	comboCorreos.addItem(texto);
+    }
+    
+    /*
 	 * Mensaje Emergente
 	 */
     public String mostrarInputEmergente(String titulo, String mensaje) {
@@ -88,6 +96,33 @@ public class VistaConfigPrincipal extends JFrame{
     
     public void mostrarMensajeEmergente(String titulo, String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
+	}
+    
+    public String mostrarComboBoxEmergente(String titulo, String mensaje) {
+		JOptionPane.showMessageDialog(null, comboCorreos, titulo, JOptionPane.INFORMATION_MESSAGE);
+		return comboCorreos.getSelectedItem().toString();
+	}
+    
+    public String mostrarMensajePassword(String titulo, String mensaje) {
+    	JPanel panel = new JPanel();
+    	panel.setPreferredSize(new Dimension(200,50));
+    	panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    	JLabel label = new JLabel(mensaje);
+    	label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    	password = new JPasswordField(30);
+    	password.setPreferredSize(new Dimension(50,10));
+    	password.setAlignmentX(Component.LEFT_ALIGNMENT);
+    	panel.add(label);
+    	panel.add(password);
+    	String[] options = new String[]{"Aceptar", "Cancelar"};
+    	JOptionPane.showOptionDialog(null, panel, titulo,
+    	                         JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+    	                         null, options, options[1]);
+		return String.valueOf(password.getPassword());
+    }
+    
+    public String getPassword() {
+		return String.valueOf(password.getPassword());
 	}
 }
 

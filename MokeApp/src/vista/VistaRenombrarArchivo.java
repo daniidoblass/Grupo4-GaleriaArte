@@ -1,7 +1,7 @@
 package vista;
 
 /**
- * @author Pablo P�rez Ferre
+ * @author Pablo Pérez Ferre
  * @date 15/12/2022
  * @version 01
  */

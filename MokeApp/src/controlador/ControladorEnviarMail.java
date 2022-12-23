@@ -15,30 +15,40 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.swing.JOptionPane;
 
+import conexion.Conexion;
+import modelo.Modelo;
 import vista.VistaMailEnviarCorreo;
 
 /**
  * 
- * @author Javier Jim�nez Torres
- *
+ * @author Javier Jimenez Torres
+ * @date 09/12/2022
+ * @version 01
  */
 public class ControladorEnviarMail {
-	private VistaMailEnviarCorreo vCorreo;
+	
+	private VistaMailEnviarCorreo vistaMailEnviarCorreo;
+	private Conexion conexion;
+	private Modelo modelo;
 
 	/**
 	 * Contructor
+	 * @param conexion 
+	 * @param modelo 
 	 * 
 	 * @param Vlogin es la vista del login que me paso a esta clase para utilizarla
 	 */
 	@SuppressWarnings("static-access")
-	public ControladorEnviarMail(VistaMailEnviarCorreo vCorreo) {
-		this.vCorreo = vCorreo;
+	public ControladorEnviarMail(VistaMailEnviarCorreo vistaMailEnviarCorreo, Conexion conexion, Modelo modelo) {
+		this.vistaMailEnviarCorreo = vistaMailEnviarCorreo;
+		this.conexion = conexion;
+		this.modelo = modelo;
 	}
 
 	/**
-	 * M�todo que se encarga de enviar el correo electronico
+	 * Metodo que se encarga de enviar el correo electronico
 	 * 
-	 * @param destinatarios el que va a recibir el correo que se coger� del
+	 * @param destinatarios el que va a recibir el correo que se cogera del
 	 *                      textField
 	 * @param asunto        del mensaje
 	 * @param cuerpo        del mensaje
@@ -47,10 +57,10 @@ public class ControladorEnviarMail {
 	 */
 	public String enviarConGMail(String destinatarios, String asunto, String cuerpo, String ruta, String nombreArchivo) throws MessagingException {
 		String mensaje; // Variable para determinar si un correo es enviado o no
-		String remitente = "joseantoniogarciavegas.sanjose@alumnado.fundacionloyola.net"; // remitente del mensaje que
+		String remitente = modelo.getCorreo(); // remitente del mensaje que
 																							// lo cogo de la vista
 		@SuppressWarnings("deprecation")
-		String clave = "67842291"; // clave del usuario
+		String clave = modelo.getPasswordCorreo(); // clave del usuario
 		Properties props = System.getProperties();
 		props.put("mail.smtp.host", "smtp.gmail.com"); // El servidor SMTP de Google
 		props.put("mail.smtp.user", remitente); // remitente de la cuenta
@@ -76,7 +86,7 @@ public class ControladorEnviarMail {
 
 		try {
 			message.setFrom(new InternetAddress(remitente));
-			message.addRecipients(Message.RecipientType.TO, destinatarios); // Se podr�an a�adir varios de la misma
+			message.addRecipients(Message.RecipientType.TO, destinatarios); // Se podrian añadir varios de la misma
 																			// manera
 			if(ruta != null) {
 				message.setSubject(asunto);
@@ -92,16 +102,19 @@ public class ControladorEnviarMail {
 			transport.close();
 			mensaje = "Correo Enviado";
 			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.INFORMATION_MESSAGE);//mensaje enviado
+			conexion.registrarMovimiento("Enviar Mail", "si", "Correo enviado a " + remitente);
 			return mensaje;
 
 		} catch (MessagingException me) {
 			mensaje = "El correo no existe";
 			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE); //correo inexistente
+			conexion.registrarMovimiento("Enviar Mail", "no", "El correo " + remitente + " no existe");
 			return mensaje;
 
 		} catch (NullPointerException e) {
 			mensaje = "No puedes dejar campos vacios";
 			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);//campos vacios
+			conexion.registrarMovimiento("Enviar Mail", "no", "No puedes dejar campos vacios");
 			return mensaje;
 		}
 	}
