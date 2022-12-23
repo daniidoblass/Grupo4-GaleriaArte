@@ -57,15 +57,18 @@ public class ControladorEliminarArchivo {
 					if(cliente.deleteFile(archivoDelServidor)) {
 						eventos.getControladorFTPPrincipal().actualizarContenido();
 						vistaEliminarArchivo.mostrarMensajeEmergente("Eliminar Archivo", "Archivo eliminado correctamente");
+						conexion.registrarMovimiento("Eliminar Archivo", "si", "Eliminado archivo " + archivoDelServidor);
 					}
 					else {
 						vistaEliminarArchivo.mostrarMensajeEmergente("Eliminar Archivo", "No se ha podido eliminar el archivo");
+						conexion.registrarMovimiento("Eliminar Archivo", "no", "Nombre de archivo invalido para " + archivoDelServidor);
 					}
 				}
 			}
 		}
 		catch(Exception e) {
 			vistaEliminarArchivo.mostrarMensajeEmergente("Eliminar Archivo", "No se ha podido eliminar el archivo");
+			conexion.registrarMovimiento("Eliminar Archivo", "no", "Error interno al eliminar archivo");
 		}
 	}
 }

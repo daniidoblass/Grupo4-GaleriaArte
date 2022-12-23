@@ -28,6 +28,7 @@ public class ControladorEliminarCarpeta {
 	private VistaEliminarCarpeta vistaEliminarCarpeta;
 	private String nombreArchivo = "";
 	private String directorioActual = "";
+	private String carpetaSeleccionada = "";
 	
 	public ControladorEliminarCarpeta(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) {
 		
@@ -40,7 +41,7 @@ public class ControladorEliminarCarpeta {
 		
 		
 		nombreArchivo = eventos.getControladorFTPPrincipal().getInfoFicheroPulsado();
-		
+
 		try {
 			
 			if (nombreArchivo.contains("carpeta")) {
@@ -50,30 +51,54 @@ public class ControladorEliminarCarpeta {
 				}
 				else {
 					nombreArchivo = nombreArchivo.replace("carpeta-", "");
-					
+					carpetaSeleccionada = nombreArchivo;
 					int opcion = JOptionPane.showConfirmDialog(null,
 							"¿Deseas eliminar la carpeta " + nombreArchivo + "?",
 							"Eliminar Carpeta", JOptionPane.YES_NO_OPTION);
 					
 					if (opcion == JOptionPane.YES_OPTION) {
-						System.out.println("seleccionada la opcion si");
 						if (cliente.printWorkingDirectory().equals("/")) {
 							nombreArchivo = cliente.printWorkingDirectory() + nombreArchivo;
 						} else {
 							nombreArchivo = cliente.printWorkingDirectory() + "/" + nombreArchivo;
 						}
 						eliminarCarpeta(cliente, nombreArchivo, directorioActual);
-						JOptionPane.showMessageDialog(null, nombreArchivo + " se ha eliminado correctamente");
+						if(comprobarEliminacion()) {
+							JOptionPane.showMessageDialog(null, "Error al eliminar la carpeta " + carpetaSeleccionada);
+							conexion.registrarMovimiento("Eliminar Carpeta", "no", "Carpeta " + nombreArchivo + " contiene elementos con nombres inválidos");
+						}
+						else {
+							JOptionPane.showMessageDialog(null, nombreArchivo + " eliminada correctamente");
+							conexion.registrarMovimiento("Eliminar Carpeta", "si", "Eliminada carpeta " + nombreArchivo);
+						}
 					}
 				}
 			} 
+			else {
+				JOptionPane.showMessageDialog(null, "No hay seleccionada ninguna carpeta");
+			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			conexion.registrarMovimiento("Eliminar Carpeta", "no", "Error interno al eliminar carpeta");
 		}
 		
 		eventos.getControladorFTPPrincipal().actualizarContenido();
 	}
 	
+
+	private boolean comprobarEliminacion() {
+		boolean comprobacion = false;
+		try {
+			FTPFile[] subFicheros = cliente.listFiles(cliente.printWorkingDirectory());
+			for(int i=0; i<subFicheros.length; i++) {
+				if(subFicheros[i].getName().toString().equals(carpetaSeleccionada)) {
+					comprobacion = true;
+				}
+			}
+		}
+		catch(Exception e) {}
+		return comprobacion;
+	}
+
 
 	private void eliminarCarpeta(FTPClient cliente, String nombreArchivo, String directorioActual)
 			throws HeadlessException, IOException {
@@ -89,7 +114,8 @@ public class ControladorEliminarCarpeta {
 		
 		
 		FTPFile[] subFicheros = cliente.listFiles(listaDirectorios);
-		if (subFicheros != null && subFicheros.length > 0) {
+
+		if (subFicheros != null || subFicheros.length > 0) {
 			for (FTPFile aFile : subFicheros) {
 				String currentFileName = aFile.getName();
 				if (currentFileName.equals(".") || currentFileName.equals("..")) {
@@ -100,8 +126,8 @@ public class ControladorEliminarCarpeta {
 				if (directorioActual.equals("")) {
 					filePath = nombreArchivo + "/" + currentFileName;
 				}
+
 				if (aFile.isDirectory()) {
-					System.out.println("el fichero es un directorio");
 					// remove the sub directory
 					eliminarCarpeta(cliente, filePath, directorioActual);
 				} else {
@@ -114,7 +140,7 @@ public class ControladorEliminarCarpeta {
 					}
 				}
 			}
-			//cliente.changeWorkingDirectory(nombreArchivo);
+			cliente.changeWorkingDirectory(nombreArchivo);
 			cliente.changeToParentDirectory();
 			// finally, remove the directory itself
 			boolean removed = cliente.removeDirectory(listaDirectorios);

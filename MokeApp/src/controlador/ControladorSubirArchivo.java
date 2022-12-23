@@ -4,6 +4,8 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -22,12 +24,14 @@ public class ControladorSubirArchivo {
 
 	private Modelo modelo;
 	private Eventos eventos;
+	private Conexion conexion;
 	private VistaSubirArchivo vistaSubirArchivo;
 	private FTPClient cliente;
 
 	public ControladorSubirArchivo(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) {
 		this.modelo = modelo;
 		this.eventos = eventos;
+		this.conexion = conexion;
 		vistaSubirArchivo = new VistaSubirArchivo(modelo);
 		this.cliente = cliente;
 
@@ -42,18 +46,25 @@ public class ControladorSubirArchivo {
 			File f = vistaSubirArchivo.getJFileChooser().getSelectedFile();
 			String archivo = f.getAbsolutePath();
 			String nombreArchivo = f.getName();
-
-			try {
-				if (subirFichero(archivo, nombreArchivo)) {
-					JOptionPane.showMessageDialog(vistaSubirArchivo.getJFileChooser(),
-							"Se ha subido correctamente el archivo " + nombreArchivo);
-					eventos.getControladorFTPPrincipal().actualizarContenido();
-				} else {
-					JOptionPane.showMessageDialog(vistaSubirArchivo.getJFileChooser(),
-							"No se ha podido subir el archivo " + nombreArchivo);
+			
+			if(nombreArchivo.contains(".")) {
+				try {
+					if (subirFichero(archivo, nombreArchivo)) {
+						JOptionPane.showMessageDialog(vistaSubirArchivo.getJFileChooser(),
+								"Se ha subido correctamente el archivo " + nombreArchivo);
+						conexion.registrarMovimiento("Subir Archivo", "si", "Subido fichero " + nombreArchivo);
+						eventos.getControladorFTPPrincipal().actualizarContenido();
+					} else {
+						JOptionPane.showMessageDialog(vistaSubirArchivo.getJFileChooser(),
+								"No se ha podido subir el archivo " + nombreArchivo);
+						conexion.registrarMovimiento("Subir Archivo", "no", "Error de Servidor FTP al subir " + nombreArchivo);
+					}
+				} catch (Exception el) {
+					conexion.registrarMovimiento("Subir Archivo", "no", "Error de Servidor FTP al subir " + nombreArchivo);
 				}
-			} catch (Exception el) {
-				System.err.println("ERROR: no se ha podido mostrar la ventana emergente \n" + el.getMessage());
+			}
+			else {
+				conexion.registrarMovimiento("Subir Archivo", "no", "Error al subir fichero sin formato");
 			}
 		}
 	}
@@ -68,4 +79,5 @@ public class ControladorSubirArchivo {
 		in.close();
 		return operacion;
 	}
+
 }

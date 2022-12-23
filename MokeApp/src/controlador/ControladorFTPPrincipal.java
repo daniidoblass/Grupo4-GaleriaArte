@@ -1,6 +1,6 @@
 /**
  * @author Samuel Acosta Fernandez
- * @date 09/02/2022
+ * @date 09/12/2022
  * @version 01
  */
 
@@ -90,7 +90,7 @@ public class ControladorFTPPrincipal {
 	private void agregarCaratulasFicheros() {
 
     	for(int i=0; i<nombreFicheros.size(); i++) {
-    		String formato = extraerFormato(nombreFicheros.get(i));
+    		String formato = extraerFormato(infoFicheros.get(i));
     		vistaFTPPrincipal.crearCaratulasFicheros(nombreFicheros.get(i), formato, infoFicheros.get(i));
     		vistaFTPPrincipal.getCaratulasProductos().get(vistaFTPPrincipal.getCaratulasProductos().size() - 1).addMouseListener(eventosFTP);
     		vistaFTPPrincipal.getCaratulasProductos().get(vistaFTPPrincipal.getCaratulasProductos().size() - 1).addActionListener(eventosFTP);
@@ -102,21 +102,28 @@ public class ControladorFTPPrincipal {
 		
 		String formato = "file";
 		
-		if(nombreFichero.contains(".mp4") || nombreFichero.contains(".avi")) {
-			formato = "movie";
+		if(nombreFichero.contains("fichero-")) {
+			String[] contenido = nombreFichero.split("\\.");
+			if(contenido.length > 0) {
+				String extension = contenido[contenido.length - 1];
+				if(extension.contains("mp4") || extension.contains("avi")) {
+					formato = "movie";
+				}
+				else if(extension.contains("mp3") || extension.contains("wav")) {
+					formato = "music";
+				}
+				else if(extension.contains("txt") || extension.contains("docx") || extension.contains("pdf")) {
+					formato = "document";
+				}
+				else if(extension.contains("png") || extension.contains("jpg") || extension.contains("jpeg")) {
+					formato = "image";
+				}
+			}
 		}
-		else if(nombreFichero.contains(".mp3") || nombreFichero.contains(".wav")) {
-			formato = "music";
-		}
-		else if(nombreFichero.contains(".txt") || nombreFichero.contains(".docx") || nombreFichero.contains(".pdf")) {
-			formato = "document";
-		}
-		else if(nombreFichero.contains(".png") || nombreFichero.contains(".jpg") || nombreFichero.contains(".jpeg")) {
-			formato = "image";
-		}
-		else if(!nombreFichero.contains(".")) {
+		else {
 			formato = "folder";
 		}
+		
 		
 		return formato;
 	}

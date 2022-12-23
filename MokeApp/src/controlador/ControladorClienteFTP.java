@@ -22,14 +22,11 @@ public class ControladorClienteFTP {
 			// iniciar sesión en el servidor
 			boolean loginCorrecto = cliente.login(usuario, contrasena);
 			if(!loginCorrecto) {
-				System.out.print("ERROR: usuario o contraseña incorrectas");
 				cliente.disconnect();
 			}
 
 		}
-		catch(Exception e) {
-			System.out.println("ERROR: no se ha podido establecer conexion con el Cliente FTP");
-		}
+		catch(Exception e) {}
 	}
 	
 	public FTPClient getFTPClient() {

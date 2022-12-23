@@ -1,6 +1,6 @@
 /**
  * @author Samuel Acosta Fernandez
- * @date 09/02/2022
+ * @date 12/12/2022
  * @version 01
  */
 package vista;
@@ -41,7 +41,8 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 	private DefaultTableModel modeloTabla = new DefaultTableModel();
 	private JTable tabla = new JTable();
 	private JButton cambiarTabla = new JButton();
-	private JButton VerMensaje = new JButton();
+	private JButton verMensaje = new JButton();
+	private JButton actualizarTabla = new JButton();
 
 	public VistaMailPrincipal(Modelo modelo, Vista vista) {
 		this.modelo = modelo;
@@ -126,6 +127,7 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 		tabla.getTableHeader().setBackground(new Color(66, 120, 147));
 		tabla.getTableHeader().setForeground(new Color(255, 255, 255));
 		tabla.setRowHeight(25);
+		tabla.setDefaultEditor(Object.class, null);
 
 		panelesAdmin.get(2).add(scroll);
 	}
@@ -145,10 +147,10 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 	}
 
 	/*
-	 * Configurar Boton Cambiar Tabla
+	 * Configurar Boton Redactar
 	 */
-	public void configurarBotonCambiarTabla() {
-		ImageIcon icon = new ImageIcon("src/subiconos/enviar.png");
+	public void configurarBotonRedactar() {
+		ImageIcon icon = new ImageIcon("src/subiconos/redactar.png");
 
 		// ponerle texto e icono
 		cambiarTabla.setText("Redactar");
@@ -159,7 +161,7 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 		cambiarTabla.setVerticalTextPosition(SwingConstants.CENTER);
 
 		// Configurar propiedades del boton
-		cambiarTabla.setBackground(new Color(66, 120, 147));
+		cambiarTabla.setBackground(Color.decode("#193349"));
 		cambiarTabla.setBorderPainted(false);
 		cambiarTabla.setPreferredSize(new Dimension(200, 60));
 		cambiarTabla.setHorizontalAlignment(SwingConstants.LEFT);
@@ -172,42 +174,71 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 	}
 	
 	public void configuracionBottonVerMensaje() {
-		ImageIcon icon = new ImageIcon("src/subiconos/enviar.png");
+		ImageIcon icon = new ImageIcon("src/subiconos/abrirmensaje.png");
 
 		// ponerle texto e icono
-		VerMensaje.setText("Ver mensaje");
-		VerMensaje.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
+		verMensaje.setText("Ver mensaje");
+		verMensaje.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
 
 		// Texto en el centro y debajo del icono
-		VerMensaje.setHorizontalTextPosition(SwingConstants.RIGHT);
-		VerMensaje.setVerticalTextPosition(SwingConstants.CENTER);
+		verMensaje.setHorizontalTextPosition(SwingConstants.RIGHT);
+		verMensaje.setVerticalTextPosition(SwingConstants.CENTER);
 
 		// Configurar propiedades del boton
-		VerMensaje.setBackground(new Color(66, 120, 147));
-		VerMensaje.setBorderPainted(false);
-		VerMensaje.setPreferredSize(new Dimension(200, 60));
-		VerMensaje.setHorizontalAlignment(SwingConstants.LEFT);
+		verMensaje.setOpaque(false);
+		verMensaje.setBorderPainted(false);
+		verMensaje.setContentAreaFilled(false);
+		verMensaje.setPreferredSize(new Dimension(200, 60));
+		verMensaje.setHorizontalAlignment(SwingConstants.LEFT);
+		
 
 		// Personalizar texto
-		VerMensaje.setForeground(Color.WHITE);
-		VerMensaje.setFont(new Font("arial", 0, 20));
+		verMensaje.setForeground(Color.WHITE);
+		verMensaje.setFont(new Font("arial", 0, 20));
 
-		panelesAdmin.get(1).add(VerMensaje);
+		panelesAdmin.get(1).add(verMensaje);
+	}
+	
+	public void configurarBotonActualizar() {
+		ImageIcon icon = new ImageIcon("src/subiconos/actualizar.png");
+
+		// ponerle texto e icono
+		actualizarTabla.setText("Actualizar");
+		actualizarTabla.setIcon(new ImageIcon(icon.getImage().getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH)));
+
+		// Texto en el centro y debajo del icono
+		actualizarTabla.setHorizontalTextPosition(SwingConstants.RIGHT);
+		actualizarTabla.setVerticalTextPosition(SwingConstants.CENTER);
+
+		// Configurar propiedades del boton
+		actualizarTabla.setOpaque(false);
+		actualizarTabla.setBorderPainted(false);
+		actualizarTabla.setContentAreaFilled(false);
+		actualizarTabla.setPreferredSize(new Dimension(200, 60));
+		actualizarTabla.setHorizontalAlignment(SwingConstants.LEFT);
+
+		// Personalizar texto
+		actualizarTabla.setForeground(Color.WHITE);
+		actualizarTabla.setFont(new Font("arial", 0, 20));
+
+		panelesAdmin.get(1).add(actualizarTabla);
 	}
 
 	public JButton getBotonCambiarTabla() {
 		return cambiarTabla;
 	}
 	
+	public JButton getBotonActualizarTabla() {
+		return actualizarTabla;
+	}
+	
 	public JButton getBotonVerMensaje() {
-		return VerMensaje;
+		return verMensaje;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		fila = tabla.rowAtPoint(e.getPoint());
-		System.out.println(fila);
-		
+		fila = tabla.rowAtPoint(e.getPoint());	
 	}
 
 	public int getFila() {

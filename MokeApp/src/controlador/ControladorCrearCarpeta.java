@@ -51,23 +51,31 @@ public class ControladorCrearCarpeta {
 						// Eliminar espacios en nombre de carpeta
 						nombreCarpeta = nombreCarpeta.replace(" ", "");
 						
+						// Eliminar puntos en nombre de carpeta
+						nombreCarpeta = nombreCarpeta.replace("\\.", "");
+						
 						// Sustituir guiones
 						nombreCarpeta = nombreCarpeta.replace("-", "_");
 
 						if(cliente.makeDirectory(nombreCarpeta)) {
 							String mensaje = nombreCarpeta.trim() + " se ha creado correctamente";
 							vistaCrearCarpeta.mostrarMensajeEmergente("Crear Carpeta", mensaje);
+							conexion.registrarMovimiento("Crear Carpeta", "si", "Creada carpeta " + nombreCarpeta);
 							eventos.getControladorFTPPrincipal().actualizarContenido();
 						}else {
 							vistaCrearCarpeta.mostrarMensajeEmergente("Crear Carpeta", nombreCarpeta.trim()+ " no se ha podido crear");
+							conexion.registrarMovimiento("Crear Carpeta", "no", "Nombre de carpeta invalido para " + nombreCarpeta);
 						}
 						
 					}catch (Exception e) {
 						vistaCrearCarpeta.mostrarMensajeEmergente("Crear Carpeta", nombreCarpeta.trim()+ " no se ha podido crear");
+						conexion.registrarMovimiento("Crear Carpeta", "no", "Error interno al crear carpeta " + nombreCarpeta);
 					}
 				}
 	    	}
-	    	catch(Exception e) {}
+	    	catch(Exception e) {
+	    		conexion.registrarMovimiento("Crear Carpeta", "no", "Error interno al crear carpeta");
+	    	}
 	    }
 	    
 	    

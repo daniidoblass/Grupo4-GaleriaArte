@@ -1,11 +1,14 @@
 /**
  * @author Samuel Acosta Fernandez
- * @date 27/04/2022
+ * @date 09/12/2022
  * @version 01
  */
 package conexion;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import modelo.Modelo;
 
 public class Conexion {
@@ -14,9 +17,9 @@ public class Conexion {
     private Connection conexion;
     private DatabaseMetaData metadatos;
     
-    public Conexion() {
-        modelo = new Modelo();
-	realizarConexion();
+    public Conexion(Modelo modelo) {
+        this.modelo = modelo;
+        realizarConexion();
         realizarDatabaseMetaData();
     }
     
@@ -108,4 +111,17 @@ public class Conexion {
         }
         return null;
     }
+    
+    /*
+	 * Registrar movimiento
+	 */
+	public int registrarMovimiento(String operacion, String exito, String resultado) {
+		SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd"); 
+		SimpleDateFormat hora = new SimpleDateFormat("HH:mm:ss"); 
+		Date date = new Date(); 
+		String sql = "INSERT INTO movimientos (idUsuario, nombreUsuario, categoriaUsuario, operacion, exito, resultado, fecha, hora) "
+				+ "VALUES(" + modelo.getId() + ", '" + modelo.getUsuario() + "', '" + modelo.getCategoria() + "', '" + operacion 
+				+ "', '" + exito + "', '" + resultado + "', '" + fecha.format(date) + "', '" + hora.format(date) + "')";
+		return realizarUpdateStatement(sql);
+	}
 }

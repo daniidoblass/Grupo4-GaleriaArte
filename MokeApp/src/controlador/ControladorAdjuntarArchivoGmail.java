@@ -1,3 +1,9 @@
+/**
+ * @author Javier Jimenez Torres
+ * @date 09/12/2022
+ * @version 01
+ */
+ 
 package controlador;
 
 import java.io.File;
@@ -20,9 +26,8 @@ public class ControladorAdjuntarArchivoGmail {
 			File f = vistaMailEnviarCorreo.getJFileChooser().getSelectedFile();
 			ruta = f.getAbsolutePath();
 			nombreArchivo = f.getName();
-
-			System.out.println("Ruta archivo seleccionada --> " + ruta);
-			System.out.println("Archivo seleccionado --> " + nombreArchivo);
+			vistaMailEnviarCorreo.getLblAdjuntar().setText("Adjuntado: " + nombreArchivo);
+			vistaMailEnviarCorreo.getLblAdjuntar().setVisible(true);
 		}
 	}
 
