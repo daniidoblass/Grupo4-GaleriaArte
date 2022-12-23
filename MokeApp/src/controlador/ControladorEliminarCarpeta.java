@@ -65,10 +65,10 @@ public class ControladorEliminarCarpeta {
 						eliminarCarpeta(cliente, nombreArchivo, directorioActual);
 						if(comprobarEliminacion()) {
 							JOptionPane.showMessageDialog(null, "Error al eliminar la carpeta " + carpetaSeleccionada);
-							conexion.registrarMovimiento("Eliminar Carpeta", "no", "Carpeta " + nombreArchivo + " contiene elementos con nombres inválidos");
+							conexion.registrarMovimiento("Eliminar Carpeta", "no", "Carpeta " + nombreArchivo.substring(nombreArchivo.lastIndexOf("/")+1) + " contiene elementos con nombres inválidos");
 						}
 						else {
-							JOptionPane.showMessageDialog(null, nombreArchivo + " eliminada correctamente");
+							JOptionPane.showMessageDialog(null, nombreArchivo.substring(nombreArchivo.lastIndexOf("/")+1) + " eliminada correctamente");
 							conexion.registrarMovimiento("Eliminar Carpeta", "si", "Eliminada carpeta " + nombreArchivo);
 						}
 					}
