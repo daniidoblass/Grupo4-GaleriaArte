@@ -1,3 +1,15 @@
+/**
+ * 
+ * Clase ControladorSubirArchivo
+ * 
+ * Permite subir un archivo seleccionado del 
+ * ordenador al servidor FTP
+ * 
+ * @author Pablo Navarro
+ * @date 15/12/2022
+ * @version 01
+ */
+
 package controlador;
 
 import java.io.BufferedInputStream;
@@ -22,12 +34,39 @@ import vista.VistaSubirArchivo;
 
 public class ControladorSubirArchivo {
 
+	/**
+	 * modelo - tipo Modelo - contiene textos del programa
+	 */
 	private Modelo modelo;
+	
+	/**
+     * eventos - tipo Eventos - eventos principales 
+     */
 	private Eventos eventos;
+	
+	/**
+     * conexion - tipo Conexion - conexion con base de datos
+     */
 	private Conexion conexion;
+	
+	/**
+     * vistaSubirArchivo - tipo VistaSubirArchivo - vista para subir archivo
+     */
 	private VistaSubirArchivo vistaSubirArchivo;
+	
+	/**
+     * cliente - tipo FTPClient - cliente FTP
+     */
 	private FTPClient cliente;
 
+	/**
+	 * Constructor por defecto. Permite subir archivo 
+	 * @param modelo - tipo Modelo - contiene textos del programa
+	 * @param vista - tipo Vista - vista principal del programa
+	 * @param eventos - tipo Eventos - eventos principales 
+	 * @param conexion - tipo Conexion - conexion con base de datos
+	 * @param cliente - tipo FTPClient - cliente FTP
+	 */
 	public ControladorSubirArchivo(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) {
 		this.modelo = modelo;
 		this.eventos = eventos;
@@ -38,7 +77,7 @@ public class ControladorSubirArchivo {
 		obtenerFicheroSeleccionado();
 	}
 
-	/*
+	/**
 	 * Obtiene fichero seleccionado y lo sube a servidor FTP
 	 */
 	public void obtenerFicheroSeleccionado() {
@@ -51,26 +90,28 @@ public class ControladorSubirArchivo {
 				try {
 					if (subirFichero(archivo, nombreArchivo)) {
 						JOptionPane.showMessageDialog(vistaSubirArchivo.getJFileChooser(),
-								"Se ha subido correctamente el archivo " + nombreArchivo);
-						conexion.registrarMovimiento("Subir Archivo", "si", "Subido fichero " + nombreArchivo);
+								modelo.getTextosSubirArchivo()[0] + nombreArchivo);
+						conexion.registrarMovimiento(modelo.getMovimientoSubirArchivo()[0], modelo.getMovimientoExito()[0], modelo.getMovimientoSubirArchivo()[1] + nombreArchivo);
 						eventos.getControladorFTPPrincipal().actualizarContenido();
 					} else {
 						JOptionPane.showMessageDialog(vistaSubirArchivo.getJFileChooser(),
-								"No se ha podido subir el archivo " + nombreArchivo);
-						conexion.registrarMovimiento("Subir Archivo", "no", "Error de Servidor FTP al subir " + nombreArchivo);
+								modelo.getTextosSubirArchivo()[1] + nombreArchivo);
+						conexion.registrarMovimiento(modelo.getMovimientoSubirArchivo()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoSubirArchivo()[2] + nombreArchivo);
 					}
 				} catch (Exception el) {
-					conexion.registrarMovimiento("Subir Archivo", "no", "Error de Servidor FTP al subir " + nombreArchivo);
+					conexion.registrarMovimiento(modelo.getMovimientoSubirArchivo()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoSubirArchivo()[2] + nombreArchivo);
 				}
 			}
 			else {
-				conexion.registrarMovimiento("Subir Archivo", "no", "Error al subir fichero sin formato");
+				conexion.registrarMovimiento(modelo.getMovimientoSubirArchivo()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoSubirArchivo()[3]);
 			}
 		}
 	}
 
-	/*
+	/**
 	 * Sube fichero pasado por parámetro al servidor FTP
+	 * @param archivo - tipo String - archivo seleccionado de ordenador
+	 * @param nombreArchivo - tipo String - nombre de archivo 
 	 */
 	private boolean subirFichero(String archivo, String nombreArchivo) throws IOException {
 		cliente.setFileType(FTP.BINARY_FILE_TYPE);

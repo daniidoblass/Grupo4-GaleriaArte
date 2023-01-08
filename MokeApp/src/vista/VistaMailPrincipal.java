@@ -1,8 +1,15 @@
 /**
- * @author Samuel Acosta Fernandez
- * @date 12/12/2022
+ * 
+ * Clase VistaMailPrincipal
+ * 
+ * Muestra ventana con correos y opciones para redactar,
+ * ver mensaje de correo y actualizar correos
+ * 
+ * @author Javier Jimenez Torres
+ * @date 09/12/2022
  * @version 01
  */
+
 package vista;
 
 import java.awt.BorderLayout;
@@ -32,18 +39,66 @@ import modelo.Modelo;
 
 public class VistaMailPrincipal extends JFrame implements MouseListener{
 
+	/**
+	 * modelo - tipo Modelo - contiene textos del programa
+	 */
 	private Modelo modelo;
+	
+	/**
+     * vista - tipo Vista - vista principal del programa
+     */
 	private Vista vista;
+	
+	/**
+     * eventos - tipo Eventos - eventos principales 
+     */
 	private Eventos eventos;
+	
+	/**
+	 * fila - tipo int - numero de filas
+	 */
 	private int fila;
+	
+	/**
+	 * panelCentral - tipo JPanel - panel central de mail
+	 */
 	private JPanel panelCentral = new JPanel();
+	
+	/**
+	 * panelesAdmin - tipo ArrayList<JPanel> - paneles mail
+	 */
 	private ArrayList<JPanel> panelesAdmin = new ArrayList<>();
+	
+	/**
+	 * modeloTabla - tipo DefaultTableModel - modelo de tabla
+	 */
 	private DefaultTableModel modeloTabla = new DefaultTableModel();
+	
+	/**
+	 * tabla - tipo JTable - tabla de correos recibidos
+	 */
 	private JTable tabla = new JTable();
+	
+	/**
+	 * cambiarTabla - tipo JButton - boton de redactar
+	 */
 	private JButton cambiarTabla = new JButton();
+	
+	/**
+	 * verMensaje - tipo JButton - boton para ver mensaje
+	 */
 	private JButton verMensaje = new JButton();
+	
+	/**
+	 * actualizarTabla - tipo JButton - boton para actualizar correos
+	 */
 	private JButton actualizarTabla = new JButton();
 
+	/**
+	 * Constructor por defecto de vista mail
+	 * @param modelo - tipo Modelo - contiene textos del programa
+	 * @param vista - tipo Vista - vista principal del programa
+	 */
 	public VistaMailPrincipal(Modelo modelo, Vista vista) {
 		this.modelo = modelo;
 		this.vista = vista;
@@ -51,7 +106,7 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 		configurarPanelCentral();
 	}
 
-	/*
+	/**
 	 * Actualizamos la ventana principal
 	 */
 	private void actualizarVentanaPrincipal() {
@@ -59,7 +114,7 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 		vista.getPaneles().get(2).removeAll();
 	}
 
-	/*
+	/**
 	 * Configuracion de Ventana Principal
 	 */
 	public void configurarPanelCentral() {
@@ -68,8 +123,9 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 		vista.getPaneles().get(2).add(panelCentral);
 	}
 
-	/*
+	/**
 	 * Configuracion de paneles admin
+	 * @param i - tipo int - contador de paneles
 	 */
 	public void crearPanelesAdmin(int i) {
 		panelesAdmin.add(new JPanel());
@@ -78,33 +134,50 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 		panelCentral.add(panelesAdmin.get(i));
 	}
 
+	/**
+	 * Ordena paneles
+	 */
 	public void ordenarPaneles() {
 		panelCentral.add(panelesAdmin.get(0), BorderLayout.NORTH);
 		panelCentral.add(panelesAdmin.get(1), BorderLayout.WEST);
 		panelCentral.add(panelesAdmin.get(2), BorderLayout.CENTER);
 	}
 
+	/**
+	 * Configurar panel norte
+	 */
 	public void configurarPanelAdminNorte() {
 		panelesAdmin.get(0).setLayout(new FlowLayout(FlowLayout.LEFT));
 		panelesAdmin.get(0).setPreferredSize(new Dimension(640, 70));
 	}
 
+	/**
+	 * Configurar panel este
+	 */
 	public void configurarPanelAdminEste() {
 		panelesAdmin.get(1).setLayout(new GridLayout(5, 1));
 		panelesAdmin.get(1).setPreferredSize(new Dimension(250, 600));
 		panelesAdmin.get(1).setAlignmentY(Component.LEFT_ALIGNMENT);
 	}
 
+	/**
+	 * Configurar panel central
+	 */
 	public void configurarPanelAdminCentral() {
 		panelesAdmin.get(2).setLayout(new GridLayout(1, 1));
 	}
 
+	/**
+	 * Obtener paneles mail
+	 * @return panelesAdmin - tipo ArrayList<JPanel> - paneles mail
+	 */
 	public ArrayList<JPanel> getPanelesAdmin() {
 		return panelesAdmin;
 	}
 
-	/*
+	/**
 	 * Configuracion Tabla
+	 * @param nombreColumnas - tipo String[] - nombre columnas de tabla
 	 */
 	public void configuracionJTable1(String[] nombreColumnas) {
 		panelesAdmin.get(2).add(tabla); // Anadimos la tabla a la ventana
@@ -132,21 +205,30 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 		panelesAdmin.get(2).add(scroll);
 	}
 
+	/**
+	 * Modifica modelo de tabla
+	 * @param nombreColumnas - tipo String[] - nombre de columnas
+	 */
 	public void modificarModeloTabla(String[] nombreColumnas) {
 		modeloTabla.setColumnIdentifiers(nombreColumnas);
 	}
 
-	// Inserta una fila
+	/**
+	 *  Inserta una fila
+	 * @param fila - tipo Object[] - fila de tabla
+	 */
 	public void insertRow(Object[] fila) {
 		modeloTabla.addRow(fila);
 	}
 	
-	// Elimina los datos de la tabla
+	/**
+	 *  Elimina los datos de la tabla
+	 */
 	public void limpiarTabla() {
 		modeloTabla.setRowCount(0);
 	}
 
-	/*
+	/**
 	 * Configurar Boton Redactar
 	 */
 	public void configurarBotonRedactar() {
@@ -173,6 +255,9 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 		panelesAdmin.get(1).add(cambiarTabla);
 	}
 	
+	/**
+	 * Configura boton de ver mensaje
+	 */
 	public void configuracionBottonVerMensaje() {
 		ImageIcon icon = new ImageIcon("src/subiconos/abrirmensaje.png");
 
@@ -199,6 +284,9 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 		panelesAdmin.get(1).add(verMensaje);
 	}
 	
+	/**
+	 * Configura boton de actualizar
+	 */
 	public void configurarBotonActualizar() {
 		ImageIcon icon = new ImageIcon("src/subiconos/actualizar.png");
 
@@ -224,31 +312,57 @@ public class VistaMailPrincipal extends JFrame implements MouseListener{
 		panelesAdmin.get(1).add(actualizarTabla);
 	}
 
+	/**
+	 * Obtener boton redactar
+	 * @return cambiarTabla - tipo JButton - boton redactar
+	 */
 	public JButton getBotonCambiarTabla() {
 		return cambiarTabla;
 	}
 	
+	/**
+	 * Obtener boton actualizar
+	 * @return actualizarTabla - tipo JButton - boton actualizar
+	 */
 	public JButton getBotonActualizarTabla() {
 		return actualizarTabla;
 	}
 	
+	/**
+	 * Obtener boton ver mensaje
+	 * @return verMensaje - tipo JButton - boton ver mensaje
+	 */
 	public JButton getBotonVerMensaje() {
 		return verMensaje;
 	}
 
+	/**
+	 * Obtener fila seleccionada
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		fila = tabla.rowAtPoint(e.getPoint());	
 	}
 
+	/**
+	 * Obtener fila tabla
+	 * @return fila - tipo int - numero de fila
+	 */
 	public int getFila() {
 		return fila;
 	}
 
+	/**
+	 * Insertar numero de fila
+	 * @param fila - tipo int - numero de fila
+	 */
 	public void setFila(int fila) {
 		this.fila = fila;
 	}
 
+	/**
+	 * Métodos al pasar puntero encima de componente
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub

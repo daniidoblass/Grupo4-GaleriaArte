@@ -1,4 +1,11 @@
 /**
+ * 
+ * Clase VistaFTPPrincipal
+ * 
+ * Muestra explorador de archivos de servidor FTP,
+ * admitiendo imagenes identificativas y exploración
+ * entre carpetas
+ * 
  * @author Samuel Acosta Fernandez
  * @date 12/12/2022
  * @version 01
@@ -14,13 +21,36 @@ import controlador.Eventos;
 
 public class VistaFTPPrincipal extends JFrame{
     
+	/**
+	 * modelo - tipo Modelo - contiene textos del programa
+	 */
     private Modelo modelo;
+    
+    /**
+     * vista - tipo Vista - vista principal del programa
+     */
     private Vista vista;
+    
+    /**
+     * eventos - tipo Eventos - eventos principales 
+     */
     private Eventos eventos;
 
+    /**
+     * panelCentral - tipo JPanel - panel central de ventana
+     */
     private JPanel panelCentral = new JPanel();
+    
+    /**
+     * caratulasProductos - tipo ArrayList<JButton> - lista carátulas
+     */
     private ArrayList<JButton> caratulasProductos = new ArrayList<>();
 
+    /**
+     * Constructor por defecto para vista de FTP
+     * @param modelo
+     * @param vista
+     */
     public VistaFTPPrincipal(Modelo modelo, Vista vista){
         this.modelo = modelo;
         this.vista = vista;
@@ -28,15 +58,15 @@ public class VistaFTPPrincipal extends JFrame{
         configurarPanelCentral();
     }
     
-    /*
+    /**
      * Actualizamos la ventana principal
-    */
+     */
     private void actualizarVentanaPrincipal() {
         vista.getPaneles().get(1).setVisible(true);
         vista.getPaneles().get(2).removeAll();
     }
     
-    /*
+    /**
      * Configuracion de Ventana Principal
      */
     public void configurarPanelCentral() {
@@ -52,8 +82,11 @@ public class VistaFTPPrincipal extends JFrame{
     	vista.getPaneles().get(2).add(scrollPanel);
     }
     
-    /*
+    /**
      * Crear Caratulas de Ficheros
+     * @param nombreFichero - tipo String - nombre del fichero
+     * @param formato - tipo String - formato del fichero
+     * @param infoFichero - tipo String - información de fichero
      */
     public void crearCaratulasFicheros(String nombreFichero, String formato, String infoFichero) {
     	caratulasProductos.add(new JButton());
@@ -85,10 +118,17 @@ public class VistaFTPPrincipal extends JFrame{
     	panelCentral.add(caratulasProductos.get(caratulasProductos.size() - 1));
     }
     
+    /**
+     * Obtener carátulas de productos
+     * @return caratulasProductos - tipo ArrayList<JButton> - carátulas productos
+     */
     public ArrayList<JButton> getCaratulasProductos() {
         return caratulasProductos;
     }
     
+    /**
+     * Limpiar explorador FTP
+     */
     public void limpiarPanelCentral() {
     	panelCentral.removeAll();
     	panelCentral.revalidate();
@@ -96,8 +136,10 @@ public class VistaFTPPrincipal extends JFrame{
     	caratulasProductos.clear();
     }
     
-    /*
+    /**
 	 * Mensaje Emergente
+	 * @param titulo - tipo String - titulo de ventana
+	 * @param mensaje - tipo String - mensaje de ventana
 	 */
 	public void mostrarMensajeEmergente(String titulo, String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);

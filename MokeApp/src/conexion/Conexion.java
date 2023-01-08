@@ -1,9 +1,15 @@
 /**
+ * Clase Conexion
+ * 
+ * Métodos para la conexión con la base de datos MySQL
+ * 
  * @author Samuel Acosta Fernandez
  * @date 09/12/2022
  * @version 01
  */
+
 package conexion;
+
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,17 +19,32 @@ import modelo.Modelo;
 
 public class Conexion {
     
+	/**
+	 * modelo - tipo Modelo - contiene textos del programa
+	 */
     private Modelo modelo;
+    
+    /**
+     * conexion - tipo Connection - conexión con MySQL
+     */
     private Connection conexion;
+    
+    /**
+     * metadatos - tipo DatabaseMetaData - metadatos MySQL
+     */
     private DatabaseMetaData metadatos;
     
+    /**
+     * Constructor de Conexion para base de datos MySQL
+     * @param modelo - tipo Modelo - contiene textos del programa
+     */
     public Conexion(Modelo modelo) {
         this.modelo = modelo;
         realizarConexion();
         realizarDatabaseMetaData();
     }
     
-    /*
+    /**
      * Realiza la conexion con la base de datos 
      */
     public void realizarConexion(){
@@ -40,9 +61,9 @@ public class Conexion {
         
     }
     
-    /*
+    /**
      * Obtener el Metadata de la conexion
-    */
+     */
     public void realizarDatabaseMetaData(){
         try {
             metadatos = conexion.getMetaData();
@@ -52,8 +73,10 @@ public class Conexion {
     }
     
     
-    /* 
-     * Realiza la consulta indicada y devuelve su resultado en forma de ArrayList<String>
+    /**
+     * Realiza la consulta indicada y devuelve su resultado en forma de ResultSet
+     * @param consulta - tipo String - consulta sql a realizar
+     * @return rs - tipo ResultSet - resultados de consulta sql
      */
     public ResultSet realizarConsultaRS(String consulta){
 
@@ -69,8 +92,10 @@ public class Conexion {
         return null;
     }
     
-    /* 
-     * Realiza la consulta indicada
+    /**
+     * Actualiza base de datos mediante consulta indicada
+     * @param consulta - tipo String - consulta sql a realizar
+     * @return s1.executeUpdate - tipo int - número registros afectados
      */
     public int realizarUpdateStatement(String consulta){
 
@@ -84,15 +109,21 @@ public class Conexion {
         return 0;
     }
     
-    // Obtener Metadata
+    /**
+     * Obtener Metadata
+     * @return metadatos - tipo DatabaseMetaData - metadatos MySQL
+     */
     public DatabaseMetaData getMetaData() {
         return metadatos;
     }
 
-    // Obtener Tablas
+    /**
+     * Obtener Tablas
+     * @return metadatos.getTables - tipo ResultSet - nombres de tablas
+     */
     public ResultSet getTables() {
         try {
-            return metadatos.getTables("mokedb", null, null, new String[]{"TABLE"});
+            return metadatos.getTables(modelo.getArchivo(), null, null, new String[]{modelo.getNombreTable()});
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -101,10 +132,14 @@ public class Conexion {
     }
 
     
-    // Obtener Columnas
+    /**
+     * Obtener Columnas de tabla pasada por parámetro
+     * @param nombreTabla - tipo String - tabla a obtener columnas
+     * @return metadatos.getColumns - tipo ResultSet - nombres de columnas
+     */
     public ResultSet getColumns(String nombreTabla) {
         try {
-            return metadatos.getColumns("mokedb", null, nombreTabla, null);
+            return metadatos.getColumns(modelo.getArchivo(), null, nombreTabla, null);
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -112,15 +147,19 @@ public class Conexion {
         return null;
     }
     
-    /*
-	 * Registrar movimiento
-	 */
+    /**
+     * Registrar movimiento de usuario en base de datos
+     * @param operacion - tipo String - operacion realizada
+     * @param exito - tipo String - si ha podido realizarlo
+     * @param resultado - tipo String - resultado de la operación
+     * @return realizarUpdateStatement(sql) - tipo int - número modificados
+     */
 	public int registrarMovimiento(String operacion, String exito, String resultado) {
-		SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd"); 
-		SimpleDateFormat hora = new SimpleDateFormat("HH:mm:ss"); 
+		SimpleDateFormat fecha = new SimpleDateFormat(modelo.getFormatoFecha()); 
+		SimpleDateFormat hora = new SimpleDateFormat(modelo.getFormatoHora()); 
 		Date date = new Date(); 
-		String sql = "INSERT INTO movimientos (idUsuario, nombreUsuario, categoriaUsuario, operacion, exito, resultado, fecha, hora) "
-				+ "VALUES(" + modelo.getId() + ", '" + modelo.getUsuario() + "', '" + modelo.getCategoria() + "', '" + operacion 
+		String sql = modelo.getSqlMovimiento()
+				+ modelo.getId() + ", '" + modelo.getUsuario() + "', '" + modelo.getCategoria() + "', '" + operacion 
 				+ "', '" + exito + "', '" + resultado + "', '" + fecha.format(date) + "', '" + hora.format(date) + "')";
 		return realizarUpdateStatement(sql);
 	}

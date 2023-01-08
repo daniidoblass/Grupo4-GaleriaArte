@@ -1,3 +1,15 @@
+/**
+ * 
+ * Clase TipoMensaje
+ * 
+ * Contiene métodos para la realización de Mail 
+ * de desencriptación y multipart
+ * 
+ * @author Javier Jiménez Torres
+ * @date 09/12/2022
+ * @version 01
+ */
+
 package controlador;
 
 import java.io.IOException;
@@ -11,16 +23,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-/**
- * 
- * @author Javier Jim�nez Torres
- *
- */
 public class TipoMensaje {
 	
 	/**
-	 * M�todo para desencriptar los mensaje si es texto plano o multipart 
-	 * @param message recibe el mensaje de ese correo y lo desencripta
+	 * Metodo para desencriptar los mensaje si es texto plano o multipart 
+	 * @param message - tipo Message - recibe el mensaje de ese correo y lo desencripta
 	 * @return
 	 * @throws MessagingException
 	 * @throws IOException
@@ -38,8 +45,8 @@ public class TipoMensaje {
 	}
 
 	/**
-	 * Entra en este m�todo si el mensaje es multipart
-	 * @param mimeMultipart
+	 * Entra en este metodo si el mensaje es multipart
+	 * @param mimeMultipart - tipo MimeMultipart - mime multipart de correo
 	 * @return
 	 * @throws MessagingException
 	 * @throws IOException

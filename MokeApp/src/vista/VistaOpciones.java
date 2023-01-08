@@ -1,8 +1,14 @@
 /**
+ * 
+ * Clase VistaOpciones
+ * 
+ * Muestra las opciones principales
+ * 
  * @author Samuel Acosta Fernandez
  * @date 12/12/2022
  * @version 01
  */
+
 package vista;
 
 import java.awt.*;
@@ -13,14 +19,36 @@ import modelo.Modelo;
 
 public class VistaOpciones extends JFrame{
     
+	/**
+	 * modelo - tipo Modelo - contiene textos del programa
+	 */
     private Modelo modelo;
+    
+    /**
+     * vista - tipo Vista - vista principal del programa
+     */
     private Vista vista;
 
+    /**
+     * panelCentral - tipo JPanel - panel central de ventana
+     */
     private JPanel panelCentral = new JPanel();
+    
+    /**
+     * panelesOpciones - tipo ArrayList<JPanel> - paneles de opciones
+     */
     private ArrayList<JPanel> panelesOpciones = new ArrayList<>();
+    
+    /**
+     * perfilesOpciones - tipo ArrayList<JButton> - botones de opciones
+     */
     private ArrayList<JButton> perfilesOpciones = new ArrayList<>();
 
-
+	/**
+	 * Constructor por defecto de vista de opciones
+	 * @param modelo - tipo Modelo - contiene textos del programa
+     * @param vista - tipo Vista - vista principal del programa
+	 */
     public VistaOpciones(Modelo modelo, Vista vista){
         this.modelo = modelo;
         this.vista = vista;
@@ -28,15 +56,15 @@ public class VistaOpciones extends JFrame{
         configurarPanelCentral();
     }
     
-    /*
+    /**
      * Actualizamos la ventana principal
-    */
+     */
     private void actualizarVentanaPrincipal() {
         vista.getPaneles().get(1).setVisible(false);
         vista.getPaneles().get(2).removeAll();
     }
     
-    /*
+    /**
      * Configuracion de Ventana Principal
      */
     public void configurarPanelCentral() {
@@ -45,23 +73,27 @@ public class VistaOpciones extends JFrame{
         vista.getPaneles().get(2).add(panelCentral);
     }
     
-    /*
+    /** 
      * Configuracion de Paneles de Opciones
-    */
+     */
     public void crearPanelesOpciones(int i) {
         panelesOpciones.add(new JPanel());
         panelesOpciones.get(i).setOpaque(false);
         panelCentral.add(panelesOpciones.get(i));
     }
     
+    /**
+     * Configura panel de opciones
+     */
     public void configurarPanelesOpciones(){
         panelesOpciones.get(0).setLayout(new BorderLayout());
         panelesOpciones.get(1).setLayout(new FlowLayout(FlowLayout.CENTER));
         panelesOpciones.get(2).setLayout(new FlowLayout(FlowLayout.CENTER));
     }
 
-    /*
+    /**
      * Crear Perfiles de Opciones
+     * @param i - tipo int - contador de opciones 
      */
     public void crearPerfilesOpciones(int i) {
     	perfilesOpciones.add(new JButton());
@@ -78,11 +110,15 @@ public class VistaOpciones extends JFrame{
     	panelesOpciones.get(1).add(perfilesOpciones.get(i));
     }
     
+    /**
+     * Obtener opciones
+     * @return perfilesOpciones - tipo ArrayList<JButton> - botones de opciones
+     */
     public ArrayList<JButton> getPerfilesOpciones() {
         return perfilesOpciones;
     }
     
-    /*
+    /**
      * Crear etiqueta Opcion
     */
     public void crearEtiquetaOpciones(){

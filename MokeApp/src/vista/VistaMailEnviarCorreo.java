@@ -1,3 +1,14 @@
+/**
+ * 
+ * Clase VistaMailEnviarCorreo
+ * 
+ * Muestra ventana emergente para redactar correo
+ * 
+ * @author Javier Jimenez Torres
+ * @date 09/12/2022
+ * @version 01
+ */
+
 package vista;
 
 import java.awt.Color;
@@ -23,24 +34,96 @@ import modelo.Modelo;
 
 public class VistaMailEnviarCorreo extends JFrame {
 
+	/**
+	 * cliente - tipo ControladorEnviarMail - controlador de enviar mail
+	 */
 	private ControladorEnviarMail cliente;
+	
+	/**
+	 * panelPrincipal - tipo FondoDegradado - panel fondo degradado
+	 */
 	private FondoDegradado panelPrincipal;
+	
+	/**
+	 * destinatario - tipo JTextField - introducir destinatario
+	 */
 	private JTextField destinatario;
+	
+	/**
+	 * asunto - tipo JTextField - introducir asunto
+	 */
 	private JTextField asunto;
+	
+	/**
+	 * cuerpo - tipo JTextArea - introducir cuerpo mensaje
+	 */
 	private JTextArea cuerpo;
+	
+	/**
+	 * lblAsunto - tipo JLabel - texto asunto
+	 */
 	private JLabel lblAsunto;
+	
+	/**
+	 * lblDestinatario - tipo JLabel - texto destinatario
+	 */
 	private JLabel lblDestinatario;
+	
+	/**
+	 * lblCuerpo - tipo JLabel - texto cuerpo
+	 */
 	private JLabel lblCuerpo;
+	
+	/**
+	 * btnEnviar - tipo JButton - boton para enviar
+	 */
 	private JButton btnEnviar;
+	
+	/**
+	 * btnCancelar - tipo JButton - boton para cancelar
+	 */
 	private JButton btnCancelar;
+	
+	/**
+	 * btnAdjuntar - tipo JButton - boton para adjuntar
+	 */
 	private JButton btnAdjuntar;
+	
+	/**
+	 * jFileChooser - tipo JFileChooser - ventana para obtener archivo local
+	 */
 	private JFileChooser jFileChooser;
+	
+	/**
+	 * controladorAdjuntarArchivoGmail - tipo ControladorAdjuntarArchivoGmail - controlador adjuntar
+	 */
 	private ControladorAdjuntarArchivoGmail controladorAdjuntarArchivoGmail;
+	
+	/**
+	 * ruta - tipo String - ruta de archivo local
+	 */
 	private String ruta;
+	
+	/**
+	 * nombreArchivo - tipo String - nombre de archivo local
+	 */
 	private String nombreArchivo;
+	
+	/**
+	 * modelo - tipo Modelo - contiene textos del programa
+	 */
 	private Modelo modelo;
+	
+	/**
+	 * lblAdjunto - tipo JLabel - texto de archivo adjunto
+	 */
 	private JLabel lblAdjunto;
 
+	/**
+	 * Constructor por defecto de vista enviar correo
+	 * @param conexion - tipo Conexion - conexion con base de datos
+	 * @param modelo - tipo Modelo - contiene textos del programa
+	 */
 	public VistaMailEnviarCorreo(Conexion conexion, Modelo modelo) {
 		this.controladorAdjuntarArchivoGmail = new ControladorAdjuntarArchivoGmail(this);
 		this.modelo = modelo;
@@ -51,6 +134,9 @@ public class VistaMailEnviarCorreo extends JFrame {
 		generarContenido();
 	}
 
+	/**
+	 * Configurar ventana 
+	 */
 	private void configurarVentana() {
 		this.setBounds(100, 100, 485, 532);
 		this.setLocationRelativeTo(null);
@@ -59,6 +145,9 @@ public class VistaMailEnviarCorreo extends JFrame {
 		this.setResizable(false);
 	}
 
+	/**
+	 * Configurar componentes
+	 */
 	private void generarContenido() {
 		// Configurar Destinatario
 		configurarDestinatario();
@@ -76,6 +165,9 @@ public class VistaMailEnviarCorreo extends JFrame {
 		configurarAdjuntar();
 	}
 
+	/**
+	 * Configurar adjuntar
+	 */
 	private void configurarAdjuntar() {
 		// JLabel
 		lblAdjunto = new JLabel("Sin archivo adjunto");
@@ -103,10 +195,17 @@ public class VistaMailEnviarCorreo extends JFrame {
 		panelPrincipal.add(btnAdjuntar);
 	}
 	
+	/**
+	 * Obtener texto adjunto
+	 * @return lblAdjunto - tipo String - texto adjuntar
+	 */
 	public JLabel getLblAdjuntar() {
 		return lblAdjunto;
 	}
 	
+	/**
+	 * Configurar enviar
+	 */
 	private void configurarEnviar() {
 		btnEnviar = new JButton();
 		ImageIcon icon = new ImageIcon("src/subiconos/enviar.png");
@@ -135,6 +234,9 @@ public class VistaMailEnviarCorreo extends JFrame {
 		panelPrincipal.add(btnEnviar);
 	}
 
+	/**
+	 * Configurar cuerpo
+	 */
 	private void configurarCuerpo() {
 		// JTextField
 		cuerpo = new JTextArea();
@@ -142,12 +244,15 @@ public class VistaMailEnviarCorreo extends JFrame {
 		panelPrincipal.add(cuerpo);
 		
 		// JLabel
-		lblCuerpo = new JLabel("CUERPO");
+		lblCuerpo = new JLabel(modelo.getTextoCuerpo());
 		lblCuerpo.setForeground(Color.WHITE);
 		lblCuerpo.setBounds(48, 199, 60, 13);
 		panelPrincipal.add(lblCuerpo);
 	}
 
+	/**
+	 * Configurar asunto
+	 */
 	private void configurarAsunto() {
 		// JTextField
 		asunto = new JTextField();
@@ -156,12 +261,15 @@ public class VistaMailEnviarCorreo extends JFrame {
 		asunto.setColumns(10);
 		
 		// JLabel
-		lblAsunto = new JLabel("ASUNTO");
+		lblAsunto = new JLabel(modelo.getTextoAsunto());
 		lblAsunto.setForeground(Color.WHITE);
 		lblAsunto.setBounds(48, 126, 60, 13);
 		panelPrincipal.add(lblAsunto);
 	}
 
+	/**
+	 * Configurar destinatario
+	 */
 	private void configurarDestinatario() {
 		// JTextField
 		destinatario = new JTextField();
@@ -170,12 +278,15 @@ public class VistaMailEnviarCorreo extends JFrame {
 		destinatario.setColumns(10);
 		
 		// JLabel
-		lblDestinatario = new JLabel("DESTINATARIO");
+		lblDestinatario = new JLabel(modelo.getTextoDestinatario());
 		lblDestinatario.setForeground(Color.WHITE);
 		lblDestinatario.setBounds(48, 55, 89, 13);
 		panelPrincipal.add(lblDestinatario);
 	}
 
+	/**
+	 * Configurar panel enviar correo
+	 */
 	private void configurarPanel() {
 		panelPrincipal = new FondoDegradado();
 		panelPrincipal.setColor2(new Color(8, 143, 173));
@@ -183,15 +294,26 @@ public class VistaMailEnviarCorreo extends JFrame {
 		this.setContentPane(panelPrincipal);
 	}
 
+	/**
+	 * Configurar JFileChooser
+	 */
 	public void configurarJFileChooser() {
 		jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		jFileChooser.setDialogTitle("Selecciona un archivo");
+		jFileChooser.setDialogTitle(modelo.getTextoTituloEnviarCorreo());
 	}
 
+	/**
+	 * Mostrar JFileChooser
+	 * @return jFileChooser.showDialog - tipo int - respuesta file chooser
+	 */
 	public int mostrarJFileChooser() {
 		return jFileChooser.showDialog(jFileChooser, "Cargar");
 	}
 
+	/**
+	 * Obtener JFileChooser
+	 * @return jFileChooser - tipo JFileChooser - ventana seleccionar archivo local
+	 */
 	public JFileChooser getJFileChooser() {
 		return jFileChooser;
 	}

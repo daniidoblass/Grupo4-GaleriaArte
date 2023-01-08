@@ -1,4 +1,12 @@
 /**
+ * 
+ * Clase ControladorFTPPrincipal
+ * 
+ * Crea explorador de archivos con el contenido del Servidor
+ * FTP junto con la nevegación entre carpetas y la selección de
+ * ficheros para la realización de operaciones de la barra
+ * lateral izquierda configurada en la clase Controlador
+ * 
  * @author Samuel Acosta Fernandez
  * @date 09/12/2022
  * @version 01
@@ -26,18 +34,64 @@ import org.apache.commons.net.ftp.FTPFile;
 
 public class ControladorFTPPrincipal {
     
+	/**
+	 * modelo - tipo Modelo - contiene textos del programa
+	 */
     private Modelo modelo;
+    
+    /**
+     * vista - tipo Vista - vista principal del programa
+     */
     private Vista vista;
+    
+    /**
+     * vistaFTPPrincipal - tipo VistaFTPPrincipal - explorador Servidor FTP
+     */
     private VistaFTPPrincipal vistaFTPPrincipal;
+    
+    /**
+     * eventos - tipo Eventos - eventos principales 
+     */
     private Eventos eventos;
+    
+    /**
+     * conexion - tipo Conexion - conexion con base de datos
+     */
     private Conexion conexion;
+    
+    /**
+     * cliente - tipo FTPClient - cliente FTP
+     */
     private FTPClient cliente;
+    
+    /**
+     * nombreFicheros - tipo ArrayList<String> - ficheros del Servidor
+     */
     private ArrayList<String> nombreFicheros;
+    
+    /**
+     * infoFicheros - tipo ArrayList<String> - información de los ficheros
+     */
     private ArrayList<String> infoFicheros;
+    
+    /**
+     * eventosFTP - tipo EventosFTP - eventos para la navegación y selección
+     */
     private EventosFTP eventosFTP;
+    
+    /**
+     * infoFicheroPulsado - tipo String - información de fichero seleccionado
+     */
     private String infoFicheroPulsado = "";
 
-    
+    /**
+     * Constructor por defecto para crear explorador de servidor FTP
+     * @param modelo - tipo Modelo - contiene textos del programa
+	 * @param vista - tipo Vista - vista principal del programa
+	 * @param eventos - tipo Eventos - eventos principales 
+	 * @param conexion - tipo Conexion - conexion con base de datos
+	 * @param cliente - tipo FTPClient - cliente FTP
+     */
 	public ControladorFTPPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente){
         this.modelo = modelo;
         this.vista = vista;
@@ -64,6 +118,9 @@ public class ControladorFTPPrincipal {
         actualizarVentana();
     }
 
+	/**
+	 * Obtener ficheros de directorio actual
+	 */
     private void listarFicherosFTP() {
     	nombreFicheros = new ArrayList<>();
         infoFicheros = new ArrayList<>();
@@ -72,7 +129,7 @@ public class ControladorFTPPrincipal {
     		FTPFile[] files = cliente.listFiles();
     		
     		//array para visualizar el tipo de fichero
-    		String[] tipos = {"fichero", "carpeta", "enlace"};
+    		String[] tipos = { modelo.getNombreFichero(), modelo.getCarpetaNombre(), modelo.getNombreEnlace() };
 
     		for (int i = 0; i < files.length; i++) {
     			if(!files[i].getName().equals(".") && !files[i].getName().equals("..")) {
@@ -82,11 +139,14 @@ public class ControladorFTPPrincipal {
     		}
     	}
     	catch(Exception e) {
-    		e.printStackTrace();
+    		vistaFTPPrincipal.mostrarMensajeEmergente(modelo.getTituloErrorServidor(), modelo.getMensajeErrorServidor());
     	}
     	
 	}
 
+    /**
+     * Agrega imagen a fichero según su tipo
+     */
 	private void agregarCaratulasFicheros() {
 
     	for(int i=0; i<nombreFicheros.size(); i++) {
@@ -98,83 +158,97 @@ public class ControladorFTPPrincipal {
 
     }
 
+	/**
+	 * Extrae el formato del fichero a procesar
+	 * @param nombreFichero - tipo String - datos del fichero
+	 * @return formato - tipo String - formato del fichero
+	 */
 	private String extraerFormato(String nombreFichero) {
 		
-		String formato = "file";
+		String formato = modelo.getFormatos()[0];
 		
-		if(nombreFichero.contains("fichero-")) {
+		if(nombreFichero.contains(modelo.getFicheroGuion())) {
 			String[] contenido = nombreFichero.split("\\.");
 			if(contenido.length > 0) {
 				String extension = contenido[contenido.length - 1];
-				if(extension.contains("mp4") || extension.contains("avi")) {
-					formato = "movie";
-				}
-				else if(extension.contains("mp3") || extension.contains("wav")) {
-					formato = "music";
-				}
-				else if(extension.contains("txt") || extension.contains("docx") || extension.contains("pdf")) {
-					formato = "document";
-				}
-				else if(extension.contains("png") || extension.contains("jpg") || extension.contains("jpeg")) {
-					formato = "image";
+				if (nombreFichero.contains(modelo.getExtensiones()[0]) || nombreFichero.contains(modelo.getExtensiones()[1])) {
+					formato = modelo.getFormatos()[1];
+				} else if (nombreFichero.contains(modelo.getExtensiones()[2])
+						|| nombreFichero.contains(modelo.getExtensiones()[3])) {
+					formato = modelo.getFormatos()[2];
+				} else if (nombreFichero.contains(modelo.getExtensiones()[4])
+						|| nombreFichero.contains(modelo.getExtensiones()[5])
+						|| nombreFichero.contains(modelo.getExtensiones()[6])) {
+					formato = modelo.getFormatos()[3];
+				} else if (nombreFichero.contains(modelo.getExtensiones()[7])
+						|| nombreFichero.contains(modelo.getExtensiones()[8])
+						|| nombreFichero.contains(modelo.getExtensiones()[9])) {
+					formato = modelo.getFormatos()[4];
 				}
 			}
 		}
 		else {
-			formato = "folder";
+			formato = modelo.getFormatos()[5];
 		}
 		
 		
 		return formato;
 	}
 
+	/**
+	 * Configura título de barra superior
+	 */
 	private void configurarTitulo() {
 		vista.setIcono("src/opcionesprincipal/0.png");
 		try {
 			vista.setTitulo("FTP MOKE " + cliente.printWorkingDirectory());
 		} catch (Exception e) {
-			vistaFTPPrincipal.mostrarMensajeEmergente("Servidor FTP", "Servidor FTP desconectado. Por favor, reinicie \n"
-					+ "el programa para conectarse");
+			vistaFTPPrincipal.mostrarMensajeEmergente(modelo.getTituloErrorServidor(), modelo.getMensajeErrorServidor());
 		}
 	}
 
+	/**
+	 * Actualiza el contenido de la ventana
+	 */
     private void actualizarVentana() {
         vista.repaint();
         vista.pack();
         vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
+    /**
+     * Cambia a directorio hijo pulsado
+     * @param infoFicheroPulsado - tipo String - datos fichero pulsado
+     */
 	public void cambiarDirectorioHijo(String infoFicheroPulsado) {
     	try {
-    		String nuevoDirectorio = infoFicheroPulsado.replace("carpeta-", "");
+    		String nuevoDirectorio = infoFicheroPulsado.replace(modelo.getCarpetaGuion(), "");
     		if(cliente.changeWorkingDirectory(nuevoDirectorio)) {
     			actualizarContenido();
     		}
-    		else {
-    			System.out.println("ERROR: no se ha podido acceder al directorio seleccionado");
-    		}
     	}
     	catch(Exception e) {
-    		vistaFTPPrincipal.mostrarMensajeEmergente("Servidor FTP", "Servidor FTP desconectado. Por favor, reinicie \n"
-					+ "el programa para conectarse");
+    		vistaFTPPrincipal.mostrarMensajeEmergente(modelo.getTituloErrorServidor(), modelo.getMensajeErrorServidor());
     	}
 	}
 	
+	/**
+     * Cambia a directorio padre de carpeta actual
+     */
 	public void cambiarDirectorioPadre() {
     	try {
     		if(cliente.changeToParentDirectory()) {
     			actualizarContenido();
     		}
-    		else {
-    			System.out.println("ERROR: no se ha podido acceder al directorio padre");
-    		}
     	}
     	catch(Exception e) {
-    		vistaFTPPrincipal.mostrarMensajeEmergente("Servidor FTP", "Servidor FTP desconectado. Por favor, reinicie \n"
-					+ "el programa para conectarse");
+    		vistaFTPPrincipal.mostrarMensajeEmergente(modelo.getTituloErrorServidor(), modelo.getMensajeErrorServidor());
     	}
 	}
 	
+	/**
+	 * Actualiza contenido del navegador
+	 */
 	public void actualizarContenido() {
 		listarFicherosFTP();
 		vistaFTPPrincipal.limpiarPanelCentral();
@@ -183,24 +257,34 @@ public class ControladorFTPPrincipal {
 		agregarCaratulasFicheros();
 	}
 	
+	/**
+	 * Agrega botón para volver a carpeta padre
+	 */
 	private void agregarBotonVolver() {
 		try {
         	if(!cliente.printWorkingDirectory().equals(eventos.getDirectorioLimite())) {
     			// agregar boton de volver
-    			vistaFTPPrincipal.crearCaratulasFicheros("Volver", "return", "carpeta-Volver");
+        		vistaFTPPrincipal.crearCaratulasFicheros(modelo.getTextosGenerales()[3], modelo.getTextosGenerales()[4],
+						modelo.getTextosGenerales()[5]);
     			vistaFTPPrincipal.getCaratulasProductos().get(0).addMouseListener(eventosFTP);
         		vistaFTPPrincipal.getCaratulasProductos().get(0).addActionListener(eventosFTP);
     		}
         }
-        catch(Exception e) {
-        	vistaFTPPrincipal.mostrarMensajeEmergente("Servidor FTP", "No se ha podido acceder a la carpeta");
-        }
+        catch(Exception e) {}
 	}
 	
+	/**
+	 * Obtener datos del fichero pulsado
+	 * @return infoFicheroPulsado - tipo String - información de fichero pulsado
+	 */
 	public String getInfoFicheroPulsado() {
 		return infoFicheroPulsado;
 	}
 
+	/**
+	 * Inserta datos del fichero pulsado
+	 * @param infoFicheroPulsado - tipo String - información de fichero pulsado
+	 */
 	public void setInfoFicheroPulsado(String infoFicheroPulsado) {
 		this.infoFicheroPulsado = infoFicheroPulsado;
 	}

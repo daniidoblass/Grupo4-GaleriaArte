@@ -1,8 +1,14 @@
 /**
+ * 
+ * Clase VistaAdmin
+ * 
+ * Vista del administrador
+ * 
  * @author Samuel Acosta Fernandez
  * @date 12/12/2022
  * @version 01
  */
+
 package vista;
 
 import java.awt.*;
@@ -18,16 +24,51 @@ import controlador.Eventos;
 
 public class VistaAdmin extends JFrame{
     
+	/**
+	 * modelo - tipo Modelo - contiene textos del programa
+	 */
     private Modelo modelo;
+    
+    /**
+     * vista - tipo Vista - vista principal del programa
+     */
     private Vista vista;
+    
+    /**
+     * eventos - tipo Eventos - eventos principales 
+     */
     private Eventos eventos;
 
+    /**
+     * panelCentral - tipo JPanel - panel central de ventana
+     */
     private JPanel panelCentral = new JPanel();
+    
+    /**
+     * panelesAdmin - tipo ArrayList<JPanel> - lista paneles
+     */
     private ArrayList<JPanel> panelesAdmin = new ArrayList<>();
+    
+    /**
+     * modeloTabla - tipo DefaultTableModel - modelo de tabla
+     */
     private DefaultTableModel modeloTabla = new DefaultTableModel();
+    
+    /**
+     * tabla - tipo JTable - tabla de administrador
+     */
     private JTable tabla = new JTable();
+    
+    /**
+     * botonesCambiarTabla - tipo ArrayList<JButton> - botones cambiar tabla
+     */
     private ArrayList<JButton> botonesCambiarTabla = new ArrayList<>();
 
+    /**
+     * Constructor por defecto de vista de administrador
+     * @param modelo - tipo Modelo - contiene textos del programa
+     * @param vista - tipo Vista - vista principal del programa
+     */
     public VistaAdmin(Modelo modelo, Vista vista){
         this.modelo = modelo;
         this.vista = vista;
@@ -35,15 +76,15 @@ public class VistaAdmin extends JFrame{
         configurarPanelCentral();
     }
     
-    /*
+    /**
      * Actualizamos la ventana principal
-    */
+     */
     private void actualizarVentanaPrincipal() {
         vista.getPaneles().get(1).setVisible(false);
         vista.getPaneles().get(2).removeAll();
     }
     
-    /*
+    /**
      * Configuracion de Ventana Principal
      */
     public void configurarPanelCentral() {
@@ -52,7 +93,7 @@ public class VistaAdmin extends JFrame{
         vista.getPaneles().get(2).add(panelCentral);
     }
     
-    /*
+    /**
      * Configuracion de paneles admin
      */
     public void crearPanelesAdmin(int i) {
@@ -62,34 +103,51 @@ public class VistaAdmin extends JFrame{
     	panelCentral.add(panelesAdmin.get(i));  
     }
     
+    /**
+     * Ordenar paneles principales
+     */
     public void ordenarPaneles() {
     	panelCentral.add(panelesAdmin.get(0), BorderLayout.NORTH);
     	panelCentral.add(panelesAdmin.get(1), BorderLayout.EAST);
     	panelCentral.add(panelesAdmin.get(2), BorderLayout.CENTER);
     }
     
+    /**
+     * Configurar panel norte
+     */
     public void configurarPanelAdminNorte() {
     	panelesAdmin.get(0).setLayout(new FlowLayout(FlowLayout.LEFT));
     	panelesAdmin.get(0).setPreferredSize(new Dimension(640, 70));
     }
     
+    /**
+     * Configurar panel este
+     */
     public void configurarPanelAdminEste() {
     	panelesAdmin.get(1).setLayout(new GridLayout(5,1));
     	panelesAdmin.get(1).setPreferredSize(new Dimension(250, 600));
     	panelesAdmin.get(1).setAlignmentY(Component.RIGHT_ALIGNMENT);
     }
     
+    /**
+     * Configurar panel central
+     */
     public void configurarPanelAdminCentral() {
     	panelesAdmin.get(2).setLayout(new GridLayout(1,1));
     }
     
+    /**
+     * Obtener paneles administrador
+     * @return panelesAdmin - tipo ArrayList<JPanel> - paneles administrador
+     */
     public ArrayList<JPanel> getPanelesAdmin(){
     	return panelesAdmin;
     }
     
     
-    /*
+    /**
      * Configuracion Tabla
+     * @param nombreColumnas - tipo String[] - nombre columnas de tabla
      */
     public void configuracionJTable1(String[] nombreColumnas){
     	panelesAdmin.get(2).add(tabla);                                     // Anadimos la tabla a la ventana
@@ -116,22 +174,33 @@ public class VistaAdmin extends JFrame{
         panelesAdmin.get(2).add(scroll);
     }
     
+    /**
+     * Insertar columnas de tabla
+     * @param nombreColumnas - tipo String[] - nombre columnas
+     */
     public void modificarModeloTabla(String[] nombreColumnas) {
     	modeloTabla.setColumnIdentifiers(nombreColumnas);
     }
     
-    // Inserta una fila
+    /**
+     * Inserta una fila
+     * @param fila - tipo Object[] - filas
+     */
     public void insertRow(Object[] fila) {
         modeloTabla.addRow(fila);
     }
     
-    // Elimina los datos de la tabla
+    /**
+     *  Elimina los datos de la tabla
+     */
     public void limpiarTabla(){
         modeloTabla.setRowCount(0);
     }
     
-    /*
+    /**
      * Configurar Boton Cambiar Tabla
+     * @param texto - tipo String - texto de opcion
+     * @param imagen - tipo String - nombre imagen
      */
     public void configurarBotonCambiarTabla(String texto, String imagen) {
     	
@@ -163,6 +232,10 @@ public class VistaAdmin extends JFrame{
     	panelesAdmin.get(1).add(botonesCambiarTabla.get(botonesCambiarTabla.size() - 1));
 	}
 	
+    /**
+     * Obtener opciones de administrador
+     * @return botonesCambiarTabla - tipo ArrayList<JButton> - botones cambiar tabla
+     */
 	public ArrayList<JButton> getBotonesCambiarTabla() {
 		return botonesCambiarTabla;
 	}

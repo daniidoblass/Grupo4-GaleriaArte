@@ -1,8 +1,14 @@
 /**
+ * 
+ * Clase VistaInfoPrincipal
+ * 
+ * Muestra secciones de ayuda para el usuario
+ * 
  * @author Samuel Acosta Fernandez
  * @date 12/12/2022
  * @version 01
  */
+
 package vista;
 
 import java.awt.*;
@@ -14,13 +20,36 @@ import controlador.Eventos;
 
 public class VistaInfoPrincipal extends JFrame{
     
+	/**
+	 * modelo - tipo Modelo - contiene textos del programa
+	 */
     private Modelo modelo;
+    
+    /**
+     * vista - tipo Vista - vista principal del programa
+     */
     private Vista vista;
+    
+    /**
+     * eventos - tipo Eventos - eventos principales 
+     */
     private Eventos eventos;
     
+    /**
+     * panelCentral - tipo JPanel - panel central de ventana
+     */
     private JPanel panelCentral = new JPanel();
+    
+    /**
+     * botonesMenu - tipo ArrayList<JButton> - botones del menú
+     */
     private ArrayList<JButton> botonesMenu = new ArrayList<>();
 
+    /**
+     * Constructor por defecto de vista de información
+     * @param modelo - tipo Modelo - contiene textos del programa
+     * @param vista - tipo Vista - vista principal del programa
+     */
     public VistaInfoPrincipal(Modelo modelo, Vista vista){
         this.modelo = modelo;
         this.vista = vista;
@@ -28,15 +57,15 @@ public class VistaInfoPrincipal extends JFrame{
         configurarPanelCentral();
     }
     
-    /*
+    /**
      * Actualizamos la ventana principal
-    */
+     */
     private void actualizarVentanaPrincipal() {
         vista.getPaneles().get(1).setVisible(false);
         vista.getPaneles().get(2).removeAll();
     }
     
-    /*
+    /**
      * Configuracion de Ventana Principal
      */
     public void configurarPanelCentral() {
@@ -45,8 +74,11 @@ public class VistaInfoPrincipal extends JFrame{
         vista.getPaneles().get(2).add(panelCentral);
     }
     
-    /*
+    /**
      * Botones de Opciones
+     * @param i - tipo int - contador de boton
+     * @param nombreOpcion - tipo String - nombre de opcion
+     * @param nombreImagen - tipo String - nombre de imagen
      */
     public void crearBotonMenu(int i, String nombreOpcion, String nombreImagen) {
     	botonesMenu.add(new JButton());
@@ -75,12 +107,18 @@ public class VistaInfoPrincipal extends JFrame{
     	panelCentral.add(botonesMenu.get(i));
     }
     
+    /**
+     * Obtener botones del menu
+     * @return botonesMenu - tipo ArrayList<JButton> - botones del menu
+     */
     public ArrayList<JButton> getBotonesMenu() {
     	return botonesMenu;
     }
     
-    /*
+    /**
 	 * Mensaje Emergente
+	 * @param titulo - tipo String - titulo de ventana
+	 * @param mensaje - tipo String - mensaje de ventana
 	 */
     public void mostrarMensajeEmergente(String titulo, String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);

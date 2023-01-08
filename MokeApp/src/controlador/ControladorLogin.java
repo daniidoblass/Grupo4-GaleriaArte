@@ -1,4 +1,11 @@
 /**
+ * 
+ * Clase ControladorLogin
+ * 
+ * Permite iniciar sesión mediante usuario y
+ * contraseña comprobados a través de la 
+ * base de datos MySQL
+ * 
  * @author Samuel Acosta Fernandez
  * @date 09/12/2022
  * @version 01
@@ -24,15 +31,54 @@ import org.apache.commons.net.ftp.FTPClient;
 
 public class ControladorLogin implements ActionListener {
     
+	/**
+	 * modelo - tipo Modelo - contiene textos del programa
+	 */
     private Modelo modelo;
+    
+    /**
+     * vista - tipo Vista - vista principal del programa
+     */
     private Vista vista;
+    
+    /**
+     * vistaLogin - tipo VistaLogin - vista de login
+     */
     private VistaLogin vistaLogin;
+    
+    /**
+     * eventos - tipo Eventos - eventos principales 
+     */
     private Eventos eventos;
+    
+    /**
+     * conexion - tipo Conexion - conexion con base de datos
+     */
     private Conexion conexion;
+    
+    /**
+     * cliente - tipo FTPClient - cliente FTP
+     */
     private FTPClient cliente;
+    
+    /**
+     * contadorActionListener - tipo int - cuenta listeners de icono 
+     */
     private static int contadorActionListener = 0;
+    
+    /**
+     * directorioLimite - tipo String - directorio limite del usuario
+     */
     private String directorioLimite = "";
     
+    /**
+     * Constructor por defecto. Permite iniciar sesión a usuario y registrar directorio ftp
+     * @param modelo - tipo Modelo - contiene textos del programa
+	 * @param vista - tipo Vista - vista principal del programa
+	 * @param eventos - tipo Eventos - eventos principales 
+	 * @param conexion - tipo Conexion - conexion con base de datos
+	 * @param cliente - tipo FTPClient - cliente FTP
+     */
     public ControladorLogin(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) {
         this.modelo = modelo;
         this.vista = vista;
@@ -51,23 +97,37 @@ public class ControladorLogin implements ActionListener {
         actualizarVentana();
     }
 
+    /**
+	 * Configura título de barra superior
+	 */
     private void configurarTitulo() {
 		vista.setIcono("src/subiconos/usuario.png");
 		vista.setTitulo("MOKE Login");
 		eventos.setVentanaActual("LOGIN");
 	}
     
+    /**
+	 * Configura botón login
+	 */
     private void configurarBotonLogin() {
 		vistaLogin.getBotonLogin().addActionListener(this);
 	}
 
+    /**
+	 * Actualiza el contenido de la ventana
+	 */
     private void actualizarVentana() {
         vista.repaint();
         vista.pack();
         vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
 
-	@Override
+    /**
+     * Comprueba si el usuario está registrado en la base de
+     * datos, obteniendo sus datos, movimientos y accediendo
+     * a su directorio en servidor ftp
+     */
+    @Override
 	public void actionPerformed(ActionEvent e) {
 		
 		String usuario = vistaLogin.getUsuario().getText().toString();
@@ -92,15 +152,15 @@ public class ControladorLogin implements ActionListener {
 				if(categoria.equals("admin")) {
 					new ControladorAdmin(modelo, vista, eventos, conexion, cliente);
 					modelo.setUsuario(usuario);
-					conexion.registrarMovimiento("Iniciar Sesión", "si", "Inicio de sesión correcto");
+					conexion.registrarMovimiento(modelo.getMovimientoLogin()[0], modelo.getMovimientoExito()[0], modelo.getMovimientoLogin()[1]);
 				}
 				else {
 					// Establecer directorio limite
-					if(categoria.equals("Responsable")) {
-						directorioLimite = "/GaleriaDeArte/Responsables/" + usuario;
+					if(categoria.equals(modelo.getCategorias()[2])) {
+						directorioLimite = modelo.getRutasUsers()[0] + usuario;
 					}
 					else {
-						directorioLimite = "/GaleriaDeArte/Responsables/" + datos.get(5) + "/Marchantes/" + usuario;
+						directorioLimite = modelo.getRutasUsers()[0] + datos.get(5) + modelo.getRutasUsers()[1] + usuario;
 					}
 					eventos.setDirectorioLimite(directorioLimite);
 					// Crear directorio si no existe
@@ -109,18 +169,18 @@ public class ControladorLogin implements ActionListener {
 						cliente.changeWorkingDirectory(directorioLimite);
 					} catch (Exception e1) {}
 					// Registrar movimimiento
-					conexion.registrarMovimiento("Iniciar Sesión", "si", "Inicio de sesión correcto");
+					conexion.registrarMovimiento(modelo.getMovimientoLogin()[0], modelo.getMovimientoExito()[0], modelo.getMovimientoLogin()[2]);
 					// Mostrar Opciones
 					new ControladorOpciones(modelo, vista, eventos, conexion, cliente);
 				}
 			}
 			else {
-				vistaLogin.mostrarMensajeEmergente("ERROR AL INICIAR SESION", "Usuario o contraseña incorrectos, vuelva a intentarlo");
-				conexion.registrarMovimiento("Iniciar Sesión", "no", "Password incorrecto");
+				vistaLogin.mostrarMensajeEmergente(modelo.getTextosGenerales()[7], modelo.getTextosGenerales()[8]);
+				conexion.registrarMovimiento(modelo.getMovimientoLogin()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoLogin()[3]);
 			}
 		}
 		else {
-			vistaLogin.mostrarMensajeEmergente("ERROR AL INICIAR SESION", "Usuario o contraseña incorrectos, vuelva a intentarlo");
+			vistaLogin.mostrarMensajeEmergente(modelo.getTextosGenerales()[7], modelo.getTextosGenerales()[8]);
 		}
 		
 		
@@ -141,13 +201,19 @@ public class ControladorLogin implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Obtiene datos del usuario según base de datos
+	 * @param usuario - tipo String - nombre del usuario
+	 * @param password - tipo String - contraseña introducida
+	 * @return datos - tipo ArrayList<String> - datos del usuario
+	 */
 	public ArrayList<String> comprobarUsuario(String usuario, String password) {
 		
 		ArrayList<String> datos = new ArrayList<>();
 		boolean comprobacion = false;
 		
 		try {
-			ResultSet usuarios = conexion.realizarConsultaRS("SELECT * FROM usuarios");
+			ResultSet usuarios = conexion.realizarConsultaRS(modelo.getConsultaPasswordEncriptado02());
 			while(usuarios.next() && !comprobacion) {
 				if(usuarios.getString(2).equals(usuario)) {
 					comprobacion = true;
@@ -162,7 +228,8 @@ public class ControladorLogin implements ActionListener {
 			
 			// Obtener password del correo
 			if(comprobacion) {
-				ResultSet correo = conexion.realizarConsultaRS("SELECT * FROM correos WHERE correo='" + datos.get(2) + "'");
+				ResultSet correo = conexion.realizarConsultaRS(modelo.getConsultaPasswordEncriptado01() + datos.get(2) + 
+						modelo.getComillaSimple());
 				while(correo.next()) {
 					datos.add(correo.getString(3));		// passwordCorreo
 				}

@@ -1,4 +1,11 @@
 /**
+ * 
+ * Clase ControladorMailPrincipal
+ * 
+ * Permite mostrar una tabla con correos recibidos
+ * y opciones del usuario para enviar mensaje
+ * y mostrar el contenido de aquellos recibidos
+ * 
  * @author Samuel Acosta Fernandez
  * @date 09/12/2022
  * @version 01
@@ -36,22 +43,86 @@ import vista.VistaMailPrincipal;
 
 public class ControladorMailPrincipal implements ActionListener {
 
-	private JButton button = new JButton();
+	/**
+	 * modelo - tipo Modelo - contiene textos del programa
+	 */
 	private Modelo modelo;
+	
+	/**
+     * vista - tipo Vista - vista principal del programa
+     */
 	private Vista vista;
+	
+	/**
+     * vistaMailPrincipal - tipo VistaMailPrincipal - vista de mail
+     */
 	private VistaMailPrincipal vistaMailPrincipal;
+	
+	/**
+     * eventos - tipo Eventos - eventos principales 
+     */
 	private Eventos eventos;
+	
+	/**
+     * conexion - tipo Conexion - conexion con base de datos
+     */
 	private Conexion conexion;
+	
+	/**
+     * cliente - tipo FTPClient - cliente FTP
+     */
 	private FTPClient cliente;
+	
+	/**
+     * nombreColumnas - tipo ArrayList<String> - columnas de tabla
+     */
 	private ArrayList<String> nombreColumnas;
+	
+	/**
+     * nombreTabla - tipo String - nombre de la tabla
+     */
 	private String nombreTabla;
+	
+	/**
+	 * mensajes - tipo Message[] - mensajes recibidos
+	 */
 	private Message[] mensajes;
+	
+	/**
+	 * tipoMensaje - tipo TipoMensaje - tipo del mensaje
+	 */
 	private TipoMensaje tipoMensaje = new TipoMensaje();
+	
+	/**
+	 * vistaMailEnviarCorreo - tipo VistaMailEnviarCorreo - vista de mail
+	 */
 	private VistaMailEnviarCorreo vistaMailEnviarCorreo;
+	
+	/**
+	 * controladorEnviarMail - tipo ControladorEnviarMail - permite enviar mail
+	 */
 	private ControladorEnviarMail controladorEnviarMail;
+	
+	/**
+	 * TIEMPO_REFRESCO - tipo int - tiempo de refresco
+	 */
 	private final int TIEMPO_REFRESCO = 60000;
+	
+	/**
+	 * hiloActualizar - tipo Hilo - actualiza contenido mail
+	 */
 	private Hilo hiloActualizar;
 
+	/**
+	 * Constructor por defecto. Permite crear opciones de mail junto a tabla
+	 * para visualizar correos recibidos
+	 * @param modelo - tipo Modelo - contiene textos del programa
+	 * @param vista - tipo Vista - vista principal del programa
+	 * @param eventos - tipo Eventos - eventos principales 
+	 * @param conexion - tipo Conexion - conexion con base de datos
+	 * @param cliente - tipo FTPClient - cliente FTP
+	 * @throws MessagingException
+	 */
 	public ControladorMailPrincipal(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente)
 			throws MessagingException {
 		this.modelo = modelo;
@@ -72,7 +143,7 @@ public class ControladorMailPrincipal implements ActionListener {
 		configurarPanelesAdmin();
 
 		// Configurar tabla
-		nombreTabla = "usuarios";
+		nombreTabla = modelo.getTextosGenerales()[9];
 		configurarTabla(nombreTabla);
 
 		// Configurar boton cambiar tabla
@@ -86,37 +157,53 @@ public class ControladorMailPrincipal implements ActionListener {
 		hiloActualizar.start();
 	}
 
+	/**
+	 * Rellena datos de correos en la tabla
+	 * @throws MessagingException
+	 */
 	public synchronized void controladorGmail() throws MessagingException {
 		rellenarDatos();
 	}
 
+	/**
+	 * Establece botón de redactar mail
+	 */
 	private void configurarBotonCambiarTabla() {
 		vistaMailPrincipal.configurarBotonRedactar();
 		vistaMailPrincipal.getBotonCambiarTabla().addActionListener(this);
 	}
 
+	/**
+	 * Configura botón para ver correo seleccionado
+	 */
 	private void configurarBottonVerMensaje() {
 		vistaMailPrincipal.configuracionBottonVerMensaje();
 		vistaMailPrincipal.getBotonVerMensaje().addMouseListener(eventos);
 		vistaMailPrincipal.getBotonVerMensaje().addActionListener(this);
 	}
 
+	/**
+	 * Actualiza el contenido de la tabla
+	 */
 	private void configurarBotonActualizarTabla() {
 		vistaMailPrincipal.configurarBotonActualizar();
 		vistaMailPrincipal.getBotonActualizarTabla().addMouseListener(eventos);
 		vistaMailPrincipal.getBotonActualizarTabla().addActionListener(this);
 	}
 
+	/**
+	 * Eventos de las opciones de mail
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (e.getActionCommand().equals("Ver mensaje")) {
+		if (e.getActionCommand().equals(modelo.getTextosGenerales()[10])) {
 			try {
 				verMensaje();
 			} catch (MessagingException e1) {
 				e1.printStackTrace();
 			}
-		} else if (e.getActionCommand().equals("Actualizar")) {
+		} else if (e.getActionCommand().equals(modelo.getTextosGenerales()[11])) {
 			hiloActualizar.setContador(TIEMPO_REFRESCO);
 		} else {
 			vistaMailEnviarCorreo.setVisible(true);
@@ -124,6 +211,11 @@ public class ControladorMailPrincipal implements ActionListener {
 
 	}
 
+	/**
+	 * Configura contenido de la tabla
+	 * @param nombreTabla - tipo String - nombre de la tabla
+	 * @throws MessagingException
+	 */
 	private void configurarTabla(String nombreTabla) throws MessagingException {
 		// Rellenar Titulos
 		rellenarTitulos(nombreTabla);
@@ -135,6 +227,11 @@ public class ControladorMailPrincipal implements ActionListener {
 		rellenarDatos();
 	}
 
+	/**
+	 * Actualiza el contenido de la tabla
+	 * @param nombreTabla - tipo String - nombre de la tabla
+	 * @throws MessagingException
+	 */
 	private void actualizarTabla(String nombreTabla) throws MessagingException {
 		// Rellenar Titulos
 		rellenarTitulos(nombreTabla);
@@ -146,13 +243,20 @@ public class ControladorMailPrincipal implements ActionListener {
 		rellenarDatos();
 	}
 
+	/**
+	 * Rellena los títulos de la tabla
+	 * @param nombreTablaSeleccionada - tipo String - nombre tabla
+	 */
 	private void rellenarTitulos(String nombreTablaSeleccionada) {
 		nombreColumnas = new ArrayList<>();
-		nombreColumnas.add("Destinatario");
-		nombreColumnas.add("Asunto");
-		nombreColumnas.add("Fecha");
+		nombreColumnas.add(modelo.getNombresColumns()[0]);
+		nombreColumnas.add(modelo.getNombresColumns()[1]);
+		nombreColumnas.add(modelo.getNombresColumns()[2]);
 	}
 
+	/**
+	 * Rellena datos de la tabla
+	 */
 	private void rellenarDatos() {
 
 		// Limpiamos los datos de la tabla
@@ -182,7 +286,7 @@ public class ControladorMailPrincipal implements ActionListener {
 					fila[i] = String.get(i); // El primer indice en rs es el 1, no el cero, por eso se suma 1.
 				}
 
-				// Se a�ade al modelo la fila completa.
+				// Se añade al modelo la fila completa.
 				vistaMailPrincipal.insertRow(fila);
 			}
 
@@ -191,6 +295,9 @@ public class ControladorMailPrincipal implements ActionListener {
 		}
 	}
 
+	/**
+	 * Configura los paneles de mail
+	 */
 	private void configurarPanelesAdmin() {
 		for (int i = 0; i < 3; i++) {
 			vistaMailPrincipal.crearPanelesAdmin(i);
@@ -201,17 +308,27 @@ public class ControladorMailPrincipal implements ActionListener {
 		vistaMailPrincipal.configurarPanelAdminCentral();
 	}
 
+	/**
+	 * Configura título de barra superior
+	 */
 	private void configurarTitulo() {
 		vista.setIcono("src/opcionesprincipal/1.png");
 		vista.setTitulo("Mail MOKE");
 	}
 
+	/**
+	 * Actualiza el contenido de la ventana
+	 */
 	private void actualizarVentana() {
 		vista.repaint();
 		vista.pack();
 		vista.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
+	/**
+	 * Obtener datos de correos recibidos
+	 * @throws MessagingException
+	 */
 	public void recibirCorreos() throws MessagingException {
 		Properties prop = new Properties();
 
@@ -242,6 +359,10 @@ public class ControladorMailPrincipal implements ActionListener {
 														// recibido el primero
 	}
 
+	/**
+	 * Muestra ventana emergente con contenido de correo
+	 * @throws MessagingException
+	 */
 	public void verMensaje() throws MessagingException {
 		String mensaje = "";
 		String[] destinatario = null;
@@ -251,11 +372,11 @@ public class ControladorMailPrincipal implements ActionListener {
 			destinatario[destinatario.length - 1] = destinatario[destinatario.length - 1].replace('>', ' ');
 
 		} catch (Exception e) {}
-		String info = "INFO PERSONA\n";
-		info += "Remitente: " + destinatario[destinatario.length - 1] + "\n" + "" + "\n";
-		info += "Asunto: " + mensajes[vistaMailPrincipal.getFila()].getSubject() + "\n";
-		info += "Fecha: " + mensajes[vistaMailPrincipal.getFila()].getSentDate().toString() + "\n" + "" + "\n";
-		info += "Mensaje: " + mensaje + "\n" + "" + "\n";
+		String info = modelo.getContextoMail()[0] + "\n";
+		info += modelo.getContextoMail()[1] + destinatario[destinatario.length - 1] + "\n" + "" + "\n";
+		info += modelo.getContextoMail()[2] + mensajes[vistaMailPrincipal.getFila()].getSubject() + "\n";
+		info += modelo.getContextoMail()[3] + mensajes[vistaMailPrincipal.getFila()].getSentDate().toString() + "\n" + "" + "\n";
+		info += modelo.getContextoMail()[4] + mensaje + "\n" + "" + "\n";
 
 		JTextArea textArea = new JTextArea();
 		textArea.setText(info);

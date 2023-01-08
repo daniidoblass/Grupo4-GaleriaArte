@@ -1,3 +1,14 @@
+/**
+ * Clase ControladorEnviarMail
+ * 
+ * Clase que permite enviar un correo electrónico
+ * junto con un archivo adjunto seleccionado por el usuario
+ * 
+ * @author Javier Jimenez Torres
+ * @date 09/12/2022
+ * @version 01
+ */
+
 package controlador;
 
 import java.util.Properties;
@@ -19,16 +30,21 @@ import conexion.Conexion;
 import modelo.Modelo;
 import vista.VistaMailEnviarCorreo;
 
-/**
- * 
- * @author Javier Jimenez Torres
- * @date 09/12/2022
- * @version 01
- */
 public class ControladorEnviarMail {
 	
+	/**
+	 * vistaMailEnviarCorreo - tipo VistaMailEnviarCorreo - vista de envio de correo
+	 */
 	private VistaMailEnviarCorreo vistaMailEnviarCorreo;
+	
+	/**
+	 * conexion - tipo Conexion - conexion con base de datos
+	 */
 	private Conexion conexion;
+	
+	/**
+	 * modelo - tipo Modelo - contiene textos del programa
+	 */
 	private Modelo modelo;
 
 	/**
@@ -100,22 +116,21 @@ public class ControladorEnviarMail {
 			transport.connect("smtp.gmail.com", remitente, clave);
 			transport.sendMessage(message, message.getAllRecipients());
 			transport.close();
-			mensaje = "Correo Enviado";
-			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.INFORMATION_MESSAGE);//mensaje enviado
-			conexion.registrarMovimiento("Enviar Mail", "si", "Correo enviado a " + remitente);
-			return mensaje;
+			JOptionPane.showMessageDialog(null, modelo.getMensajesEnviarMail()[0], "", JOptionPane.INFORMATION_MESSAGE);//mensaje enviado
+			conexion.registrarMovimiento(modelo.getMovimientoEnviarMail()[0], modelo.getMovimientoExito()[0], 
+					modelo.getMovimientoEnviarMail()[1] + remitente);
+			return modelo.getMensajesEnviarMail()[0];
 
 		} catch (MessagingException me) {
-			mensaje = "El correo no existe";
-			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE); //correo inexistente
-			conexion.registrarMovimiento("Enviar Mail", "no", "El correo " + remitente + " no existe");
-			return mensaje;
+			JOptionPane.showMessageDialog(null, modelo.getMensajesEnviarMail()[1], "", JOptionPane.ERROR_MESSAGE); //correo inexistente
+			conexion.registrarMovimiento(modelo.getMovimientoEnviarMail()[0], modelo.getMovimientoExito()[1], 
+					modelo.getMovimientoEnviarMail()[2] + remitente + modelo.getMovimientoEnviarMail()[3]);
+			return modelo.getMensajesEnviarMail()[1];
 
 		} catch (NullPointerException e) {
-			mensaje = "No puedes dejar campos vacios";
-			JOptionPane.showMessageDialog(null, mensaje, "", JOptionPane.ERROR_MESSAGE);//campos vacios
-			conexion.registrarMovimiento("Enviar Mail", "no", "No puedes dejar campos vacios");
-			return mensaje;
+			JOptionPane.showMessageDialog(null, modelo.getMensajesEnviarMail()[2], "", JOptionPane.ERROR_MESSAGE);//campos vacios
+			conexion.registrarMovimiento(modelo.getMovimientoEnviarMail()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoEnviarMail()[4]);
+			return modelo.getMensajesEnviarMail()[2];
 		}
 	}
 }

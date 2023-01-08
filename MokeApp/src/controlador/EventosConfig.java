@@ -1,3 +1,17 @@
+/**
+ * 
+ * Clase EventosConfig
+ * 
+ * Permite realizar los eventos de los distintos componentes
+ * de la ventana de administración. Principalmente realiza las
+ * operaciones de restablecer contraseña, cambiar correo electrónico
+ * y soporte técnico
+ * 
+ * @author Samuel Acosta Fernandez
+ * @date 12/12/2022
+ * @version 01
+ */
+
 package controlador;
 
 import java.awt.Color;
@@ -21,12 +35,39 @@ import vista.VistaConfigPrincipal;
 
 public class EventosConfig implements ActionListener, MouseListener {
 
+	/**
+	 * modelo - tipo Modelo - contiene textos del programa
+	 */
     private Modelo modelo;
+    
+    /**
+     * eventos - tipo Eventos - eventos principales 
+     */
     private Eventos eventos;
+    
+    /**
+     * conexion - tipo Conexion - conexion con base de datos
+     */
     private Conexion conexion;
+    
+    /**
+     * controladorFTPPrincipal - tipo ControladorFTPPrincipal - controlador FTP
+     */
     private ControladorConfigPrincipal controladorConfigPrincipal;
+    
+    /**
+     * vistaConfigPrincipal - tipo VistaConfigPrincipal - vista de configuración
+     */
     private VistaConfigPrincipal vistaConfigPrincipal;
 
+    /**
+     * Constructor por defectos de eventos de configuración
+     * @param modelo - tipo Modelo - contiene textos del programa
+     * @param eventos - tipo Eventos - eventos principales 
+     * @param conexion - tipo Conexion - conexion con base de datos
+     * @param controladorConfigPrincipal - tipo ControladorFTPPrincipal - controlador FTP
+     * @param vistaConfigPrincipal - tipo VistaConfigPrincipal - vista de configuración
+     */
     public EventosConfig(Modelo modelo, Eventos eventos, Conexion conexion, ControladorConfigPrincipal controladorConfigPrincipal, VistaConfigPrincipal vistaConfigPrincipal){
         this.modelo = modelo;
         this.eventos = eventos;
@@ -35,6 +76,9 @@ public class EventosConfig implements ActionListener, MouseListener {
         this.vistaConfigPrincipal = vistaConfigPrincipal; 
     }
     
+    /**
+     * Eventos principales de la configuración
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
@@ -49,7 +93,7 @@ public class EventosConfig implements ActionListener, MouseListener {
             		restablecerPassword(respuesta);
         		}
         		else {
-        			vistaConfigPrincipal.mostrarMensajeEmergente("Password Incorrecta", "Password introducida incorrecta");
+        			vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosPasswordIncorrecta()[0], modelo.getTextosPasswordIncorrecta()[1]);
         		}
             }
         	else if(btn.getText().contains(modelo.getTextoOpcionesConfig()[1])){ 	// Cambio Correo Corporativo
@@ -58,25 +102,28 @@ public class EventosConfig implements ActionListener, MouseListener {
             		cambiarCorreo(respuesta);
         		}
         		else {
-        			vistaConfigPrincipal.mostrarMensajeEmergente("Password Incorrecta", "Password introducida incorrecta");
+        			vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosPasswordIncorrecta()[0], modelo.getTextosPasswordIncorrecta()[1]);
         		}
             }
         	else if(btn.getText().contains(modelo.getTextoOpcionesConfig()[2])){ 	// Soporte Técnico
-        		String respuesta = vistaConfigPrincipal.mostrarInputEmergente(modelo.getTextoOpcionesConfig()[2], 
-        				"Si desea informarnos sobre algún problema relacionado con el programa\nContáctanos por:\n\n"
-        				+ "Teléfono: 695138058\nCorreo Electrónico: adminMokeApp@gmail.com\n\nTambién puede enviar un mensaje desde aqui:");
+        		String respuesta = vistaConfigPrincipal.mostrarInputEmergente(modelo.getTextoOpcionesConfig()[2], modelo.getTextoDatosConfig()[2]);
         		enviarMensajeSoporte(respuesta);
             }
         }
     }
     
+    /**
+     * Comprueba password introducida con registrada
+     * @return comprobacion - tipo boolean - devuelve true si password correcta
+     */
     private boolean comprobarPassword() {
     	boolean comprobacion = false;
     	try {
-    		String passwordActual = vistaConfigPrincipal.mostrarMensajePassword("Verificación Usuario", "Introduzca su contraseña actual");
+    		String passwordActual = vistaConfigPrincipal.mostrarMensajePassword(modelo.getTextosComprobarPassword()[0], 
+    				modelo.getTextosComprobarPassword()[1]);
         	if(!passwordActual.equals("") && !passwordActual.isEmpty()) {
         		String usuario = modelo.getUsuario();
-        		ResultSet rs = conexion.realizarConsultaRS("SELECT password FROM usuarios WHERE nombre='" + usuario + "'");
+        		ResultSet rs = conexion.realizarConsultaRS(modelo.getTextosComprobarPassword()[2] + usuario + modelo.getComillaSimple());
         		try {
     				while(rs.next()) {
     					if (passwordActual.equals(rs.getString(1))) {
@@ -90,103 +137,118 @@ public class EventosConfig implements ActionListener, MouseListener {
 		return comprobacion;
 	}
 
+    /**
+     * Permite restablecer password del usuario
+     * @param respuesta - tipo String - password introducida
+     */
 	private void restablecerPassword(String respuesta) {
     	try {
     		if(respuesta.equals("") || respuesta.isEmpty()) {
-        		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Vacío", "El campo contraseña no puede estar vacío");
-        		conexion.registrarMovimiento("Restablecer Password", "no", "El campo contraseña no puede estar vacío");
+        		vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosRestablecerPassword()[0], modelo.getTextosRestablecerPassword()[1]);
+        		conexion.registrarMovimiento(modelo.getMovimientoRestablecerPassword()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoRestablecerPassword()[1]);
         	}
         	else if(respuesta.contains(" ")) {
-        		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Con Espacios", "La contraseña no puede contener espacios");
-        		conexion.registrarMovimiento("Restablecer Password", "no", "La contraseña no puede contener espacios");
+        		vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosRestablecerPassword()[2], modelo.getTextosRestablecerPassword()[3]);
+        		conexion.registrarMovimiento(modelo.getMovimientoRestablecerPassword()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoRestablecerPassword()[2]);
         	}
         	else if(respuesta.length() < 6) {
-        		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Demasiado Corto", "El campo contraseña debe tener entre 6 y 30 caracteres");
-        		conexion.registrarMovimiento("Restablecer Password", "no", "El campo contraseña debe tener entre 6 y 30 caracteres");
+        		vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosRestablecerPassword()[4], modelo.getTextosRestablecerPassword()[5]);
+        		conexion.registrarMovimiento(modelo.getMovimientoRestablecerPassword()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoRestablecerPassword()[3]);
         	}
         	else if(respuesta.length() > 30) {
-        		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Demasiado Largo", "El campo contraseña debe tener entre 6 y 30 caracteres");
-        		conexion.registrarMovimiento("Restablecer Password", "no", "El campo contraseña debe tener entre 6 y 30 caracteres");
+        		vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosRestablecerPassword()[6], modelo.getTextosRestablecerPassword()[7]);
+        		conexion.registrarMovimiento(modelo.getMovimientoRestablecerPassword()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoRestablecerPassword()[3]);
         	}
         	else {
         		String usuario = modelo.getUsuario();
-        		int num = conexion.realizarUpdateStatement("UPDATE usuarios SET password='" + respuesta + "' WHERE nombre = '" + usuario + "'");
+        		int num = conexion.realizarUpdateStatement(modelo.getTextosRestablecerPassword()[8] + respuesta + 
+        				modelo.getTextosRestablecerPassword()[9] + usuario + modelo.getComillaSimple());
         		if(num > 0) {
         			modelo.setPasswordUsuario(respuesta);
-        			vistaConfigPrincipal.mostrarMensajeEmergente("Restablecer Contraseña", "Contraseña cambiada correctamente");
-        			conexion.registrarMovimiento("Restablecer Password", "si", "Cambio password a " + respuesta);
+        			vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosRestablecerPassword()[10], modelo.getTextosRestablecerPassword()[11]);
+        			conexion.registrarMovimiento(modelo.getMovimientoRestablecerPassword()[0], modelo.getMovimientoExito()[0], 
+        					modelo.getMovimientoRestablecerPassword()[4] + respuesta);
         		}
         		else {
-        			vistaConfigPrincipal.mostrarMensajeEmergente("ERROR Restablecer Contraseña", "La contraseña no se ha podido modificar");
-        			conexion.registrarMovimiento("Restablecer Password", "no", "Error interno al restablecer password");
+        			vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosRestablecerPassword()[12], modelo.getTextosRestablecerPassword()[13]);
+        			conexion.registrarMovimiento(modelo.getMovimientoRestablecerPassword()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoRestablecerPassword()[5]);
         		}
         	}
     	}
     	catch(Exception e) {}
     }
     
+	/**
+	 * Cambiar correo por uno configurado
+	 * @param respuesta - tipo String - correo introducido
+	 */
     private void cambiarCorreo(String respuesta) {
     	try {
     		// Patrón para validar el email
-			Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-					+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+			Pattern pattern = Pattern.compile(modelo.getTextosCambiarCorreo()[0]);
 					
 			// El email a validar
 			Matcher mather = pattern.matcher(respuesta);
 			
     		if(respuesta.equals("") || respuesta.isEmpty()) {
-        		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Vacío", "El campo correo no puede estar vacío");
-        		conexion.registrarMovimiento("Cambiar Correo Corporativo", "no", "El campo correo no puede estar vacío");
+        		vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosCambiarCorreo()[1], modelo.getTextosCambiarCorreo()[2]);
+        		conexion.registrarMovimiento(modelo.getMovimientoCambiarCorreo()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoCambiarCorreo()[1]);
         	}
         	else if(respuesta.contains(" ")) {
-        		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Con Espacios", "El correo corporativo no puede contener espacios");
-        		conexion.registrarMovimiento("Cambiar Correo Corporativo", "no", "El correo corporativo no puede contener espacios");
+        		vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosCambiarCorreo()[3], modelo.getTextosCambiarCorreo()[4]);
+        		conexion.registrarMovimiento(modelo.getMovimientoCambiarCorreo()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoCambiarCorreo()[2]);
         	}
         	else if(!mather.find()) {
-        		vistaConfigPrincipal.mostrarMensajeEmergente("Correo Inválido", "Formato de correo inválido");
-        		conexion.registrarMovimiento("Cambiar Correo Corporativo", "no", "Formato de correo inválido");
+        		vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosCambiarCorreo()[5], modelo.getTextosCambiarCorreo()[6]);
+        		conexion.registrarMovimiento(modelo.getMovimientoCambiarCorreo()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoCambiarCorreo()[3]);
         	}
         	else {
         		String usuario = modelo.getUsuario();
-        		int num = conexion.realizarUpdateStatement("UPDATE usuarios SET correo='" + respuesta + "' WHERE nombre = '" + usuario + "'");
+        		int num = conexion.realizarUpdateStatement(modelo.getTextosCambiarCorreo()[7] + respuesta + modelo.getTextosCambiarCorreo()[8] 
+        				+ usuario + modelo.getComillaSimple());
         		if(num > 0) {
         			// Guardar datos del correo en el modelo
         			modelo.setCorreo(respuesta);
-        			ResultSet correo = conexion.realizarConsultaRS("SELECT * FROM correos WHERE correo='" + respuesta + "'");
+        			ResultSet correo = conexion.realizarConsultaRS(modelo.getTextosCambiarCorreo()[9] + respuesta + modelo.getComillaSimple());
     				while(correo.next()) {
     					modelo.setPasswordCorreo(correo.getString(3));		// passwordCorreo
     				}
-        			vistaConfigPrincipal.mostrarMensajeEmergente("Cambio Correo Corporativo", "Correo Corporativo cambiado correctamente");
-        			conexion.registrarMovimiento("Cambiar Correo Corporativo", "si", "Cambio correo a " + respuesta);
+        			vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosCambiarCorreo()[10], modelo.getTextosCambiarCorreo()[11]);
+        			conexion.registrarMovimiento(modelo.getMovimientoCambiarCorreo()[0], modelo.getMovimientoExito()[0], modelo.getMovimientoCambiarCorreo()[4] 
+        					+ respuesta);
         		}
         		else {
-        			vistaConfigPrincipal.mostrarMensajeEmergente("ERROR Correo Corporativo", "El correo no se ha podido modificar");
-        			conexion.registrarMovimiento("Cambiar Correo Corporativo", "no", "Error interno al cambiar correo");
+        			vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosCambiarCorreo()[12], modelo.getTextosCambiarCorreo()[13]);
+        			conexion.registrarMovimiento(modelo.getMovimientoCambiarCorreo()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoCambiarCorreo()[5]);
         		}
         	}
     	}
     	catch(Exception e) {
-    		vistaConfigPrincipal.mostrarMensajeEmergente("Correo Inválido", "Formato de correo inválido");
-    		conexion.registrarMovimiento("Cambiar Correo Corporativo", "no", "Error interno al cambiar correo");
+    		vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosCambiarCorreo()[14], modelo.getTextosCambiarCorreo()[15]);
+    		conexion.registrarMovimiento(modelo.getMovimientoCambiarCorreo()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoCambiarCorreo()[5]);
     	}
     }
     
+    /**
+     * Registra mensaje en base de datos del soporte
+     * @param respuesta - tipo String - mensaje para el soporte
+     */
     private void enviarMensajeSoporte(String respuesta) {
     	try {
     		if(respuesta.equals("") || respuesta.isEmpty()) {
-        		vistaConfigPrincipal.mostrarMensajeEmergente("Texto Vacío", "El campo mensaje no puede estar vacío");
-        		conexion.registrarMovimiento("Enviar Mensaje Soporte Técnico", "no", "El campo mensaje no puede estar vacío");
+        		vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosSoporte()[0], modelo.getTextosSoporte()[1]);
+        		conexion.registrarMovimiento(modelo.getMovimientoSoporte()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoSoporte()[1]);
         	}
         	else {
         		int id = 0;
         		String usuario = modelo.getUsuario();
         		String categoria = "";
-        		SimpleDateFormat fecha = new SimpleDateFormat("yyyy-MM-dd"); 
-        		SimpleDateFormat hora = new SimpleDateFormat("HH:mm:ss"); 
+        		SimpleDateFormat fecha = new SimpleDateFormat(modelo.getFormatoFecha()); 
+        		SimpleDateFormat hora = new SimpleDateFormat(modelo.getFormatoHora()); 
         		Date date = new Date(); 
         		try {
         			
-        			ResultSet usuarios = conexion.realizarConsultaRS("SELECT * FROM usuarios");
+        			ResultSet usuarios = conexion.realizarConsultaRS(modelo.getTextosSoporte()[2]);
         			while(usuarios.next() && id == 0) {
         				if(usuarios.getString(2).equals(usuario)) {
         					id = usuarios.getInt(1);
@@ -194,30 +256,29 @@ public class EventosConfig implements ActionListener, MouseListener {
         				}
         			}
         			
-        			int num = conexion.realizarUpdateStatement("INSERT INTO mensajes (idUsuario, nombreUsuario, categoriaUsuario, mensaje, fecha, hora) "
-            				+ "VALUES(" + id + ", '" + usuario + "', '" + categoria + "', '" + respuesta + "', '" + fecha.format(date) + "', '" + hora.format(date) + "')");
+        			int num = conexion.realizarUpdateStatement(modelo.getTextosSoporte()[3] + id + ", '" + usuario + "', '" + categoria + "', '" + respuesta + "', '" + fecha.format(date) + "', '" + hora.format(date) + "')");
             		if(num > 0) {
-            			vistaConfigPrincipal.mostrarMensajeEmergente("Soporte Técnico", "Mensaje enviado a administradores");
-            			conexion.registrarMovimiento("Enviar Mensaje Soporte Técnico", "si", "Enviado mensaje con contenido '" + respuesta + "'");
+            			vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosSoporte()[4], modelo.getTextosSoporte()[5]);
+            			conexion.registrarMovimiento(modelo.getMovimientoSoporte()[0], modelo.getMovimientoExito()[0], modelo.getMovimientoSoporte()[2] + respuesta);
             		}
             		else {
-            			vistaConfigPrincipal.mostrarMensajeEmergente("ERROR Soporte Técnico", "El mensaje no se ha podido enviar");
-            			conexion.registrarMovimiento("Enviar Mensaje Soporte Técnico", "no", "Error interno al enviar el correo");
+            			vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosSoporte()[6], modelo.getTextosSoporte()[7]);
+            			conexion.registrarMovimiento(modelo.getMovimientoSoporte()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoSoporte()[3]);
             		}
         		}
         		catch(Exception e) {
-        			vistaConfigPrincipal.mostrarMensajeEmergente("ERROR INESPERADO", "No se ha podido enviar mensaje");
-        			conexion.registrarMovimiento("Enviar Mensaje Soporte Técnico", "no", "Error interno al enviar el correo");
+        			vistaConfigPrincipal.mostrarMensajeEmergente(modelo.getTextosSoporte()[8], modelo.getTextosSoporte()[9]);
+        			conexion.registrarMovimiento(modelo.getMovimientoSoporte()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoSoporte()[3]);
         		}
 
         	}
     	}
     	catch(Exception e) {
-    		conexion.registrarMovimiento("Enviar Mensaje Soporte Técnico", "no", "Error interno al enviar el correo");
+    		conexion.registrarMovimiento(modelo.getMovimientoSoporte()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoSoporte()[3]);
     	}
     }
 
-	/*
+	/**
      * HOVER EN OPCIONES PRINCIPALES
      */
     @Override
@@ -232,6 +293,9 @@ public class EventosConfig implements ActionListener, MouseListener {
     public void mouseReleased(MouseEvent e) {
     }
 
+    /**
+     * Efecto al ir encima del componente
+     */
     @Override
     public void mouseEntered(MouseEvent e) {
         Object source = e.getSource();
@@ -242,6 +306,9 @@ public class EventosConfig implements ActionListener, MouseListener {
         }
     }
 
+    /**
+     * Efecto al salir del componente
+     */
     @Override
     public void mouseExited(MouseEvent e) {
         Object source = e.getSource();

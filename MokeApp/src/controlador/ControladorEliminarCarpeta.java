@@ -1,10 +1,19 @@
-package controlador;
-import java.awt.HeadlessException;
 /**
- * @author Daniel Jesus Doblas Florido
+ * 
+ * Clase ControladorEliminarCarpeta
+ * 
+ * Elimina el contenido de la carpeta seleccionada de forma
+ * recursiva para posteriormente eliminar la carpeta
+ * seleccionada por el usuario del Servidor FTP
+ * 
+ * @author Pablo Perez Ferre
  * @date 15/12/2022
  * @version 01
  */
+
+package controlador;
+
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
@@ -20,17 +29,62 @@ import vista.VistaEliminarCarpeta;
 
 public class ControladorEliminarCarpeta {
 
+	/**
+	 * modelo - tipo Modelo - contiene textos del programa
+	 */
 	private Modelo modelo;
+	
+	/**
+     * vista - tipo Vista - vista principal del programa
+     */
 	private Vista vista;
+	
+	/**
+     * eventos - tipo Eventos - eventos principales 
+     */
 	private Eventos eventos;
+	
+	/**
+     * conexion - tipo Conexion - conexion con base de datos
+     */
 	private Conexion conexion;
+	
+	/**
+     * cliente - tipo FTPClient - cliente FTP
+     */
 	private FTPClient cliente;
+	
+	/**
+     * vistaEliminarCarpeta - tipo VistaEliminarCarpeta - vista de eliminar carpeta
+     */
 	private VistaEliminarCarpeta vistaEliminarCarpeta;
+	
+	/**
+	 * nombreArchivo - tipo String - nombre de fichero seleccionado
+	 */
 	private String nombreArchivo = "";
+	
+	/**
+	 * directorioActual - tipo String - directorio actual de FTP
+	 */
 	private String directorioActual = "";
+	
+	/**
+	 * carpetaSeleccionada - tipo String - carpeta seleccionada
+	 */
 	private String carpetaSeleccionada = "";
 	
-	public ControladorEliminarCarpeta(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) {
+	/**
+	 * Constructor por defecto. Comprueba si el usuario desea eliminar 
+	 * y realiza la acción de eliminar la carpeta recursivamente por 
+	 * el contenido de la misma
+	 * @param modelo - tipo Modelo - contiene textos del programa
+	 * @param vista - tipo Vista - vista principal del programa
+	 * @param eventos - tipo Eventos - eventos principales 
+	 * @param conexion - tipo Conexion - conexion con base de datos
+	 * @param cliente - tipo FTPClient - cliente FTP
+	 */
+public ControladorEliminarCarpeta(Modelo modelo, Vista vista, Eventos eventos, Conexion conexion, FTPClient cliente) {
 		
 		this.modelo = modelo;
 		this.vista = vista;
@@ -44,17 +98,15 @@ public class ControladorEliminarCarpeta {
 
 		try {
 			
-			if (nombreArchivo.contains("carpeta")) {
+			if (nombreArchivo.contains(modelo.getCarpetaNombre())) {
 
 				if(nombreArchivo.contains(" ")) {
-					JOptionPane.showMessageDialog(null, "ERROR: la carpeta seleccionada contiene espacios");
+					JOptionPane.showMessageDialog(null, modelo.getTextosEliminarCarpetas()[0]);
 				}
 				else {
-					nombreArchivo = nombreArchivo.replace("carpeta-", "");
+					nombreArchivo = nombreArchivo.replace(modelo.getCarpetaGuion(), "");
 					carpetaSeleccionada = nombreArchivo;
-					int opcion = JOptionPane.showConfirmDialog(null,
-							"¿Deseas eliminar la carpeta " + nombreArchivo + "?",
-							"Eliminar Carpeta", JOptionPane.YES_NO_OPTION);
+					int opcion = vistaEliminarCarpeta.mostrarMensajeConfirmacion(nombreArchivo);
 					
 					if (opcion == JOptionPane.YES_OPTION) {
 						if (cliente.printWorkingDirectory().equals("/")) {
@@ -64,27 +116,32 @@ public class ControladorEliminarCarpeta {
 						}
 						eliminarCarpeta(cliente, nombreArchivo, directorioActual);
 						if(comprobarEliminacion()) {
-							JOptionPane.showMessageDialog(null, "Error al eliminar la carpeta " + carpetaSeleccionada);
-							conexion.registrarMovimiento("Eliminar Carpeta", "no", "Carpeta " + nombreArchivo.substring(nombreArchivo.lastIndexOf("/")+1) + " contiene elementos con nombres inválidos");
+							JOptionPane.showMessageDialog(null, modelo.getTextoErrorEliminar() + carpetaSeleccionada);
+							conexion.registrarMovimiento(modelo.getMovimientoEliminarCarpeta()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoEliminarCarpeta()[1] 
+									+ nombreArchivo.substring(nombreArchivo.lastIndexOf("/")+1) + modelo.getMovimientoEliminarCarpeta()[2]);
 						}
 						else {
-							JOptionPane.showMessageDialog(null, nombreArchivo.substring(nombreArchivo.lastIndexOf("/")+1) + " eliminada correctamente");
-							conexion.registrarMovimiento("Eliminar Carpeta", "si", "Eliminada carpeta " + nombreArchivo);
+							JOptionPane.showMessageDialog(null, nombreArchivo.substring(nombreArchivo.lastIndexOf("/")+1) + modelo.getTextoCorrectoEliminar());
+							conexion.registrarMovimiento(modelo.getMovimientoEliminarCarpeta()[0], modelo.getMovimientoExito()[0], modelo.getMovimientoEliminarCarpeta()[3] 
+									+ nombreArchivo);
 						}
 					}
 				}
 			} 
 			else {
-				JOptionPane.showMessageDialog(null, "No hay seleccionada ninguna carpeta");
+				vistaEliminarCarpeta.mostrarMensajeEmergente(modelo.getTextoCarpetaNoSeleccionada());
 			}
 		} catch (Exception e) {
-			conexion.registrarMovimiento("Eliminar Carpeta", "no", "Error interno al eliminar carpeta");
+			conexion.registrarMovimiento(modelo.getMovimientoEliminarCarpeta()[0], modelo.getMovimientoExito()[1], modelo.getMovimientoEliminarCarpeta()[4]);
 		}
 		
 		eventos.getControladorFTPPrincipal().actualizarContenido();
 	}
 	
-
+	/**
+	 * Comprueba si se ha eliminado
+	 * @return comprobacion - tipo boolean - devuelve true si se elimina 
+	 */
 	private boolean comprobarEliminacion() {
 		boolean comprobacion = false;
 		try {
@@ -99,7 +156,14 @@ public class ControladorEliminarCarpeta {
 		return comprobacion;
 	}
 
-
+	/**
+	 * Elimina la carpeta seleccionada y subficheros
+	 * @param cliente - tipo FTPClient - cliente ftp
+	 * @param nombreArchivo - tipo String - nombre del archivo
+	 * @param directorioActual - tipo String - directorio actual FTP
+	 * @throws HeadlessException
+	 * @throws IOException
+	 */
 	private void eliminarCarpeta(FTPClient cliente, String nombreArchivo, String directorioActual)
 			throws HeadlessException, IOException {
 		
@@ -133,22 +197,12 @@ public class ControladorEliminarCarpeta {
 				} else {
 					// delete the file
 					boolean deleted = cliente.deleteFile(filePath);
-					if (deleted) {
-						System.out.println("DELETED the file: " + filePath);
-					} else {
-						System.out.println("CANNOT delete the file: " + filePath);
-					}
 				}
 			}
 			cliente.changeWorkingDirectory(nombreArchivo);
 			cliente.changeToParentDirectory();
 			// finally, remove the directory itself
 			boolean removed = cliente.removeDirectory(listaDirectorios);
-			if (removed) {
-				System.out.println("REMOVED the directory: " + listaDirectorios);
-			} else {
-				System.out.println("CANNOT remove the directory: " + listaDirectorios);
-			}
 
 		}
 	}
