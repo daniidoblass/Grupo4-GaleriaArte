@@ -615,7 +615,7 @@ public class Modelo {
 				"Soporte Técnico" };
 		textoOpcionesConfigImages = new String[] { "password", "gmail", "soporte" };
 		textoDatosConfig = new String[] { "Introduzca la nueva contraseña", "Introduzca el nuevo correo corporativo",
-				"Introduzca un mensaje para el Soporte Técnico" };
+				"Si desea informarnos sobre algún problema relacionado con el programa\nContáctanos por:\n\nTeléfono: 695138058\nCorreo Electrónico: adminMokeApp@gmail.com\n\nTambien puede enviar un mensaje desde aqui:" };
 
 		// ADMIN
 		textoOpcionesAdmin = new String[] { "Movimientos", "Usuarios", "Mensajes" };
