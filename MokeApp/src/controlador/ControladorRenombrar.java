@@ -13,12 +13,6 @@
 package controlador;
 
 import java.awt.HeadlessException;
-/**
- * @author Daniel Jesús Doblas Florido
- * @date 15/12/2022
- * @version 01
- */
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;

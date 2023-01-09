@@ -16,25 +16,17 @@ package controlador;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-import javax.mail.MessagingException;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import org.apache.commons.net.ftp.FTPClient;
 
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
+import conexion.Conexion;
 import modelo.Modelo;
 import vista.Vista;
-import conexion.Conexion;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class Eventos implements ActionListener, MouseListener {
 

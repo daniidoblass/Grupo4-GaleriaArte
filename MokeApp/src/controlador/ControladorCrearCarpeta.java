@@ -13,13 +13,10 @@
 package controlador;
 
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
-
 import conexion.Conexion;
 import modelo.Modelo;
 import vista.Vista;
 import vista.VistaCrearCarpeta;
-import vista.VistaSubirArchivo;
 
 public class ControladorCrearCarpeta {
 

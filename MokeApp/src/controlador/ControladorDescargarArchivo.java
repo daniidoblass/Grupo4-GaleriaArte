@@ -17,17 +17,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
-/**
- * @author Daniel Jesus Doblas Florido
- * @date 14/12/2022
- * @version 01
- */
-
-import java.io.IOException;
-import java.net.SocketException;
-
-import javax.swing.JFileChooser;
-
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
@@ -35,7 +24,6 @@ import conexion.Conexion;
 import modelo.Modelo;
 import vista.Vista;
 import vista.VistaDescargarArchivo;
-import vista.VistaSubirArchivo;
 
 public class ControladorDescargarArchivo {
 	

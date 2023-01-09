@@ -11,19 +11,8 @@
 
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
-
-import conexion.Conexion;
-import controlador.Eventos;
-
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import modelo.Modelo;
 

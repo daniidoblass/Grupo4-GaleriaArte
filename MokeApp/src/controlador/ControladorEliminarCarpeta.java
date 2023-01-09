@@ -14,7 +14,6 @@
 package controlador;
 
 import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;

@@ -20,7 +20,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -30,7 +29,6 @@ import javax.swing.JButton;
 
 import conexion.Conexion;
 import modelo.Modelo;
-import vista.Vista;
 import vista.VistaConfigPrincipal;
 
 public class EventosConfig implements ActionListener, MouseListener {

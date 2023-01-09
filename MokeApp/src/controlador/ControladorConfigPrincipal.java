@@ -13,16 +13,16 @@
 
 package controlador;
 
-import modelo.Modelo;
-import vista.Vista;
-import vista.VistaConfigPrincipal;
-import conexion.Conexion;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.swing.JFrame;
 
 import org.apache.commons.net.ftp.FTPClient;
+
+import conexion.Conexion;
+import modelo.Modelo;
+import vista.Vista;
+import vista.VistaConfigPrincipal;
 
 public class ControladorConfigPrincipal {
     

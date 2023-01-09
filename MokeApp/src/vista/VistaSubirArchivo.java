@@ -12,18 +12,14 @@
 
 package vista;
 
-import javax.swing.*;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import filtros.ImageFileView;
 import filtros.ImageFilter;
 import filtros.ImagePreview;
 import modelo.Modelo;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
 public class VistaSubirArchivo extends JFrame {
 

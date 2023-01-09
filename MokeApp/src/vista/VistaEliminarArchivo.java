@@ -12,21 +12,10 @@
 
 package vista;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.SocketException;
-
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
-
-import controlador.ControladorDescargarArchivo;
 import modelo.Modelo;
 
 public class VistaEliminarArchivo extends JFrame{

@@ -12,16 +12,8 @@
 
 package vista;
 
-import javax.swing.*;
-
-import org.apache.commons.net.ftp.FTPClient;
-
-import modelo.Modelo;
-
-import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class VistaRenombrarArchivo extends JFrame {
 

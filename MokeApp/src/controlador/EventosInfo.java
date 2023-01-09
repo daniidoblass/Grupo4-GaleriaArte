@@ -23,11 +23,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 
-import org.apache.commons.net.ftp.FTPClient;
-
-import conexion.Conexion;
 import modelo.Modelo;
-import vista.Vista;
 import vista.VistaInfoPrincipal;
 
 public class EventosInfo implements ActionListener, MouseListener {

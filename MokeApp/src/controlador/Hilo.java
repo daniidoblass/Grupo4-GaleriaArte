@@ -13,8 +13,6 @@
 
 package controlador;
 
-import javax.mail.MessagingException;
-
 public class Hilo extends Thread {
 	
 	/**

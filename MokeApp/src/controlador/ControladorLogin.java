@@ -13,21 +13,19 @@
 
 package controlador;
 
-import modelo.Modelo;
-import vista.Vista;
-import vista.VistaLogin;
-import conexion.Conexion;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
 import org.apache.commons.net.ftp.FTPClient;
+
+import conexion.Conexion;
+import modelo.Modelo;
+import vista.Vista;
+import vista.VistaLogin;
 
 public class ControladorLogin implements ActionListener {
     
